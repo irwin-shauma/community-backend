@@ -9,7 +9,7 @@ import com.lawencon.base.BaseEntity;
 @Entity
 @Table(uniqueConstraints = {
 		@UniqueConstraint(
-				name = "role_ck",
+				name = "role_bk",
 				columnNames = {"role_code"}
 				)
 })
