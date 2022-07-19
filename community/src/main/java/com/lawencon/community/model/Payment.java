@@ -10,26 +10,21 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(uniqueConstraints = {
-		@UniqueConstraint(
-				name = "payment_bk",
-				columnNames = "payment_code"
-			)
-})
-public class Payment extends BaseEntity{
-	
+@Table(uniqueConstraints = { @UniqueConstraint(name = "payment_bk", columnNames = "payment_code") })
+public class Payment extends BaseEntity {
+
 	private static final long serialVersionUID = -5196455701225322056L;
-	
+
 	@Column(name = "payment_code")
 	private String paymentCode;
-	
+
 	@OneToOne
 	@JoinColumn(name = "file_id")
-	private String fileId;
-	
+	private File file;
+
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	private String userId;
+	private User user;
 
 	public String getPaymentCode() {
 		return paymentCode;
@@ -39,21 +34,20 @@ public class Payment extends BaseEntity{
 		this.paymentCode = paymentCode;
 	}
 
-	public String getFileId() {
-		return fileId;
+	public File getFile() {
+		return file;
 	}
 
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
+	public void setFile(File file) {
+		this.file = file;
 	}
 
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	
-	
+
 }
