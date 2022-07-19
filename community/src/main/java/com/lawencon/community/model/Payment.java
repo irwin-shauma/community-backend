@@ -10,7 +10,10 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(name = "payment_bk", columnNames = "payment_code") })
+@Table(name = "payment" , uniqueConstraints = { @UniqueConstraint(
+		name = "payment_bk",
+		columnNames = "payment_code") 
+})
 public class Payment extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;

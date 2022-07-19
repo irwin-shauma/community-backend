@@ -8,7 +8,7 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(uniqueConstraints = {
+@Table(name = "file " ,uniqueConstraints = {
 		@UniqueConstraint(
 				name = "file_bk",
 				columnNames = "file_code"

@@ -1,28 +1,30 @@
 package com.lawencon.community.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(uniqueConstraints = {
-		@UniqueConstraint(
-				name = "email_bk",
-				columnNames = {"email"}
-		),
-		@UniqueConstraint(
-				name = "verification_bk",
-				columnNames = {"nama", "univ_id"}
-				),
-})
+@Table(name = "thread_headers")
 public class ThreadHeader extends BaseEntity{
+	
 	private static final long serialVersionUID = -5196455701225322056L;
 
+	@Column(name = "title")
 	private String title;
+	
+	@OneToOne
+	@JoinColumn(name = "thread_type_id")
 	private ThreadType threadType;
+	
+	@OneToOne
+	@JoinColumn(name = "content_thread_id")
 	private String contentThread;
+	
 	public String getTitle() {
 		return title;
 	}

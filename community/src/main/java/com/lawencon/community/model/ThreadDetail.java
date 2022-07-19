@@ -2,14 +2,14 @@ package com.lawencon.community.model;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(uniqueConstraints = {
+@Table(name = "thread_details", uniqueConstraints = {
 		@UniqueConstraint(
 				name = "email_bk",
 				columnNames = {"email"}
@@ -22,15 +22,15 @@ import com.lawencon.base.BaseEntity;
 public class ThreadDetail extends BaseEntity{
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "thread_header_id")
 	private ThreadHeader threadHeader;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "file_id")
 	private File file;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 
