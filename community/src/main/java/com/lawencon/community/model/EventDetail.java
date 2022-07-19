@@ -32,7 +32,7 @@ public class EventDetail extends BaseEntity {
 
 	@OneToOne
 	@JoinColumn(name = "file_id")
-	private String fileId;
+	private File file;
 
 	private Float price;
 	private LocalDate dates;
@@ -57,12 +57,12 @@ public class EventDetail extends BaseEntity {
 		this.eventHeaderId = eventHeaderId;
 	}
 
-	public String getFileId() {
-		return fileId;
+	public File getFile() {
+		return file;
 	}
 
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
+	public void setFile(File file) {
+		this.file = file;
 	}
 
 	public Float getPrice() {
