@@ -4,28 +4,37 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(name = "user_bk", columnNames = { "nama", "univ_id" }) })
+@Table(name = "profile")
 public class Profile extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@Column(name = "full_name")
 	private String fullName;
 
+	@Column(name = "company")
 	private String company;
+	
+	@Column(name = "industry")
 	private String industry;
+	
+	@Column(name = "position")
 	private String position;
+	
+	@Column(name = "status")
 	private String status;
 
+	@Column(name = "status_duration")
 	private LocalDateTime status_duration;
 
 	public User getUser() {

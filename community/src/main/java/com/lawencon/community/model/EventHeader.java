@@ -23,6 +23,7 @@ public class EventHeader extends BaseEntity {
 	@Column(name="event_header_code")
 	private String eventHeaderCode;
 	
+	@Column(name = "title")
 	private String title;
 	
 	@OneToOne

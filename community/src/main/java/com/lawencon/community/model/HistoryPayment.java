@@ -15,7 +15,6 @@ import com.lawencon.base.BaseEntity;
 				name = "history_payment_bk",
 				columnNames = "history_payment_code"
 			)
-		
 })
 public class HistoryPayment extends BaseEntity {
 	
