@@ -26,7 +26,7 @@ public class HistoryPayment extends BaseEntity {
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	private String userId;
+	private User user;
 	
 	@Column(name = "trx_no")
 	private String trxNo;
@@ -39,12 +39,12 @@ public class HistoryPayment extends BaseEntity {
 		this.historyPaymentCode = historyPaymentCode;
 	}
 
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getTrxNo() {

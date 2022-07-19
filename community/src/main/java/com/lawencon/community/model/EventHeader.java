@@ -27,7 +27,7 @@ public class EventHeader extends BaseEntity {
 	
 	@OneToOne
 	@JoinColumn(name = "event_type_id")
-	private String eventTypeId;
+	private EventType eventType;
 
 	public String getEventHeaderCode() {
 		return eventHeaderCode;
@@ -45,12 +45,12 @@ public class EventHeader extends BaseEntity {
 		this.title = title;
 	}
 
-	public String getEventTypeId() {
-		return eventTypeId;
+	public EventType getEventType() {
+		return eventType;
 	}
 
-	public void setEventTypeId(String eventTypeId) {
-		this.eventTypeId = eventTypeId;
+	public void setEventTypeId(EventType eventType) {
+		this.eventType = eventType;
 	}
 
 }

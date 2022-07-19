@@ -26,7 +26,7 @@ public class ThreadLike extends BaseEntity{
 	
 	@OneToOne
 	@JoinColumn(name = "thread_id")
-	private String threadId;
+	private ThreadHeader threadHeader;
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
@@ -40,12 +40,12 @@ public class ThreadLike extends BaseEntity{
 		this.threadLikeCode = threadLikeCode;
 	}
 
-	public String getThreadId() {
-		return threadId;
+	public ThreadHeader getThreadHeader() {
+		return threadHeader;
 	}
 
-	public void setThreadId(String threadId) {
-		this.threadId = threadId;
+	public void setThreadHeader(ThreadHeader threadHeader) {
+		this.threadHeader = threadHeader;
 	}
 
 	public String getUserId() {
