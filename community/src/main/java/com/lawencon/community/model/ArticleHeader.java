@@ -23,7 +23,7 @@ public class ArticleHeader extends BaseEntity {
 
 	@OneToOne
 	@JoinColumn(name = "file_id")
-	private String fileId;
+	private File file;
 
 	private String title;
 	private String contents;
@@ -36,12 +36,12 @@ public class ArticleHeader extends BaseEntity {
 		this.articleHeaderCode = articleHeaderCode;
 	}
 
-	public String getFileId() {
-		return fileId;
+	public File getFile() {
+		return file;
 	}
 
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
+	public void setFileId(File file) {
+		this.file = file;
 	}
 
 	public String getTitle() {

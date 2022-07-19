@@ -28,7 +28,7 @@ public class EventDetail extends BaseEntity {
 
 	@OneToOne
 	@JoinColumn(name = "event_header_id")
-	private String eventHeaderId;
+	private EventHeader eventHeader;
 
 	@OneToOne
 	@JoinColumn(name = "file_id")
@@ -49,12 +49,12 @@ public class EventDetail extends BaseEntity {
 		this.eventDetailCode = eventDetailCode;
 	}
 
-	public String getEventHeaderId() {
-		return eventHeaderId;
+	public EventHeader getEventHeader() {
+		return eventHeader;
 	}
 
-	public void setEventHeaderId(String eventHeaderId) {
-		this.eventHeaderId = eventHeaderId;
+	public void setEventHeader(EventHeader eventHeader) {
+		this.eventHeader = eventHeader;
 	}
 
 	public File getFile() {

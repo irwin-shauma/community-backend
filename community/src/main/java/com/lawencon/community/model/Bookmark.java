@@ -24,7 +24,7 @@ public class Bookmark extends BaseEntity {
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	private String userId;
+	private User user;
 	
 	@OneToOne
 	@JoinColumn(name = "thread_id")
@@ -38,12 +38,12 @@ public class Bookmark extends BaseEntity {
 		this.bookmarkCode = bookmarkCode;
 	}
 
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserId(User user) {
+		this.user = user;
 	}
 
 	public String getThreadId() {

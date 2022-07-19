@@ -25,26 +25,34 @@ public class ThreadPollingAnswer extends BaseEntity {
 
 	@OneToOne
 	@JoinColumn(name = "thread_polling_id")
-	private String threadPollingId;
+	private ThreadHeaderPolling threadHeaderPolling;
 
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	private String userId;
+	private User user;
 
-	public String getThreadPollingId() {
-		return threadPollingId;
+	public String getThreadPollingAnswerCode() {
+		return threadPollingAnswerCode;
 	}
 
-	public void setThreadPollingId(String threadPollingId) {
-		this.threadPollingId = threadPollingId;
+	public void setThreadPollingAnswerCode(String threadPollingAnswerCode) {
+		this.threadPollingAnswerCode = threadPollingAnswerCode;
 	}
 
-	public String getUserId() {
-		return userId;
+	public ThreadHeaderPolling getThreadHeaderPolling() {
+		return threadHeaderPolling;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setThreadHeaderPolling(ThreadHeaderPolling threadHeaderPolling) {
+		this.threadHeaderPolling = threadHeaderPolling;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
