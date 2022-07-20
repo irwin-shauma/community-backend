@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.dao.EventHeaderDao;
 import com.lawencon.community.model.EventHeader;
-import com.lawencon.community.model.Role;
 import com.lawencon.model.SearchQuery;
 
 @Service

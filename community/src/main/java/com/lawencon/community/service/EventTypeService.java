@@ -24,10 +24,8 @@ public class EventTypeService extends BaseCoreService {
 			rollback();
 			throw new Exception(e);
 		}
-
 		return data;
 	}
-	
 	
 	public EventType update(EventType data) throws Exception {
 		try {

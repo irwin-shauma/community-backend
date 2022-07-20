@@ -35,7 +35,6 @@ public class ThreadDetailService extends BaseCoreService {
 			rollback();
 			throw new Exception(e);
 		}
-
 		return data;
 	}
 	
@@ -45,7 +44,7 @@ public class ThreadDetailService extends BaseCoreService {
 			ThreadDetail mhsDb = threadDetailDao.getById(data.getId());
 			data.setCreatedAt(mhsDb.getCreatedAt());
 			data.setCreatedBy(mhsDb.getCreatedBy());
-
+			
 			begin();
 			threadDetailDao.save(data);
 			commit();
