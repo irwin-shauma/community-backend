@@ -5,7 +5,7 @@ import com.lawencon.community.model.Balance;
 import com.lawencon.community.model.User;
 
 public class BalanceDao extends AbstractJpaDao<Balance>{
-	public Balance findByUserId(Long userId) throws Exception{
+	public Balance findByUserId(String userId) throws Exception{
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append("SELECT b.id, b.balanceCode, b.currentBalance, b.user FROM balance b")
 					.append("INNER JOIN users u ON u.id = b.user")

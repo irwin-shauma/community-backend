@@ -14,7 +14,7 @@ import com.lawencon.community.model.User;
 @Repository
 public class HistoryPaymentDao extends AbstractJpaDao<HistoryPayment>{
 	
-	public List<HistoryPayment> findAllByUserId(Long userId) throws Exception{
+	public List<HistoryPayment> findAllByUserId(String userId) throws Exception{
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append("SELECT hp.id, hp.historyPaymentCode, hp.user, hp.trxNo FROM history_payment hp ")
 					.append("INNER JOIN users u ON u.id = hp.user ")

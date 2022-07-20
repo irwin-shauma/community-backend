@@ -6,7 +6,7 @@ import com.lawencon.community.model.Payment;
 import com.lawencon.community.model.User;
 
 public class PaymentDao extends AbstractJpaDao<Payment> {
-	public Payment findByUserId(Long userId) throws Exception{
+	public Payment findByUserId(String userId) throws Exception{
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append("SELECT p.id, p.paymentCode, p.fileId, p.userId  FROM payment p ")
 					.append(" INNER JOIN file f ON f.id = p.fileId ")
