@@ -10,7 +10,7 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(uniqueConstraints = {
+@Table(name = "balance " , uniqueConstraints = {
 		@UniqueConstraint(
 				name = "balance_bk",
 				columnNames = "balance_code"

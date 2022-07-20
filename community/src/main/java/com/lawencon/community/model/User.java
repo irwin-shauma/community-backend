@@ -1,38 +1,36 @@
 package com.lawencon.community.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
-
 
 @Entity
 @Table(uniqueConstraints = {
 		@UniqueConstraint(
 				name = "email_bk",
 				columnNames = {"email"}
-		),
-		@UniqueConstraint(
-				name = "verification_bk",
-				columnNames = {"nama", "univ_id"}
-				),
+		)
 })
 public class User extends BaseEntity{
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "verification_id")
 	private Verification verification;
 	
+	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "password")
 	private String password;
 
 	public Role getRole() {

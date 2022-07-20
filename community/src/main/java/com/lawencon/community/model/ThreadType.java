@@ -1,5 +1,6 @@
 package com.lawencon.community.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -7,27 +8,23 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(uniqueConstraints = {
+@Table(name = "thread_types", uniqueConstraints = {
 		@UniqueConstraint(
-				name = "email_bk",
-				columnNames = {"email"}
-		),
-		@UniqueConstraint(
-				name = "verification_bk",
-				columnNames = {"nama", "univ_id"}
-				),
+				name = "thread_types_bk",
+				columnNames = {"thread_type"}
+		)
 })
 public class ThreadType extends BaseEntity{
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	private String type;
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
+	@Column(name = "thread_type")
+	private String threadType;
+	
+	public String getThreadType() {
+		return threadType;
 	}
 	
+	public void setThreadType(String threadType) {
+		this.threadType = threadType;
+	}
 }
