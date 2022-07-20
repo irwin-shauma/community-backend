@@ -34,6 +34,6 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return eventHeader;)
+		return eventHeader;
 	}
 }
