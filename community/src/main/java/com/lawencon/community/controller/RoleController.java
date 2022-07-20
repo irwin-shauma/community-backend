@@ -35,7 +35,6 @@ public class RoleController {
 	public ResponseEntity<?> getMhs(@PathVariable("id") String id) throws Exception {
 		Role mhs = roleService.getById(id);
 		return new ResponseEntity<>(mhs, HttpStatus.OK);
-
 	}
 
 	@PostMapping
