@@ -1,5 +1,6 @@
 package com.lawencon.community.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -33,6 +34,9 @@ public class ThreadDetail extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+	
+	@Column(name = "comment_thread")
+	private String commentThread;
 
 	public ThreadHeader getThreadHeader() {
 		return threadHeader;
@@ -57,5 +61,15 @@ public class ThreadDetail extends BaseEntity{
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	public String getCommentThread() {
+		return commentThread;
+	}
+
+	public void setCommentThread(String commentThread) {
+		this.commentThread = commentThread;
+	}
+	
+	
 
 }
