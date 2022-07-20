@@ -32,7 +32,7 @@ public class ProfileDao extends AbstractJpaDao<Profile> {
 			profile.setCompany(objArr[3].toString());
 			profile.setIndustry(objArr[4].toString());
 			profile.setStatus(objArr[5].toString());
-			profile.setStatus_duration(((Timestamp) objArr[6]).toLocalDateTime());
+			profile.setStatusDuration(((Timestamp) objArr[6]).toLocalDateTime());
 			User user = new User();
 			user.setId(objArr[7].toString());
 			profile.setUser(user);
