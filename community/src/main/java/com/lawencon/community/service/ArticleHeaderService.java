@@ -4,20 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
-import com.lawencon.community.dao.RoleDao;
-import com.lawencon.community.model.Role;
+import com.lawencon.community.dao.ArticleHeaderDao;
+import com.lawencon.community.model.ArticleHeader;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class RoleService extends BaseCoreService {
-	
+public class ArticleHeaderService extends BaseCoreService {
+
 	@Autowired
-	private RoleDao roleDao;
+	private ArticleHeaderDao articleHeaderDao;
 	
-	public Role insert(Role data) throws Exception {
+	public ArticleHeader insert(ArticleHeader data) throws Exception {
 		try {
 			begin();
-			roleDao.save(data);
+			articleHeaderDao.save(data);
 			commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -29,14 +29,14 @@ public class RoleService extends BaseCoreService {
 	}
 	
 	
-	public Role update(Role data) throws Exception {
+	public ArticleHeader update(ArticleHeader data) throws Exception {
 		try {
-			Role mhsDb = roleDao.getById(data.getId());
+			ArticleHeader mhsDb = articleHeaderDao.getById(data.getId());
 			data.setCreatedAt(mhsDb.getCreatedAt());
 			data.setCreatedBy(mhsDb.getCreatedBy());
 
 			begin();
-			roleDao.save(data);
+			articleHeaderDao.save(data);
 			commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,18 +47,18 @@ public class RoleService extends BaseCoreService {
 		return data;
 	}
 
-	public Role getById(String id) throws Exception {
-		return roleDao.getById(id);
+	public ArticleHeader getById(String id) throws Exception {
+		return articleHeaderDao.getById(id);
 	}
 
-	public SearchQuery<Role> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
-		return roleDao.findAll(query, startPage, maxPage);
+	public SearchQuery<ArticleHeader> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
+		return articleHeaderDao.findAll(query, startPage, maxPage);
 	}
 
 	public boolean deleteById(String id) throws Exception {
 		try {
 			begin();
-			boolean isDeleted = roleDao.deleteById(id);
+			boolean isDeleted = articleHeaderDao.deleteById(id);
 			commit();
 
 			return isDeleted;
@@ -68,5 +68,5 @@ public class RoleService extends BaseCoreService {
 			throw new Exception(e);
 		}
 	}
-
+	
 }

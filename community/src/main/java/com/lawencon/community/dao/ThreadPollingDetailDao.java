@@ -1,8 +1,11 @@
 package com.lawencon.community.dao;
 
-import com.lawencon.base.AbstractJpaDao;
-import com.lawencon.community.model.ThreadHeaderPolling;
+import org.springframework.stereotype.Repository;
 
-public class ThreadPollingDetailDao extends AbstractJpaDao<ThreadHeaderPolling>{
+import com.lawencon.base.AbstractJpaDao;
+import com.lawencon.community.model.ThreadPollingDetail;
+
+@Repository
+public class ThreadPollingDetailDao extends AbstractJpaDao<ThreadPollingDetail>{
 
 }
