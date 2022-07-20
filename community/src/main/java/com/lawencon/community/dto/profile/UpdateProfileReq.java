@@ -29,6 +29,8 @@ public class UpdateProfileReq {
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.000'Z'")
 	private LocalDateTime statusDuration;
 
+	private Integer version;
+
 	public String getId() {
 		return id;
 	}
@@ -91,6 +93,14 @@ public class UpdateProfileReq {
 
 	public void setStatusDuration(LocalDateTime statusDuration) {
 		this.statusDuration = statusDuration;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 }

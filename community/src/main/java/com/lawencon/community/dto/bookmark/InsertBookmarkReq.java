@@ -1,27 +1,14 @@
 package com.lawencon.community.dto.bookmark;
 
-public class BookmarkData {
+import javax.validation.constraints.NotNull;
 
-	private String id;
-	private String bookmarkCode;
+public class InsertBookmarkReq {
+
+	@NotNull(message = "User Can't Be Null")
 	private String userId;
+	
+	@NotNull(message = "Thread Can't Be Null")
 	private String threadId;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getBookmarkCode() {
-		return bookmarkCode;
-	}
-
-	public void setBookmarkCode(String bookmarkCode) {
-		this.bookmarkCode = bookmarkCode;
-	}
 
 	public String getUserId() {
 		return userId;
