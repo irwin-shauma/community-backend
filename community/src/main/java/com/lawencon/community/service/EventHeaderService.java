@@ -10,6 +10,7 @@ import com.lawencon.model.SearchQuery;
 
 @Service
 public class EventHeaderService extends BaseCoreService{
+	
 	@Autowired
 	private EventHeaderDao eventHeaderDao;
 	
@@ -65,6 +66,16 @@ public class EventHeaderService extends BaseCoreService{
 			rollback();
 			throw new Exception(e);
 		}
+	}
+	
+	public EventHeader findByTitle(String title) throws Exception{
+		EventHeader eventHeader = new EventHeader();
+		try {
+			eventHeader = eventHeaderDao.findByTitle(title);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return eventHeader;
 	}
 
 
