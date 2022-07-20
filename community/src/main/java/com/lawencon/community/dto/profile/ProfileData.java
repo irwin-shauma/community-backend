@@ -1,50 +1,27 @@
-package com.lawencon.community.model;
+package com.lawencon.community.dto.profile;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+public class ProfileData {
 
-import com.lawencon.base.BaseEntity;
-
-@Entity
-@Table(name = "profile", uniqueConstraints = {
-		@UniqueConstraint(name = "profile_code_bk", columnNames = "profile_code") })
-public class Profile extends BaseEntity {
-	private static final long serialVersionUID = -5196455701225322056L;
-
-	@Column(name = "profile_code")
+	private String id;
 	private String profileCode;
-
-	@OneToOne
-	@JoinColumn(name = "user_id")
-	private User user;
-
-	@Column(name = "full_name")
+	private String userId;
 	private String fullName;
-
-	@Column(name = "company")
 	private String company;
-
-	@Column(name = "industry")
 	private String industry;
-
-	@Column(name = "position")
 	private String position;
-
-	@Column(name = "status")
 	private String status;
-
-	@OneToOne
-	@JoinColumn(name = "file_id")
-	private File file;
-
-	@Column(name = "status_duration")
+	private String fileId;
 	private LocalDateTime statusDuration;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getProfileCode() {
 		return profileCode;
@@ -54,12 +31,12 @@ public class Profile extends BaseEntity {
 		this.profileCode = profileCode;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getFullName() {
@@ -102,12 +79,12 @@ public class Profile extends BaseEntity {
 		this.status = status;
 	}
 
-	public File getFile() {
-		return file;
+	public String getFileId() {
+		return fileId;
 	}
 
-	public void setFile(File file) {
-		this.file = file;
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 	public LocalDateTime getStatusDuration() {

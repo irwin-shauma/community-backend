@@ -1,6 +1,5 @@
 package com.lawencon.community.dto.role;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,8 +7,7 @@ import javax.validation.constraints.Size;
 public class UpdateRoleReq {
 
 	@NotNull(message = "ID can't be empty")
-	@Min(value = 1, message = "Minimum ID must be greater than 0")
-	private Long id;
+	private String id;
 
 	@NotBlank(message = "Role Name can't be empty")
 	@Size(min = 3, max = 50, message = "Role Name size must be between 3 to 50 ")
@@ -25,11 +23,11 @@ public class UpdateRoleReq {
 	@NotNull(message = "Version can't be empty")
 	private Integer version;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
