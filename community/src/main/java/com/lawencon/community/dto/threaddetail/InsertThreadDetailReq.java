@@ -7,28 +7,28 @@ import javax.validation.constraints.Size;
 public class InsertThreadDetailReq {
 	
 	@NotNull
-	private Long fileId;
+	private String fileId;
 	
 	@NotNull
-	private Long userId;
+	private String userId;
 	
 	@NotBlank(message = "Comments can't be empty")
 	@Size(min = 1, max = 10000, message = "Comment must be between 1 to 10000 characters")
 	private String commentThread;
 
-	public Long getFileId() {
+	public String getFileId() {
 		return fileId;
 	}
 
-	public void setFileId(Long fileId) {
+	public void setFileId(String fileId) {
 		this.fileId = fileId;
 	}
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

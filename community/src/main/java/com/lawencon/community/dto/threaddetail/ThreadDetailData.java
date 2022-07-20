@@ -2,20 +2,20 @@ package com.lawencon.community.dto.threaddetail;
 
 public class ThreadDetailData {
 
-	private Long id;
+	private String id;
 	private String threadHeaderCode;
-	private Long threadHeaderId;
-	private Long fileId;
-	private Long userId;
+	private String threadHeaderId;
+	private String fileId;
+	private String userId;
 	private String commentThread;
 	private Boolean isActive;
 	private Integer version;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -27,27 +27,27 @@ public class ThreadDetailData {
 		this.threadHeaderCode = threadHeaderCode;
 	}
 
-	public Long getThreadHeaderId() {
+	public String getThreadHeaderId() {
 		return threadHeaderId;
 	}
 
-	public void setThreadHeaderId(Long threadHeaderId) {
+	public void setThreadHeaderId(String threadHeaderId) {
 		this.threadHeaderId = threadHeaderId;
 	}
 
-	public Long getFileId() {
+	public String getFileId() {
 		return fileId;
 	}
 
-	public void setFileId(Long fileId) {
+	public void setFileId(String fileId) {
 		this.fileId = fileId;
 	}
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

@@ -1,6 +1,6 @@
-package com.lawencon.community.dto.eventtype;
+package com.lawencon.community.dto.threadheaderpolling;
 
-public class EventTypeData {
+public class ThreadHeaderPollingData {
 
 	private String id;
 	private String threadTypeCode;

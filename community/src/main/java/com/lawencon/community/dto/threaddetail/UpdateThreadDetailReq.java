@@ -7,16 +7,16 @@ import javax.validation.constraints.Size;
 public class UpdateThreadDetailReq {
 
 	@NotNull(message = "ID can't be empty")
-	private Long id;
+	private String id;
 	
 	@NotNull(message = "ID can't be empty")
-	private Long threadHeaderId;
+	private String threadHeaderId;
 	
 	@NotNull(message = "ID can't be empty")
-	private Long fileId;
+	private String fileId;
 	
 	@NotNull(message = "ID can't be empty")
-	private Long userId;
+	private String userId;
 
 	@NotBlank(message = "Comments can't be empty")
 	@Size(min = 1, max = 10000, message = "Comment must be between 1 to 10000 characters ")
@@ -28,35 +28,35 @@ public class UpdateThreadDetailReq {
 	@NotNull(message = "Version can't be empty")
 	private Integer version;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Long getThreadHeaderId() {
+	public String getThreadHeaderId() {
 		return threadHeaderId;
 	}
 
-	public void setThreadHeaderId(Long threadHeaderId) {
+	public void setThreadHeaderId(String threadHeaderId) {
 		this.threadHeaderId = threadHeaderId;
 	}
 
-	public Long getFileId() {
+	public String getFileId() {
 		return fileId;
 	}
 
-	public void setFileId(Long fileId) {
+	public void setFileId(String fileId) {
 		this.fileId = fileId;
 	}
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
