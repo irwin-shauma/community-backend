@@ -12,6 +12,7 @@ import com.lawencon.community.model.File;
 
 @Repository
 public class ArticleHeaderDao extends AbstractJpaDao<ArticleHeader> {
+
 	public List<ArticleHeader> findAllByTitle(String title) throws Exception {
 		String sql = "SELECT * FROM article_header WHERE title = :title";
 

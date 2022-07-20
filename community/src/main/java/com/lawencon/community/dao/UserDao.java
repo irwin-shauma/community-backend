@@ -38,7 +38,7 @@ public class UserDao extends AbstractJpaDao<User> {
 	public User findByEmail(String email) throws Exception {
 		
 		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append(" SELECT u.id, u.email, r.id, r.role_code ")
+		sqlBuilder.append("SELECT u.id, u.email, r.id, r.role_code ")
 		.append(" FROM users INNER JOIN u.role_id = r.id ")
 		.append(" WHERE email = :email ");
 		User user = null;

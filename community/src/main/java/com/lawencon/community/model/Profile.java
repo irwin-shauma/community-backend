@@ -7,13 +7,22 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "profile")
+@Table(name = "profile", uniqueConstraints = {
+		@UniqueConstraint(
+				name = "profile_code_bk",
+				columnNames = "profile_code"
+			)
+})
 public class Profile extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
+	
+	@Column(name = "profile_code")
+	private String profileCode;
 
 	@OneToOne
 	@JoinColumn(name = "user_id")
@@ -33,9 +42,21 @@ public class Profile extends BaseEntity {
 	
 	@Column(name = "status")
 	private String status;
+	
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private File file;
 
 	@Column(name = "status_duration")
 	private LocalDateTime status_duration;
+
+	public String getProfileCode() {
+		return profileCode;
+	}
+
+	public void setProfileCode(String profileCode) {
+		this.profileCode = profileCode;
+	}
 
 	public User getUser() {
 		return user;
@@ -83,6 +104,14 @@ public class Profile extends BaseEntity {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
 	}
 
 	public LocalDateTime getStatus_duration() {

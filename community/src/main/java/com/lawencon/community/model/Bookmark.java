@@ -28,7 +28,7 @@ public class Bookmark extends BaseEntity {
 	
 	@OneToOne
 	@JoinColumn(name = "thread_id")
-	private String threadId;
+	private ThreadHeader thread;
 
 	public String getBookmarkCode() {
 		return bookmarkCode;
@@ -42,16 +42,16 @@ public class Bookmark extends BaseEntity {
 		return user;
 	}
 
-	public void setUserId(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
-	public String getThreadId() {
-		return threadId;
+	public ThreadHeader getThread() {
+		return thread;
 	}
 
-	public void setThreadId(String threadId) {
-		this.threadId = threadId;
+	public void setThread(ThreadHeader thread) {
+		this.thread = thread;
 	}
 
 }
