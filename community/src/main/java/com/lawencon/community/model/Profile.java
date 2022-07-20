@@ -13,14 +13,10 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "profile", uniqueConstraints = {
-		@UniqueConstraint(
-				name = "profile_code_bk",
-				columnNames = "profile_code"
-			)
-})
+		@UniqueConstraint(name = "profile_code_bk", columnNames = "profile_code") })
 public class Profile extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
-	
+
 	@Column(name = "profile_code")
 	private String profileCode;
 
@@ -33,16 +29,16 @@ public class Profile extends BaseEntity {
 
 	@Column(name = "company")
 	private String company;
-	
+
 	@Column(name = "industry")
 	private String industry;
-	
+
 	@Column(name = "position")
 	private String position;
-	
+
 	@Column(name = "status")
 	private String status;
-	
+
 	@OneToOne
 	@JoinColumn(name = "file_id")
 	private File file;
