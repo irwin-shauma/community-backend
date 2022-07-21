@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class UpdateProfileReq {
+public class ProfileUpdateReq {
 
 	@NotNull(message = "Id Can't be Empty")
 	private String id;

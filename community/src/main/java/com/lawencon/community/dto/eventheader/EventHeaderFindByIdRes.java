@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.eventheader;
 
-public class FindByIdRes {
+public class EventHeaderFindByIdRes {
 	private EventHeaderData data;
 
 	public EventHeaderData getData() {

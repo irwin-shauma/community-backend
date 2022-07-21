@@ -3,7 +3,7 @@ package com.lawencon.community.dto.eventheader;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class InsertEventHeaderReq {
+public class EventHeaderInsertReq {
 	
 	
 	@NotBlank(message = "Event Header Code can't be empty")

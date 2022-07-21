@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.historypayment;
 
-public class FindByIdRes {
+public class HistoryPaymentFindByIdRes {
 	private HistoryPaymentData data;
 
 	public HistoryPaymentData getData() {

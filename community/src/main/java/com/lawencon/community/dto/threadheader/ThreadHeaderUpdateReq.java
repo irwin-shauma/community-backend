@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.threadheader;
 
-public class UpdateThreadHeaderReq {
+public class ThreadHeaderUpdateReq {
 
 	private String id;
 	private String title;

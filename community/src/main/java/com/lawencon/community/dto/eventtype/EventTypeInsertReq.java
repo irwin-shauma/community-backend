@@ -2,7 +2,7 @@ package com.lawencon.community.dto.eventtype;
 
 import javax.validation.constraints.NotNull;
 
-public class InsertThreadTypeReq {
+public class EventTypeInsertReq {
 	
 	@NotNull
 	private String type;

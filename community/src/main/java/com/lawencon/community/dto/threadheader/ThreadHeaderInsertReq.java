@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.threadheader;
 
-public class InsertThreadHeaderReq {
+public class ThreadHeaderInsertReq {
 
 	private String title;
 	private String content;

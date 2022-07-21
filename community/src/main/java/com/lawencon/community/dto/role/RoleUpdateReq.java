@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class UpdateRoleReq {
+public class RoleUpdateReq {
 
 	@NotNull(message = "ID can't be empty")
 	private String id;

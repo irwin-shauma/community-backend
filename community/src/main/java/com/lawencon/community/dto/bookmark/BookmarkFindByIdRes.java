@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.bookmark;
 
-public class FindByIdBookmarkRes {
+public class BookmarkFindByIdRes {
 
 	private BookmarkData data;
 

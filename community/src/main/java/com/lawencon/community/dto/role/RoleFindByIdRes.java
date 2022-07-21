@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.role;
 
-public class FindByIdRes {
+public class RoleFindByIdRes {
 	
 	private RoleData data;
 

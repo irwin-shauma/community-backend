@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.threaddetail;
 
-public class FindByIdRes {
+public class ThreadDetailFindByIdRes {
 	private ThreadDetailData data;
 
 	public ThreadDetailData getData() {

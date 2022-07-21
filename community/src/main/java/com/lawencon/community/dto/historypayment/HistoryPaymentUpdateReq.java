@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class UpdateHistoryPaymentReq {
+public class HistoryPaymentUpdateReq {
 	
 	@NotNull(message = "ID can't be empty")
 	@Min(value = 1, message = "Minimum ID must be greater than 0")

@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.threadheaderpolling;
 
-public class FindByIdRes {
+public class ThreadHeaderPollingFindByIdRes {
 	private ThreadHeaderPollingData data;
 
 	public ThreadHeaderPollingData getData() {

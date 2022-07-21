@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.eventtype;
 
-public class FindByIdRes {
+public class EventTypeFindByIdRes {
 	private EventTypeData data;
 
 	public EventTypeData getData() {

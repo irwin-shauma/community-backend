@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.threadheader;
 
-public class FindByIdThreadHeaderRes {
+public class ThreadHeaderFindByIdRes {
 
 	private ThreadHeaderData data;
 

@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.profile;
 
-public class FindByIdProfileRes {
+public class ProfileFindByIdRes {
 
 	private ProfileData data;
 
