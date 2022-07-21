@@ -30,7 +30,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 			threadHdr.setIsActive(true);
 			
 			begin();
-			ThreadHeader inserted = new ThreadHeader();
+			ThreadHeader inserted = save(threadHdr);
 			commit();
 			
 			InsertDataRes insertDataRes = new InsertDataRes();
