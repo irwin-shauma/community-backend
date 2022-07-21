@@ -3,10 +3,9 @@ package com.lawencon.community.dto.profile;
 import java.time.LocalDateTime;
 
 public class ProfileData {
-
 	private String id;
-	private String profileCode;
 	private String userId;
+	private String profileCode;
 	private String fullName;
 	private String company;
 	private String industry;

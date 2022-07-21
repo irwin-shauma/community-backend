@@ -11,6 +11,5 @@ public class UserFindByIdRes {
 	public void setData(UserData data) {
 		this.data = data;
 	}
-
-
+	
 }

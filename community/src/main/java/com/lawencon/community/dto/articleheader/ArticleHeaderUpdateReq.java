@@ -1,19 +1,18 @@
 package com.lawencon.community.dto.articleheader;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class ArticleHeaderUpdateReq {
 	
 	@NotNull
 	private String id;
-
-	@NotNull
 	private String fileId;
 	
-	@NotNull
+	@NotBlank(message = "Title can't be empty")
 	private String title;
 	
-	@NotNull
+	@NotBlank(message = "Contents can't be empty")
 	private String contents;
 	
 	public String getFileId() {

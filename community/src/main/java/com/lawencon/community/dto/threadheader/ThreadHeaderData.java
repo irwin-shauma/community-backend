@@ -3,10 +3,10 @@ package com.lawencon.community.dto.threadheader;
 public class ThreadHeaderData {
 
 	private String id;
+	private String threadTypeId;
 	private String threadHeaderCode;
 	private String title;
-	private String content;
-	private String threadTypeId;
+	private String contentThread;
 	private Integer version;
 	private Boolean isActive;
 
@@ -34,12 +34,12 @@ public class ThreadHeaderData {
 		this.title = title;
 	}
 
-	public String getContent() {
-		return content;
+	public String getContentThread() {
+		return contentThread;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setContentThread(String contentThread) {
+		this.contentThread = contentThread;
 	}
 
 	public String getThreadTypeId() {

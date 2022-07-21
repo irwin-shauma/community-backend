@@ -6,10 +6,12 @@ import javax.validation.constraints.Size;
 
 public class ThreadDetailInsertReq {
 	
-	@NotNull
+	@NotNull(message = "Thread header can't be empty")
+	private String threadHeaderId;
+	
 	private String fileId;
 	
-	@NotNull
+	@NotNull(message = "User cant' be empty")
 	private String userId;
 	
 	@NotBlank(message = "Comments can't be empty")

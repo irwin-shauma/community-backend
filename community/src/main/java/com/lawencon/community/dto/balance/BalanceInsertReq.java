@@ -9,10 +9,10 @@ public class BalanceInsertReq {
 	@Size(min =3, max = 50, message = "Balance Code size must be between 3 to 50")
 	private String balanceCode;
 	
-	@NotBlank(message = "current balance can't be empty")
+	@NotBlank(message = "Current balance can't be empty")
 	private Float currentBalance;
 	
-	@NotBlank(message = "user can't be empty")
+	@NotBlank(message = "User Id can't be empty")
 	private String userId;
 
 	public String getBalanceCode() {
