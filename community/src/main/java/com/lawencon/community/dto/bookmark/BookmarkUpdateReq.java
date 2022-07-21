@@ -12,6 +12,7 @@ public class BookmarkUpdateReq {
 
 	@NotNull(message = "Thread can't be empty")
 	private String threadId;
+	private Boolean isActive;
 
 	public String getId() {
 		return id;
@@ -35,6 +36,14 @@ public class BookmarkUpdateReq {
 
 	public void setThreadId(String threadId) {
 		this.threadId = threadId;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }

@@ -20,10 +20,6 @@ public class EventTypeData {
 		return threadTypeCode;
 	}
 
-	public void setThreadHeaderCode(String threadTypeCode) {
-		this.threadTypeCode = threadTypeCode;
-	}
-
 	public String getThreadTypeCode() {
 		return threadTypeCode;
 	}

@@ -7,9 +7,10 @@ public class EventTypeUpdateReq {
 
 	@NotNull(message = "Id can't be empty")
 	private String id;
-	
+
 	@NotBlank(message = "Type can't be empty")
 	private String type;
+	private Boolean isActive;
 
 	public String getId() {
 		return id;
@@ -26,10 +27,13 @@ public class EventTypeUpdateReq {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
 
-	
-	
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
 
 }
