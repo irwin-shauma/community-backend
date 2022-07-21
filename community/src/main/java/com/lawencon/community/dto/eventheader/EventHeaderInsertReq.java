@@ -5,7 +5,6 @@ import javax.validation.constraints.Size;
 
 public class EventHeaderInsertReq {
 	
-	
 	@NotBlank(message = "Event Header Code can't be empty")
 	@Size(min =3, max = 50, message = "Event Header Code size must be between 3 to 50")
 	private String eventHeaderCode;
@@ -13,8 +12,8 @@ public class EventHeaderInsertReq {
 	@NotBlank(message = "Title can't be empty")
 	private String title;
 	
-	@NotBlank(message = "event type can't be empty")
-	private String eventType;
+	@NotBlank(message = "Tvent type can't be empty")
+	private String eventTypeId;
 
 	public String getEventHeaderCode() {
 		return eventHeaderCode;
@@ -32,15 +31,13 @@ public class EventHeaderInsertReq {
 		this.title = title;
 	}
 
-	public String getEventType() {
-		return eventType;
+	public String getEventTypeId() {
+		return eventTypeId;
 	}
 
-	public void setEventType(String eventType) {
-		this.eventType = eventType;
+	public void setEventTypeId(String eventTypeId) {
+		this.eventTypeId = eventTypeId;
 	}
-	
-	
-	
+
 	
 }

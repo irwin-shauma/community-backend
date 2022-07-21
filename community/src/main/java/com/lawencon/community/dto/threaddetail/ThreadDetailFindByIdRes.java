@@ -10,6 +10,4 @@ public class ThreadDetailFindByIdRes {
 	public void setData(ThreadDetailData data) {
 		this.data = data;
 	}
-
-
 }

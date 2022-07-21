@@ -1,6 +1,5 @@
 package com.lawencon.community.dto.balance;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,7 +7,6 @@ import javax.validation.constraints.Size;
 public class BalanceUpdateReq {
 	
 	@NotNull(message = "ID can't be empty")
-	@Min(value = 1, message = "Minimum ID must be greater than 0")
 	private String id;
 	
 	@NotBlank(message = "Balance code can't be empty")
@@ -18,7 +16,7 @@ public class BalanceUpdateReq {
 	@NotBlank(message = "Current Balance can't be empty")
 	private Float currentBalance;
 	
-	@NotBlank(message = "User can't be empty")
+	@NotBlank(message = "User Id can't be empty")
 	private String userId;
 	
 	@NotBlank(message = "Active can't be empty")

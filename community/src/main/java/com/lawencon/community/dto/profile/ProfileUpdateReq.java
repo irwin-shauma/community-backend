@@ -9,20 +9,20 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ProfileUpdateReq {
 
-	@NotNull(message = "Id Can't be Empty")
+	@NotNull(message = "Id Can't be empty")
 	private String id;
 	private String userId;
 
-	@NotBlank(message = "Fullname can't be Blank")
+	@NotBlank(message = "Fullname can't be empty")
 	private String fullName;
 
-	@NotBlank(message = "Company can't be Blank")
+	@NotBlank(message = "Company can't be empty")
 	private String company;
 
-	@NotBlank(message = "Industry can't be Blank")
+	@NotBlank(message = "Industry can't be empty")
 	private String industry;
 
-	@NotBlank(message = "Position can't be Blank")
+	@NotBlank(message = "Position can't be empty")
 	private String position;
 	private String fileId;
 

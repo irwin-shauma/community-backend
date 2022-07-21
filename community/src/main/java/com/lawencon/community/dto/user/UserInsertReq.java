@@ -1,41 +1,52 @@
 package com.lawencon.community.dto.user;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 public class UserInsertReq {
 	
-	@NotBlank(message = "Role Name can't be empty")
-	@Size(min = 3, max = 50, message = "Role Name size must be between 3 to 50")
-	private String roleName;
+	@NotBlank(message = "Role Id can't be empty")
+	private String roleId;
 	
-	@NotBlank(message = "Role Code can't be empty")
-	@Size(min = 3, max = 50, message = "Role Code size must be between 3 to 50")
-	private String roleCode;
+	@NotBlank(message = "Verification Id can't be empty")
+	private String verificationId;
 	
-	private Boolean isActive;
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-
-	public String getRoleCode() {
-		return roleCode;
-	}
-
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
-	}
+	@NotNull(message = "Email can't be empty")
+	private String email;
 	
-	public Boolean getIsActive() {
-		return isActive;
+	@NotBlank(message = "Passwords can't be empty")
+	private String passwords;
+
+	public String getRoleId() {
+		return roleId;
 	}
 
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
+
+	public String getVerificationId() {
+		return verificationId;
+	}
+
+	public void setVerificationId(String verificationId) {
+		this.verificationId = verificationId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPasswords() {
+		return passwords;
+	}
+
+	public void setPasswords(String passwords) {
+		this.passwords = passwords;
+	}
+
 }
