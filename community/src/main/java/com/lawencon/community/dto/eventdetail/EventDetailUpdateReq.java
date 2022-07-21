@@ -1,11 +1,25 @@
-package com.lawencon.community.dto.eventheader;
+package com.lawencon.community.dto.eventdetail;
 
-public class EventHeaderData {
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+public class EventDetailUpdateReq {
+
+	@NotNull(message = "ID can't be empty")
 	private String id;
+
+	@NotBlank(message = "Event Header can't be empty")
+	@Size(min = 3, max = 50, message = "Event Header Code must be between 3 to 50")
 	private String eventHeaderCode;
-	private String title;
+
+	@NotBlank(message = "Event Type Id can't be empty")
 	private String eventTypeId;
+
+	@NotBlank(message = "Active can't be empty")
 	private Boolean isActive;
+
+	@NotBlank(message = " version can't be empty")
 	private Integer version;
 
 	public String getId() {
@@ -22,14 +36,6 @@ public class EventHeaderData {
 
 	public void setEventHeaderCode(String eventHeaderCode) {
 		this.eventHeaderCode = eventHeaderCode;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public String getEventTypeId() {
