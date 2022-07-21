@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.BookmarkDao;
 import com.lawencon.community.dao.ThreadHeaderDao;
 import com.lawencon.community.dao.UserDao;
@@ -49,7 +50,7 @@ public class BookmarkService extends BaseCoreService<Bookmark> {
 			insertDataRes.setId(inserted.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage("Success");
+			result.setMessage(MessageResponse.SAVED.name());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -77,7 +78,7 @@ public class BookmarkService extends BaseCoreService<Bookmark> {
 			dataRes.setVersion(updated.getVersion());
 			
 			result.setData(dataRes);
-			result.setMessage("Success");
+			result.setMessage(MessageResponse.UPDATED.name());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -88,13 +89,13 @@ public class BookmarkService extends BaseCoreService<Bookmark> {
 	
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
-		result.setMessage("Failed");
+		result.setMessage(MessageResponse.FAILED.name());
 		try {
 			begin();
 			boolean isDeleted = bookmarkDao.deleteById(id);
 			commit();
 			if (isDeleted) {
-				result.setMessage("Sucess");
+				result.setMessage(MessageResponse.DELETED.name());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.BalanceDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
@@ -46,9 +47,9 @@ public class BalanceService extends BaseCoreService<Balance> {
 
 			InsertDataRes insertDataRes = new InsertDataRes();
 			insertDataRes.setId(balanceInsert.getId());
-
+			
 			result.setData(insertDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());	
+			result.setMessage(MessageResponse.SAVED.name());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -82,7 +83,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 			updateDataRes.setVersion(balanceUpdate.getVersion());
 
 			result.setData(updateDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.UPDATED.name());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -134,8 +135,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
-
-//		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.name());
 
 		try {
 			begin();
@@ -143,13 +143,29 @@ public class BalanceService extends BaseCoreService<Balance> {
 			commit();
 
 			if (isDeleted) {
-//				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.name());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
 		}
+
+		return result;
+	}
+	
+	public BalanceFindByIdRes getByUserId(String id) throws Exception {
+		Balance balanceDb = balanceDao.findByUserId(getAuthPrincipal());
+
+		BalanceData data = new BalanceData();
+		data.setId(balanceDb.getId());
+		data.setBalanceCode(balanceDb.getBalanceCode());
+		data.setCurrentBalance(balanceDb.getCurrentBalance());
+		data.setUserId(balanceDb.getUser().getId());
+		data.setVersion(balanceDb.getVersion());
+
+		BalanceFindByIdRes result = new BalanceFindByIdRes();
+		result.setData(data);
 
 		return result;
 	}
