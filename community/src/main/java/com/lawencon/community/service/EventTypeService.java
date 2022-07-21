@@ -1,70 +1,132 @@
 package com.lawencon.community.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.dao.EventTypeDao;
+import com.lawencon.community.dto.DeleteRes;
+import com.lawencon.community.dto.InsertDataRes;
+import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.UpdateDataRes;
+import com.lawencon.community.dto.UpdateRes;
+import com.lawencon.community.dto.eventtype.EventTypeData;
+import com.lawencon.community.dto.eventtype.EventTypeFindByIdRes;
+import com.lawencon.community.dto.eventtype.EventTypeInsertReq;
+import com.lawencon.community.dto.eventtype.EventTypeUpdateReq;
 import com.lawencon.community.model.EventType;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class EventTypeService extends BaseCoreService {
+public class EventTypeService extends BaseCoreService<EventType> {
 
 	@Autowired
 	private EventTypeDao eventTypeDao;
 	
-	public EventType insert(EventType data) throws Exception {
+	public InsertRes insert(EventTypeInsertReq data) throws Exception {
+		InsertRes result = new InsertRes();
 		try {
+			EventType eventType = new EventType();
+			eventType.setType(data.getType());
+			eventType.setIsActive(true);
+			
 			begin();
-			eventTypeDao.save(data);
+			EventType inserted= save(eventType);
 			commit();
+			
+			InsertDataRes insertDataRes = new InsertDataRes();
+			insertDataRes.setId(inserted.getId());
+
+			result.setData(insertDataRes);
+			result.setMessage("Success");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
 		}
-		return data;
+		return result;
 	}
 	
-	public EventType update(EventType data) throws Exception {
+	public UpdateRes update(EventTypeUpdateReq data) throws Exception {
+		UpdateRes result = new UpdateRes();
 		try {
-			EventType mhsDb = eventTypeDao.getById(data.getId());
-			data.setCreatedAt(mhsDb.getCreatedAt());
-			data.setCreatedBy(mhsDb.getCreatedBy());
-
+			EventType eventType = eventTypeDao.getById(data.getId());
+			eventType.setType(data.getType());
+			eventType.setIsActive(data.getIsActive());
 			begin();
-			eventTypeDao.save(data);
+			EventType update = save(eventType);
 			commit();
+			
+			UpdateDataRes dataRes = new UpdateDataRes();
+			dataRes.setVersion(update.getVersion());
+			
+			result.setData(dataRes);
+			result.setMessage("Success");
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
 		}
 
-		return data;
+		return result;
 	}
 
-	public EventType getById(String id) throws Exception {
-		return eventTypeDao.getById(id);
+	public EventTypeFindByIdRes getById(String id) throws Exception {
+		EventType eventType = eventTypeDao.getById(id);
+		
+		EventTypeData event = new EventTypeData();
+		event.setId(eventType.getId());
+		event.setType(eventType.getType());
+		event.setIsActive(eventType.getIsActive());
+		event.setVersion(eventType.getVersion());
+		
+		EventTypeFindByIdRes result = new EventTypeFindByIdRes();
+		result.setData(event);
+		
+		return result;
 	}
 
-	public SearchQuery<EventType> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
-		return eventTypeDao.findAll(query, startPage, maxPage);
+	public SearchQuery<EventTypeData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
+		SearchQuery<EventType> dataDb = eventTypeDao.findAll(query, startPage, maxPage);
+		
+		List<EventTypeData> data = new ArrayList<>();
+		dataDb.getData().forEach(eventType -> {
+			EventTypeData event = new EventTypeData();
+			event.setId(eventType.getId());
+			event.setType(eventType.getType());
+			event.setIsActive(eventType.getIsActive());
+			event.setVersion(eventType.getVersion());
+			
+			data.add(event);
+		});
+		
+		SearchQuery<EventTypeData> result = new SearchQuery<>();
+		result.setCount(dataDb.getCount());
+		result.setData(data);
+
+		return result;
 	}
 
-	public boolean deleteById(String id) throws Exception {
+	public DeleteRes deleteById(String id) throws Exception {
+		DeleteRes result = new DeleteRes();
+		result.setMessage("Failed");
 		try {
 			begin();
 			boolean isDeleted = eventTypeDao.deleteById(id);
 			commit();
-
-			return isDeleted;
+			if (isDeleted) {
+				result.setMessage("Sucess");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
 		}
+		return result;
 	}
 	
 }
