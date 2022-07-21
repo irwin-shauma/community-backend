@@ -1,10 +1,10 @@
 package com.lawencon.community.dto.threadheaderpolling;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 public class ThreadHeaderPollingInsertReq {
 	
-	@NotNull
+	@NotBlank(message="Type can't be empty")
 	private String type;
 
 	public String getType() {

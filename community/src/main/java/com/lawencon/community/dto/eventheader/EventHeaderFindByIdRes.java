@@ -10,6 +10,4 @@ public class EventHeaderFindByIdRes {
 	public void setData(EventHeaderData data) {
 		this.data = data;
 	}
-	
-	
 }

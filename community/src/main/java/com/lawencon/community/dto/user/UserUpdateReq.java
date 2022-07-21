@@ -2,65 +2,62 @@ package com.lawencon.community.dto.user;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class UserUpdateReq {
-
-	@NotNull(message = "ID can't be empty")
-	private String id;
-
-	@NotBlank(message = "Role Name can't be empty")
-	@Size(min = 3, max = 50, message = "Role Name size must be between 3 to 50 ")
-	private String roleName;
-
-	@NotBlank(message = "Role Code can't be empty")
-	@Size(min = 3, max = 50, message = "Role Code size must be between 3 to 50")
-	private String roleCode;
 	
-	@NotNull(message = "Active status can't be empty")
-	private Boolean isActive;
+	@NotBlank(message = "User Id can't be empty")
+	private String userId;
+	
+	@NotBlank(message = "Role Id can't be empty")
+	private String roleId;
+	
+	@NotBlank(message = "Verification Id can't be empty")
+	private String verificationId;
+	
+	@NotNull(message = "Email can't be empty")
+	private String email;
+	
+	@NotBlank(message = "Passwords can't be empty")
+	private String passwords;
 
-	@NotNull(message = "Version can't be empty")
-	private Integer version;
-
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public String getRoleName() {
-		return roleName;
+	public String getRoleId() {
+		return roleId;
 	}
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
 
-	public String getRoleCode() {
-		return roleCode;
+	public String getVerificationId() {
+		return verificationId;
 	}
 
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
+	public void setVerificationId(String verificationId) {
+		this.verificationId = verificationId;
 	}
 
-	public Boolean getIsActive() {
-		return isActive;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public Integer getVersion() {
-		return version;
+	public String getPasswords() {
+		return passwords;
 	}
 
-	public void setVersion(Integer version) {
-		this.version = version;
+	public void setPasswords(String passwords) {
+		this.passwords = passwords;
 	}
 
 	

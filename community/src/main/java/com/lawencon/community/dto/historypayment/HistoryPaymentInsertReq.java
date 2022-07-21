@@ -4,12 +4,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class HistoryPaymentInsertReq {
-	
 	@NotBlank(message = "Balance Code can't be empty")
 	@Size(min =3, max = 50, message = "Balance Code size must be between 3 to 50")
 	private String historyPaymentCode;
 	
-	@NotBlank(message = "user can't be empty")
+	@NotBlank(message = "User Id can't be empty")
 	private String userId;
 	
 	@NotBlank(message = "trxNo can't be empty")

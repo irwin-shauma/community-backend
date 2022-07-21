@@ -4,13 +4,13 @@ import javax.validation.constraints.NotNull;
 
 public class BookmarkUpdateReq {
 
-	@NotNull(message = "Id Can't be Null")
+	@NotNull(message = "Id can't be empty")
 	private String id;
 
-	@NotNull(message = "User Can't Be Null")
+	@NotNull(message = "User can't be empty")
 	private String userId;
 
-	@NotNull(message = "Thread Can't Be Null")
+	@NotNull(message = "Thread can't be empty")
 	private String threadId;
 
 	public String getId() {

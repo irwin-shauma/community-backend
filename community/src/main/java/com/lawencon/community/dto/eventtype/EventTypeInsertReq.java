@@ -1,10 +1,10 @@
 package com.lawencon.community.dto.eventtype;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 public class EventTypeInsertReq {
 	
-	@NotNull
+	@NotBlank(message = "Type can't be empty")
 	private String type;
 
 	public String getType() {

@@ -9,13 +9,12 @@ public class ThreadDetailUpdateReq {
 	@NotNull(message = "ID can't be empty")
 	private String id;
 	
-	@NotNull(message = "ID can't be empty")
+	@NotNull(message = "Thread header id can't be empty")
 	private String threadHeaderId;
 	
-	@NotNull(message = "ID can't be empty")
 	private String fileId;
 	
-	@NotNull(message = "ID can't be empty")
+	@NotNull(message = "User id can't be empty")
 	private String userId;
 
 	@NotBlank(message = "Comments can't be empty")

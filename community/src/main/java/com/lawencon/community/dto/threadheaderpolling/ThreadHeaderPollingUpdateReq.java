@@ -5,10 +5,10 @@ import javax.validation.constraints.NotNull;
 
 public class ThreadHeaderPollingUpdateReq {
 
-	@NotNull
+	@NotNull(message = "Id can't be empty")
 	private String id;
 	
-	@NotBlank
+	@NotBlank(message = "Type can't be empty")
 	private String type;
 
 	public String getId() {

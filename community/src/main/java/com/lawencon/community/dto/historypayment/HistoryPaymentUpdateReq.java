@@ -1,6 +1,5 @@
 package com.lawencon.community.dto.historypayment;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,14 +7,13 @@ import javax.validation.constraints.Size;
 public class HistoryPaymentUpdateReq {
 	
 	@NotNull(message = "ID can't be empty")
-	@Min(value = 1, message = "Minimum ID must be greater than 0")
 	private String id;
 	
 	@NotBlank(message = "History Payment Code can't be empty")
 	@Size(min = 3, max = 50, message = "History Payment Code must be between 3 to 50")
 	private String historyPaymentCode;
 	
-	@NotBlank(message = "user can't be empty")
+	@NotBlank(message = "User Id can't be empty")
 	private String userId;
 	
 	@NotBlank(message = "Trx no can't be empty")
