@@ -16,6 +16,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.balance.BalanceData;
 import com.lawencon.community.dto.balance.BalanceFindByIdRes;
 import com.lawencon.community.dto.balance.BalanceInsertReq;
+import com.lawencon.community.dto.balance.BalanceUpdateReq;
 import com.lawencon.community.model.Balance;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
@@ -58,7 +59,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 		return result;
 	}
 
-	public UpdateRes update(Balance data) throws Exception {
+	public UpdateRes update(BalanceUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 
 		try {

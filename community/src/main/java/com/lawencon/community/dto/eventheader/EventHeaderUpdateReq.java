@@ -15,6 +15,9 @@ public class EventHeaderUpdateReq {
 
 	@NotBlank(message = "Event Type Id can't be empty")
 	private String eventTypeId;
+	
+	@NotBlank(message = "Title can't be empty")
+	private String title;
 
 	@NotBlank(message = "Active can't be empty")
 	private Boolean isActive;
@@ -32,6 +35,15 @@ public class EventHeaderUpdateReq {
 
 	public String getEventHeaderCode() {
 		return eventHeaderCode;
+	}
+
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setEventHeaderCode(String eventHeaderCode) {
