@@ -1,15 +1,15 @@
 package com.lawencon.community.dto;
 
 public class InsertRes {
-	private InsertResData insertResData;
+	private InsertDataRes data;
 	private String message;
-
-	public InsertResData getInsertResData() {
-		return insertResData;
+	
+	public InsertDataRes getData() {
+		return data;
 	}
 
-	public void setInsertResData(InsertResData insertResData) {
-		this.insertResData = insertResData;
+	public void setData(InsertDataRes data) {
+		this.data = data;
 	}
 
 	public String getMessage() {
@@ -19,5 +19,6 @@ public class InsertRes {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
 
 }
