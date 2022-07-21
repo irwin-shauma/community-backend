@@ -30,7 +30,7 @@ public class ThreadLike extends BaseEntity{
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	private String userId;
+	private User userId;
 
 	public String getThreadLikeCode() {
 		return threadLikeCode;
@@ -48,14 +48,15 @@ public class ThreadLike extends BaseEntity{
 		this.threadHeader = threadHeader;
 	}
 
-	public String getUserId() {
+	public User getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(User userId) {
 		this.userId = userId;
 	}
-	
+
+
 	
 
 }

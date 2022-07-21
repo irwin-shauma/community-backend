@@ -2,17 +2,18 @@ package com.lawencon.community.dto.file;
 
 public class FileData {
 
-	private Long id;
+	private String id;
 	private String fileName;
 	private String fileExt;
 	private Boolean isActive;
 	private Integer version;
 
-	public Long getId() {
+	
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
