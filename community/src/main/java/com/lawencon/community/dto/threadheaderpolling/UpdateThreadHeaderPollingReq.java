@@ -26,10 +26,4 @@ public class UpdateThreadHeaderPollingReq {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
-
-	
-	
-
 }

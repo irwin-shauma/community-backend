@@ -1,15 +1,15 @@
 package com.lawencon.community.dto;
 
 public class UpdateRes {
-	private UpdateResData updateResData;
+	private UpdateDataRes data;
 	private String message;
 
-	public UpdateResData getUpdateResData() {
-		return updateResData;
+	public UpdateDataRes getData() {
+		return data;
 	}
 
-	public void setUpdateResData(UpdateResData updateResData) {
-		this.updateResData = updateResData;
+	public void setData(UpdateDataRes data) {
+		this.data = data;
 	}
 
 	public String getMessage() {
