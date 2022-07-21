@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.verificaton;
 
-public class FindByIdVerificationRes {
+public class VerificationFindByIdRes {
 
 	private VerificationData data;
 

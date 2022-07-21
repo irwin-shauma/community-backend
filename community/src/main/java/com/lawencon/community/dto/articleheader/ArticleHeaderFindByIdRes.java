@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.articleheader;
 
-public class FindByIdRes {
+public class ArticleHeaderFindByIdRes {
 	private ArticleHeaderData data;
 
 	public ArticleHeaderData getData() {

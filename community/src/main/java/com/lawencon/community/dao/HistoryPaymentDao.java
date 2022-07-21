@@ -10,7 +10,6 @@ import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.HistoryPayment;
 import com.lawencon.community.model.User;
 
-
 @Repository
 public class HistoryPaymentDao extends AbstractJpaDao<HistoryPayment>{
 	

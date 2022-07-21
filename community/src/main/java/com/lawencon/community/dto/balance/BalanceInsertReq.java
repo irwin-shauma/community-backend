@@ -3,7 +3,7 @@ package com.lawencon.community.dto.balance;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class InsertBalanceReq {
+public class BalanceInsertReq {
 	
 	@NotBlank(message = "Balance Code can't be empty")
 	@Size(min =3, max = 50, message = "Balance Code size must be between 3 to 50")

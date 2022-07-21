@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.threadtype;
 
-public class FindByIdThreadTypeRes {
+public class ThreadTypeFindByIdRes {
 
 	private ThreadTypeData data;
 

@@ -2,7 +2,7 @@ package com.lawencon.community.dto.articleheader;
 
 import javax.validation.constraints.NotNull;
 
-public class InsertArticleHeaderReq {
+public class ArticleHeaderInsertReq {
 	
 	@NotNull
 	private String fileId;

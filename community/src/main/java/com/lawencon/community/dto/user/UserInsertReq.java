@@ -1,9 +1,9 @@
-package com.lawencon.community.dto.role;
+package com.lawencon.community.dto.user;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class RoleInsertReq {
+public class UserInsertReq {
 	
 	@NotBlank(message = "Role Name can't be empty")
 	@Size(min = 3, max = 50, message = "Role Name size must be between 3 to 50")

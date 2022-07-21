@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.threadtype;
 
-public class UpdateThreadTypeRes {
+public class ThreadTypeUpdateRes {
 
 	private String id;
 	private String threadType;

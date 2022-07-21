@@ -2,7 +2,7 @@ package com.lawencon.community.dto.articleheader;
 
 import javax.validation.constraints.NotNull;
 
-public class UpdateArticleHeaderReq {
+public class ArticleHeaderUpdateReq {
 	
 	@NotNull
 	private String id;

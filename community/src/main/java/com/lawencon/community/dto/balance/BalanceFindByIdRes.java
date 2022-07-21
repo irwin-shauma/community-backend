@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.balance;
 
-public class FindByIdRes {
+public class BalanceFindByIdRes {
 	
 	private BalanceData data;
 

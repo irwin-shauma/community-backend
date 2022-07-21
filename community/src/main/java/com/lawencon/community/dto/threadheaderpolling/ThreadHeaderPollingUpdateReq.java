@@ -3,7 +3,7 @@ package com.lawencon.community.dto.threadheaderpolling;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class UpdateThreadHeaderPollingReq {
+public class ThreadHeaderPollingUpdateReq {
 
 	@NotNull
 	private String id;

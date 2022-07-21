@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class UpdateThreadDetailReq {
+public class ThreadDetailUpdateReq {
 
 	@NotNull(message = "ID can't be empty")
 	private String id;

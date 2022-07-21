@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.threadtype;
 
-public class InsertThreadTypeReq {
+public class ThreadTypeInsertReq {
 	
 	private String threadType;
 

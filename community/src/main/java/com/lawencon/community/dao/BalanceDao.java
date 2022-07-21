@@ -1,9 +1,12 @@
 package com.lawencon.community.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.Balance;
 import com.lawencon.community.model.User;
 
+@Repository
 public class BalanceDao extends AbstractJpaDao<Balance>{
 	public Balance findByUserId(String userId) throws Exception{
 		StringBuilder sqlBuilder = new StringBuilder();
@@ -11,7 +14,7 @@ public class BalanceDao extends AbstractJpaDao<Balance>{
 					.append("INNER JOIN users u ON u.id = b.user")
 					.append("WHERE b.user = :userId");
 		
-		Balance balance =null;
+		Balance balance = null;
 		try {
 			Object result = createNativeQuery(sqlBuilder.toString())
 					.setParameter("userId", userId)

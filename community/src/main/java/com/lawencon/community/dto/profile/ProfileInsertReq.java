@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class InsertProfileReq {
+public class ProfileInsertReq {
 
 	@NotNull(message = "user id can't be null")
 	private String userId;
