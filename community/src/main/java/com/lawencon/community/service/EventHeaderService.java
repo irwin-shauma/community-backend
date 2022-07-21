@@ -9,7 +9,7 @@ import com.lawencon.community.model.EventHeader;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class EventHeaderService extends BaseCoreService{
+public class EventHeaderService extends BaseCoreService<EventHeader>{
 	
 	@Autowired
 	private EventHeaderDao eventHeaderDao;

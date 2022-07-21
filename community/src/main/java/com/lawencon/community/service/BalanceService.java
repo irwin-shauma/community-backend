@@ -5,7 +5,7 @@ import com.lawencon.community.dao.BalanceDao;
 import com.lawencon.community.model.Balance;
 import com.lawencon.model.SearchQuery;
 
-public class BalanceService extends BaseCoreService{
+public class BalanceService extends BaseCoreService<Balance>{
 	
 	private BalanceDao balanceDao;
 	
