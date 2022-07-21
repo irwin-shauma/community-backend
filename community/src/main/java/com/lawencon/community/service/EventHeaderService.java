@@ -17,6 +17,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.eventheader.EventHeaderData;
 import com.lawencon.community.dto.eventheader.EventHeaderFindByIdRes;
 import com.lawencon.community.dto.eventheader.EventHeaderInsertReq;
+import com.lawencon.community.dto.eventheader.EventHeaderUpdateReq;
 import com.lawencon.community.model.EventHeader;
 import com.lawencon.community.model.EventType;
 import com.lawencon.model.SearchQuery;
@@ -62,7 +63,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 	}
 	
 	
-	public UpdateRes update(EventHeader data) throws Exception {
+	public UpdateRes update(EventHeaderUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 
 		try {

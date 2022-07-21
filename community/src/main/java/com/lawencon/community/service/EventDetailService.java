@@ -16,6 +16,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.eventdetail.EventDetailData;
 import com.lawencon.community.dto.eventdetail.EventDetailFindByIdRes;
 import com.lawencon.community.dto.eventdetail.EventDetailInsertReq;
+import com.lawencon.community.dto.eventdetail.EventDetailUpdateReq;
 import com.lawencon.community.model.EventDetail;
 import com.lawencon.community.model.EventHeader;
 import com.lawencon.community.model.File;
@@ -67,17 +68,17 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 	}
 	
 	
-	public UpdateRes update(EventDetail data) throws Exception {
+	public UpdateRes update(EventDetailUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 
 		try {
 			EventDetail eventDetailDb = eventDetailDao.getById(data.getId());
 			eventDetailDb.setId(data.getId());
 			
-			EventHeader eventHeaderDb = eventHeaderDao.getById(data.getEventHeader().getId());
+			EventHeader eventHeaderDb = eventHeaderDao.getById(data.getEventHeaderId());
 			eventDetailDb.setEventHeader(eventHeaderDb);
 			
-			File fileDb = fileDao.getById(data.getFile().getId());
+			File fileDb = fileDao.getById(data.getFileId());
 			eventDetailDb.setFile(fileDb);
 			
 			eventDetailDb.setPrice(data.getPrice());

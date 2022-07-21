@@ -16,6 +16,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.historypayment.HistoryPaymentData;
 import com.lawencon.community.dto.historypayment.HistoryPaymentFindByIdRes;
 import com.lawencon.community.dto.historypayment.HistoryPaymentInsertReq;
+import com.lawencon.community.dto.historypayment.HistoryPaymentUpdateReq;
 import com.lawencon.community.model.HistoryPayment;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
@@ -60,7 +61,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 		return result;
 	}
 	
-	public UpdateRes update(HistoryPayment data) throws Exception{
+	public UpdateRes update(HistoryPaymentUpdateReq data) throws Exception{
 		UpdateRes result = new UpdateRes();
 		
 		try {

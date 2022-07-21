@@ -18,6 +18,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.threadlike.ThreadLikeData;
 import com.lawencon.community.dto.threadlike.ThreadLikeFindByIdRes;
 import com.lawencon.community.dto.threadlike.ThreadLikeInsertReq;
+import com.lawencon.community.dto.threadlike.ThreadLikeUpdateReq;
 import com.lawencon.community.model.ThreadHeader;
 import com.lawencon.community.model.ThreadLike;
 import com.lawencon.community.model.User;
@@ -69,7 +70,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 	}
 	
 	
-	public UpdateRes update(ThreadLike data) throws Exception {
+	public UpdateRes update(ThreadLikeUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 
 		try {

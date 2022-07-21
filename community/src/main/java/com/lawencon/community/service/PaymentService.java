@@ -18,6 +18,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.payment.PaymentData;
 import com.lawencon.community.dto.payment.PaymentFindByIdRes;
 import com.lawencon.community.dto.payment.PaymentInsertReq;
+import com.lawencon.community.dto.payment.PaymentUpdateReq;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Payment;
 import com.lawencon.community.model.User;
@@ -67,7 +68,7 @@ public class PaymentService extends BaseCoreService<Payment>{
 	}
 	
 	
-	public UpdateRes update(Payment data) throws Exception {
+	public UpdateRes update(PaymentUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 
 		try {
