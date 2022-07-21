@@ -8,6 +8,7 @@ public class VerificationUpdateReq {
 	private String verification;
 	private LocalDateTime expired;
 	private Integer version;
+	private Boolean isActive;
 
 	public String getId() {
 		return id;
@@ -39,6 +40,14 @@ public class VerificationUpdateReq {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }
