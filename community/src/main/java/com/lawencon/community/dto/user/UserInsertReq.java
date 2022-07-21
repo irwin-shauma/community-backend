@@ -1,21 +1,39 @@
 package com.lawencon.community.dto.user;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class UserInsertReq {
-	
+
 	@NotBlank(message = "Role Id can't be empty")
 	private String roleId;
-	
+
 	@NotBlank(message = "Verification Id can't be empty")
 	private String verificationId;
-	
+
 	@NotNull(message = "Email can't be empty")
 	private String email;
-	
+
 	@NotBlank(message = "Passwords can't be empty")
 	private String passwords;
+
+	@NotBlank(message = "Fullname can't be empty")
+	private String fullName;
+
+	@NotBlank(message = "Company can't be empty")
+	private String company;
+
+	@NotBlank(message = "Industry can't be empty")
+	private String industry;
+
+	@NotBlank(message = "Position can't be empty")
+	private String position;
+	private String status;
+	private String fileName;
+	private String fileExtension;
+	private LocalDateTime statusDuration;
 
 	public String getRoleId() {
 		return roleId;
@@ -47,6 +65,70 @@ public class UserInsertReq {
 
 	public void setPasswords(String passwords) {
 		this.passwords = passwords;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getIndustry() {
+		return industry;
+	}
+
+	public void setIndustry(String industry) {
+		this.industry = industry;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
+
+	public LocalDateTime getStatusDuration() {
+		return statusDuration;
+	}
+
+	public void setStatusDuration(LocalDateTime statusDuration) {
+		this.statusDuration = statusDuration;
 	}
 
 }
