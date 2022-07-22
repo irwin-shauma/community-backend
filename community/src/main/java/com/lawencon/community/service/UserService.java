@@ -1,20 +1,108 @@
 package com.lawencon.community.service;
 
-import com.lawencon.base.BaseCoreService;
-import com.lawencon.community.dto.InsertRes;
-import com.lawencon.community.dto.user.UserInsertReq;
-import com.lawencon.community.model.User;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UserService extends BaseCoreService<User> {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
+import com.lawencon.community.dao.FileDao;
+import com.lawencon.community.dao.ProfileDao;
+import com.lawencon.community.dao.RoleDao;
+import com.lawencon.community.dao.UserDao;
+import com.lawencon.community.dto.InsertDataRes;
+import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.user.UserData;
+import com.lawencon.community.dto.user.UserInsertReq;
+import com.lawencon.community.model.File;
+import com.lawencon.community.model.Profile;
+import com.lawencon.community.model.Role;
+import com.lawencon.community.model.User;
+import com.lawencon.model.SearchQuery;
+
+public class UserService extends BaseCoreService<User> implements UserDetailsService {
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private ProfileDao profileDao;
+	
+	@Autowired
+	private FileDao fileDao;
+	
+	@Autowired
+	private RoleDao roleDao;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	public InsertRes insert(UserInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
 			begin();
+			User user = new User();
+			user.setEmail(data.getEmail());
+			user.setPassword(passwordEncoder.encode(data.getPasswords()));
+			Role role = roleDao.getById(data.getRoleId());
+			user.setRole(role);
+			user.setIsActive(true);
+			User insertUser = saveNonLogin(user, () -> {
+				return user.getId();
+				});
+			
+			Profile profile = new Profile();
+			profile.setFullName(data.getFullName());
+			profile.setCompany(data.getCompany());
+			profile.setIndustry(data.getIndustry());
+			profile.setPosition(data.getPosition());
+			profile.setCreatedBy(insertUser.getCreatedBy());
+			profile.setIsActive(true);
+			
+			File file = new File();
+			file.setFileName(data.getFileName());
+			file.setFileExtension(data.getFileExtension());
+			file.setCreatedBy(insertUser.getCreatedBy());
+			file.setIsActive(true);
+			File insertedFile = fileDao.save(file);
+			
+			profile.setFile(insertedFile);
+			profileDao.save(profile);
+			commit();
+			
+			InsertDataRes insertRes = new InsertDataRes();
+			insertRes.setId(insertUser.getId());
+
+			result.setData(insertRes);
+			result.setMessage(MessageResponse.SAVED.name());
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
 		}
 		return result;
+	}
+	
+	public SearchQuery<UserData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
+		SearchQuery<User> dataDb = userDao.findAll(query, startPage, maxPage);
+		
+		List<UserData> users = new ArrayList<>();
+		dataDb.getData().forEach(user -> {
+			UserData data = new UserData();
+			
+		});
+		return null;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
