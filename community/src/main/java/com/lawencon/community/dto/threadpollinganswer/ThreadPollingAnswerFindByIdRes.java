@@ -1,13 +1,13 @@
 package com.lawencon.community.dto.threadpollinganswer;
 
 public class ThreadPollingAnswerFindByIdRes {
-	private ThreadPollingAnswerDetailData data;
+	private ThreadPollingAnswerData data;
 
-	public ThreadPollingAnswerDetailData getData() {
+	public ThreadPollingAnswerData getData() {
 		return data;
 	}
 
-	public void setData(ThreadPollingAnswerDetailData data) {
+	public void setData(ThreadPollingAnswerData data) {
 		this.data = data;
 	}
 }

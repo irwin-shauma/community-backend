@@ -13,6 +13,12 @@ public class ThreadPollingAnswerUpdateReq {
 
 	@NotBlank(message = "User Id can't be empty")
 	private String userId;
+	
+	@NotBlank(message = "Active can't be empty")
+	private Boolean isActive;
+	
+	@NotBlank(message = " version can't be empty")
+	private Integer version;
 
 	public String getId() {
 		return id;
@@ -37,6 +43,24 @@ public class ThreadPollingAnswerUpdateReq {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+	
+	
 
 
 }

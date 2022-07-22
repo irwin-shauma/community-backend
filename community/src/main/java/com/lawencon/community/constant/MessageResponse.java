@@ -1,6 +1,6 @@
 package com.lawencon.community.constant;
 
 public enum MessageResponse {
-	SAVED, DELETED, FAILED
+	SAVED, DELETED, FAILED, UPDATED
 
 }
