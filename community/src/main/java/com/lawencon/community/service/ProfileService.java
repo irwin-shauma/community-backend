@@ -12,7 +12,7 @@ import com.lawencon.community.model.Profile;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class ProfileService extends BaseCoreService {
+public class ProfileService extends BaseCoreService<Profile> {
 	
 	@Autowired
 	private ProfileDao profileDao;

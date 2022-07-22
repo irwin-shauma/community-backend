@@ -18,6 +18,7 @@ import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.user.UserData;
+import com.lawencon.community.dto.user.UserFindByIdRes;
 import com.lawencon.community.dto.user.UserInsertReq;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Profile;
@@ -94,15 +95,76 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		List<UserData> users = new ArrayList<>();
 		dataDb.getData().forEach(user -> {
 			UserData data = new UserData();
+			data.setId(user.getId());
+			data.setEmail(user.getEmail());
+			Profile profile = null;
+			try {
+				profile = profileDao.findByUserId(user.getId());
+				data.setProfileId(profile.getId());
+				data.setFullName(profile.getFullName());
+				data.setCompany(profile.getCompany());
+				data.setIndustry(profile.getIndustry());
+				data.setPosition(profile.getPosition());
+				data.setFileId(profile.getFile().getId());
+				data.setStatus(profile.getStatus());
+				data.setStatusDuration(profile.getStatusDuration());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			users.add(data);
 			
 		});
-		return null;
+		
+		SearchQuery<UserData> result = new SearchQuery<>();
+		result.setCount(dataDb.getCount());
+		result.setData(users);
+		
+		return result;
+	}
+	
+	public UserFindByIdRes getById(String id) throws Exception {
+		User user = userDao.getById(id);
+		UserData data = new UserData();
+		data.setId(user.getId());
+		data.setEmail(user.getEmail());
+		Profile profile = null;
+		try {
+			profile = profileDao.findByUserId(user.getId());
+			data.setProfileId(profile.getId());
+			data.setFullName(profile.getFullName());
+			data.setCompany(profile.getCompany());
+			data.setIndustry(profile.getIndustry());
+			data.setPosition(profile.getPosition());
+			data.setFileId(profile.getFile().getId());
+			data.setStatus(profile.getStatus());
+			data.setStatusDuration(profile.getStatusDuration());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		UserFindByIdRes result = new UserFindByIdRes();
+		return result;
+	}
+	
+	public User findByUsername(String email) throws Exception {
+		User userResult = userDao.findByEmail(email);
+		return userResult;
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		User userDb = null;
+		try {
+			userDb = userDao.findByEmail(email);
+			if (userDb == null) {
+				throw new RuntimeException("User Invalid");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return new org.springframework.security.core.userdetails.User(email, userDb.getPassword(),
+				new ArrayList<>());
 	}
 
 }

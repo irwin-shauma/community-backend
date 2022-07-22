@@ -93,7 +93,7 @@ public class PaymentService extends BaseCoreService<Payment>{
 			updateDataRes.setVersion(paymentUpdate.getVersion());
 
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.UPDATED.name());
+			result.setMessage(MessageResponse.SAVED.name());
 
 		} catch (Exception e) {
 			e.printStackTrace();

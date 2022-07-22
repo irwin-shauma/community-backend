@@ -84,7 +84,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 			updateDataRes.setVersion(balanceUpdate.getVersion());
 
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.UPDATED.name());
+			result.setMessage(MessageResponse.SAVED.name());
 
 		} catch (Exception e) {
 			e.printStackTrace();

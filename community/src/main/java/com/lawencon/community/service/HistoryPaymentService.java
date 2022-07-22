@@ -86,7 +86,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 			updateDataRes.setVersion(historyPaymentUpdate.getVersion());
 			
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.UPDATED.name());
+			result.setMessage(MessageResponse.SAVED.name());
 		}catch (Exception e) {
 			e.printStackTrace();
 			rollback();

@@ -66,7 +66,7 @@ public class EventTypeService extends BaseCoreService<EventType> {
 			dataRes.setVersion(update.getVersion());
 			
 			result.setData(dataRes);
-			result.setMessage(MessageResponse.UPDATED.name());
+			result.setMessage(MessageResponse.SAVED.name());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
