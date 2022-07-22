@@ -50,7 +50,7 @@ public class BookmarkService extends BaseCoreService<Bookmark> {
 			insertDataRes.setId(inserted.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -78,7 +78,7 @@ public class BookmarkService extends BaseCoreService<Bookmark> {
 			dataRes.setVersion(updated.getVersion());
 			
 			result.setData(dataRes);
-			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -89,13 +89,13 @@ public class BookmarkService extends BaseCoreService<Bookmark> {
 	
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
-		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 		try {
 			begin();
 			boolean isDeleted = bookmarkDao.deleteById(id);
 			commit();
 			if (isDeleted) {
-				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

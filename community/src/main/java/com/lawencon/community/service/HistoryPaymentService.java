@@ -52,7 +52,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 			insertDataRes.setId(historyPaymentInsert.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.name());	
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());	
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -86,7 +86,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 			updateDataRes.setVersion(historyPaymentUpdate.getVersion());
 			
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
 		}catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -140,7 +140,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
-		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 
 		try {
 			begin();
@@ -148,7 +148,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 			commit();
 
 			if (isDeleted) {
-				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

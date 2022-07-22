@@ -42,7 +42,7 @@ public class EventTypeService extends BaseCoreService<EventType> {
 			insertDataRes.setId(inserted.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class EventTypeService extends BaseCoreService<EventType> {
 			dataRes.setVersion(update.getVersion());
 			
 			result.setData(dataRes);
-			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -114,13 +114,13 @@ public class EventTypeService extends BaseCoreService<EventType> {
 
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
-		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 		try {
 			begin();
 			boolean isDeleted = eventTypeDao.deleteById(id);
 			commit();
 			if (isDeleted) {
-				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

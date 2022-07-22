@@ -4,12 +4,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class ThreadHeaderPollingUpdateReq {
-
 	@NotNull(message = "Id can't be empty")
 	private String id;
 	
-	@NotBlank(message = "Type can't be empty")
-	private String type;
+	@NotBlank(message = "Title can't be empty")
+	private String titlePolling;
+	
+	@NotBlank(message = "Content can't be empty")
+	private String contentPolling;
 
 	public String getId() {
 		return id;
@@ -19,11 +21,19 @@ public class ThreadHeaderPollingUpdateReq {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
+	public String getTitlePolling() {
+		return titlePolling;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setTitlePolling(String titlePolling) {
+		this.titlePolling = titlePolling;
+	}
+
+	public String getContentPolling() {
+		return contentPolling;
+	}
+
+	public void setContentPolling(String contentPolling) {
+		this.contentPolling = contentPolling;
 	}
 }
