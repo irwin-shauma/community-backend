@@ -10,7 +10,7 @@ public class ThreadPollingAnswerInsertReq {
 
 	@NotBlank(message = "User Id can't be empty")
 	private String userId;
-
+	
 	public String getThreadPollingId() {
 		return threadPollingId;
 	}

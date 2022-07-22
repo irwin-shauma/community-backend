@@ -2,7 +2,7 @@ package com.lawencon.community.dto.threadtype;
 
 import javax.validation.constraints.NotBlank;
 
-public class ThreadTypeUpdateRes {
+public class ThreadTypeUpdateReq {
 
 	private String id;
 	@NotBlank(message = "Thread type can't be empty")

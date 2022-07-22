@@ -2,6 +2,7 @@ package com.lawencon.community.constant;
 
 public enum MessageResponse {
 
+
 	SAVED("Insert Success!"),
 	DELETED("Delete Success!"), 
 	UPDATED("Update Success!"),
@@ -18,6 +19,7 @@ public enum MessageResponse {
 	}
 	
 	
+
 
 
 }
