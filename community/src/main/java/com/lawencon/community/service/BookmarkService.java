@@ -1,5 +1,8 @@
 package com.lawencon.community.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +16,14 @@ import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateDataRes;
 import com.lawencon.community.dto.UpdateRes;
+import com.lawencon.community.dto.bookmark.BookmarkData;
+import com.lawencon.community.dto.bookmark.BookmarkFindByIdRes;
 import com.lawencon.community.dto.bookmark.BookmarkInsertReq;
 import com.lawencon.community.dto.bookmark.BookmarkUpdateReq;
 import com.lawencon.community.model.Bookmark;
 import com.lawencon.community.model.ThreadHeader;
 import com.lawencon.community.model.User;
+import com.lawencon.model.SearchQuery;
 
 @Service
 public class BookmarkService extends BaseCoreService<Bookmark> {
@@ -86,6 +92,38 @@ public class BookmarkService extends BaseCoreService<Bookmark> {
 		}
 		return result;
 	}
+	
+	public SearchQuery<BookmarkData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
+		SearchQuery<Bookmark> dataDb = bookmarkDao.findAll(query, startPage, maxPage);
+		List<BookmarkData> bookmarks = new ArrayList<>();
+		
+		dataDb.getData().forEach(bookmark -> {
+			BookmarkData data = new BookmarkData();
+			data.setId(bookmark.getId());
+			data.setUserId(bookmark.getUser().getId());
+			data.setThreadId(bookmark.getThread().getId());
+			
+			bookmarks.add(data);
+		});
+		SearchQuery<BookmarkData> result = new SearchQuery<>();
+		result.setCount(dataDb.getCount());
+		result.setData(bookmarks);
+		return result;
+	}
+	
+	public BookmarkFindByIdRes getById(String id) throws Exception {
+		Bookmark bookmark = bookmarkDao.getById(id);
+		
+		BookmarkData data = new BookmarkData();
+		data.setId(bookmark.getId());
+		data.setUserId(bookmark.getUser().getId());
+		data.setThreadId(bookmark.getThread().getId());
+		
+		BookmarkFindByIdRes result = new BookmarkFindByIdRes();
+		result.setData(data);
+		return result;
+	}
+
 	
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();

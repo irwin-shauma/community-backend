@@ -27,22 +27,22 @@ import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 public class UserService extends BaseCoreService<User> implements UserDetailsService {
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private ProfileDao profileDao;
-	
+
 	@Autowired
 	private FileDao fileDao;
-	
+
 	@Autowired
 	private RoleDao roleDao;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	public InsertRes insert(UserInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
@@ -55,8 +55,8 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			user.setIsActive(true);
 			User insertUser = saveNonLogin(user, () -> {
 				return user.getId();
-				});
-			
+			});
+
 			Profile profile = new Profile();
 			profile.setFullName(data.getFullName());
 			profile.setCompany(data.getCompany());
@@ -64,18 +64,18 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			profile.setPosition(data.getPosition());
 			profile.setCreatedBy(insertUser.getCreatedBy());
 			profile.setIsActive(true);
-			
+
 			File file = new File();
 			file.setFileName(data.getFileName());
 			file.setFileExtension(data.getFileExtension());
 			file.setCreatedBy(insertUser.getCreatedBy());
 			file.setIsActive(true);
 			File insertedFile = fileDao.save(file);
-			
+
 			profile.setFile(insertedFile);
 			profileDao.save(profile);
 			commit();
-			
+
 			InsertDataRes insertRes = new InsertDataRes();
 			insertRes.setId(insertUser.getId());
 
@@ -88,10 +88,10 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		}
 		return result;
 	}
-	
+
 	public SearchQuery<UserData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
 		SearchQuery<User> dataDb = userDao.findAll(query, startPage, maxPage);
-		
+
 		List<UserData> users = new ArrayList<>();
 		dataDb.getData().forEach(user -> {
 			UserData data = new UserData();
@@ -111,18 +111,18 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			users.add(data);
-			
+
 		});
-		
+
 		SearchQuery<UserData> result = new SearchQuery<>();
 		result.setCount(dataDb.getCount());
 		result.setData(users);
-		
+
 		return result;
 	}
-	
+
 	public UserFindByIdRes getById(String id) throws Exception {
 		User user = userDao.getById(id);
 		UserData data = new UserData();
@@ -145,7 +145,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		UserFindByIdRes result = new UserFindByIdRes();
 		return result;
 	}
-	
+
 	public User findByUsername(String email) throws Exception {
 		User userResult = userDao.findByEmail(email);
 		return userResult;
@@ -163,8 +163,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			e.printStackTrace();
 		}
 
-		return new org.springframework.security.core.userdetails.User(email, userDb.getPassword(),
-				new ArrayList<>());
+		return new org.springframework.security.core.userdetails.User(email, userDb.getPassword(), new ArrayList<>());
 	}
 
 }

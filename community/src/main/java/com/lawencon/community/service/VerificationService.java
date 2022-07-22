@@ -3,6 +3,7 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lawencon.base.BaseCoreService;
@@ -29,7 +30,8 @@ public class VerificationService extends BaseCoreService<Verification> {
 		InsertRes result = new InsertRes();
 		try {
 			Verification verif = new Verification();
-			verif.setVerificationCode(data.getVerification());
+			String verification = RandomStringUtils.randomAlphanumeric(5);
+			verif.setVerificationCode(verification);
 			verif.setExpired(data.getExpired());
 			verif.setIsActive(true);
 

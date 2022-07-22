@@ -3,6 +3,7 @@ package com.lawencon.community.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lawencon.community.model.Role;
+import com.lawencon.community.dto.DeleteRes;
+import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.UpdateRes;
+import com.lawencon.community.dto.role.RoleData;
+import com.lawencon.community.dto.role.RoleFindByIdRes;
+import com.lawencon.community.dto.role.RoleInsertReq;
+import com.lawencon.community.dto.role.RoleUpdateReq;
 import com.lawencon.community.service.RoleService;
 import com.lawencon.model.SearchQuery;
 
@@ -27,26 +34,32 @@ public class RoleController {
 	public ResponseEntity<?> getAll(@RequestParam("query") String query, 
 			@RequestParam("startPage") Integer startPage,
 			@RequestParam("maxPage") Integer maxPage) throws Exception {
-		SearchQuery<Role> mhs = roleService.findAll(query, startPage, maxPage);
+		SearchQuery<RoleData> mhs = roleService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(mhs, HttpStatus.OK);
 	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<?> getMhs(@PathVariable("id") String id) throws Exception {
-		Role mhs = roleService.getById(id);
+		RoleFindByIdRes mhs = roleService.getById(id);
 		return new ResponseEntity<>(mhs, HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody Role data) throws Exception {
-		roleService.insert(data);
-		return new ResponseEntity<>(data, HttpStatus.OK);
+	public ResponseEntity<InsertRes> insert(@RequestBody RoleInsertReq data) throws Exception {
+		InsertRes result = roleService.insert(data);
+		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody Role data) throws Exception {
-		roleService.update(data);
-		return new ResponseEntity<>(data, HttpStatus.OK);
+	public ResponseEntity<UpdateRes> update(@RequestBody RoleUpdateReq data) throws Exception {
+		UpdateRes result = roleService.update(data);
+		return new ResponseEntity<UpdateRes>(result, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("{id}")
+	public ResponseEntity<DeleteRes> delete(@PathVariable("id") String id) throws Exception {
+		DeleteRes result = roleService.deleteById(id);
+		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
 	}
 	
 	

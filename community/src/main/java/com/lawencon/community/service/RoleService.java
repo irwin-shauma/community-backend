@@ -1,10 +1,23 @@
 package com.lawencon.community.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.RoleDao;
+import com.lawencon.community.dto.DeleteRes;
+import com.lawencon.community.dto.InsertDataRes;
+import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.UpdateDataRes;
+import com.lawencon.community.dto.UpdateRes;
+import com.lawencon.community.dto.role.RoleData;
+import com.lawencon.community.dto.role.RoleFindByIdRes;
+import com.lawencon.community.dto.role.RoleInsertReq;
+import com.lawencon.community.dto.role.RoleUpdateReq;
 import com.lawencon.community.model.Role;
 import com.lawencon.model.SearchQuery;
 
@@ -14,58 +27,112 @@ public class RoleService extends BaseCoreService<Role> {
 	@Autowired
 	private RoleDao roleDao;
 	
-	public Role insert(Role data) throws Exception {
+	public InsertRes insert(RoleInsertReq data) throws Exception {
+		InsertRes result = new InsertRes();
 		try {
+			Role role = new Role();
+			role.setRoleCode(data.getRoleCode());
+			role.setRoleName(data.getRoleName());
+			role.setIsActive(true);
+			
 			begin();
-			roleDao.save(data);
+			Role inserted = roleDao.save(role);
 			commit();
+			
+			InsertDataRes dataRes = new InsertDataRes();
+			dataRes.setId(inserted.getId());
+			
+			result.setData(dataRes);
+			result.setMessage(MessageResponse.SAVED.name());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
 		}
-		return data;
+		return result;
 	}
 	
 	
-	public Role update(Role data) throws Exception {
+	public UpdateRes update(RoleUpdateReq data) throws Exception {
+		UpdateRes result = new UpdateRes();
 		try {
-			Role mhsDb = roleDao.getById(data.getId());
-			data.setCreatedAt(mhsDb.getCreatedAt());
-			data.setCreatedBy(mhsDb.getCreatedBy());
-
+			Role role = roleDao.getById(data.getId());
+			role.setRoleCode(data.getRoleCode());
+			role.setRoleName(data.getRoleName());
+			role.setIsActive(data.getIsActive());
+			
 			begin();
-			roleDao.save(data);
+			Role updated = roleDao.save(role);
 			commit();
+
+			UpdateDataRes updateRes = new UpdateDataRes();
+			updateRes.setVersion(updated.getVersion());
+			
+			result.setData(updateRes);
+			result.setMessage(MessageResponse.SAVED.name());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
 		}
 
-		return data;
+		return result;
 	}
 
-	public Role getById(String id) throws Exception {
-		return roleDao.getById(id);
+	public RoleFindByIdRes getById(String id) throws Exception {
+		Role roleDb = roleDao.getById(id);
+		
+		RoleData data = new RoleData();
+		data.setId(roleDb.getId());
+		data.setRoleCode(roleDb.getRoleCode());
+		data.setRoleName(roleDb.getRoleName());
+		data.setIsActive(roleDb.getIsActive());
+		data.setVersion(roleDb.getVersion());
+		
+		RoleFindByIdRes result = new RoleFindByIdRes();
+		result.setData(data);
+		return result;
 	}
 
-	public SearchQuery<Role> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
-		return roleDao.findAll(query, startPage, maxPage);
+	public SearchQuery<RoleData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
+		SearchQuery<Role> roleDb = roleDao.findAll(query, startPage, maxPage);
+		List<RoleData> roles = new ArrayList<RoleData>();
+		
+		roleDb.getData().forEach(role -> {
+			RoleData data = new RoleData();
+			data.setRoleCode(role.getRoleCode());
+			data.setRoleName(role.getRoleName());
+			data.setIsActive(role.getIsActive());
+			data.setVersion(role.getVersion());
+			
+			roles.add(data);
+		});
+		SearchQuery<RoleData> result = new SearchQuery<>();
+		result.setCount(roleDb.getCount());
+		result.setData(roles);
+		return result;
 	}
 
-	public boolean deleteById(String id) throws Exception {
+	public DeleteRes deleteById(String id) throws Exception {
+		DeleteRes result = new DeleteRes();
+
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
+
 		try {
 			begin();
 			boolean isDeleted = roleDao.deleteById(id);
 			commit();
 
-			return isDeleted;
+			if (isDeleted) {
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
 		}
+
+		return result;
 	}
 
 }

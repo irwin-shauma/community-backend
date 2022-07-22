@@ -64,7 +64,7 @@ public class FileService extends BaseCoreService<File>{
 		data.setVersion(fileDb.getVersion());
 
 		FileFindByIdRes result = new FileFindByIdRes();
-		result.setFileData(data);
+		result.setData(data);
 
 		return result;
 	}

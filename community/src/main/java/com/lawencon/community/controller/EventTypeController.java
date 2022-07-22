@@ -42,15 +42,15 @@ public class EventTypeController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody EventTypeInsertReq data) throws Exception {
+	public ResponseEntity<InsertRes> insert(@RequestBody EventTypeInsertReq data) throws Exception {
 		InsertRes result = eventTypeService.insert(data);
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<InsertRes>(result, HttpStatus.OK);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody EventTypeUpdateReq data) throws Exception {
+	public ResponseEntity<UpdateRes> update(@RequestBody EventTypeUpdateReq data) throws Exception {
 		UpdateRes result = eventTypeService.update(data);
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<UpdateRes>(result, HttpStatus.OK);
 	}
 
 }
