@@ -58,7 +58,7 @@ public class PaymentService extends BaseCoreService<Payment>{
 			insertDataRes.setId(paymentInsert.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.name());	
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());	
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -93,7 +93,7 @@ public class PaymentService extends BaseCoreService<Payment>{
 			updateDataRes.setVersion(paymentUpdate.getVersion());
 
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.UPDATED.name());
+			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,7 +147,7 @@ public class PaymentService extends BaseCoreService<Payment>{
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
-		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 
 		try {
 			begin();
@@ -155,7 +155,7 @@ public class PaymentService extends BaseCoreService<Payment>{
 			commit();
 
 			if (isDeleted) {
-				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

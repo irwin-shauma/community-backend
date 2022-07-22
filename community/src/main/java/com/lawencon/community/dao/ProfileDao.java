@@ -57,5 +57,47 @@ public class ProfileDao extends AbstractJpaDao<Profile> {
 		});
 		return profiles;
 	}
+	
+	public Profile findByUserId(String userId) throws Exception {
+		String sql = "SELECT * FROM profile WHERE user_id = :user_id";
+		Profile profile = null;
+		try {
+			Object result = createNativeQuery(sql)
+							.setParameter("user_id", userId)
+							.getSingleResult();
+			if (result != null) {
+				Object[] objArr = (Object[]) result;
+				profile = new Profile();
+				profile.setId(objArr[0].toString());
+				profile.setProfileCode(objArr[1].toString());
+				profile.setFullName(objArr[2].toString());
+				profile.setCompany(objArr[3].toString());
+				profile.setIndustry(objArr[4].toString());
+				profile.setStatus(objArr[5].toString());
+				profile.setStatusDuration(((Timestamp) objArr[6]).toLocalDateTime());
+				User user = new User();
+				user.setId(objArr[7].toString());
+				profile.setUser(user);
+				File file = new File();
+				if (objArr[8] != null) {
+					file.setId(objArr[8].toString());
+					profile.setFile(file);
+				}
+				profile.setCreatedBy(objArr[9].toString());
+				if (objArr[10] != null) {
+					profile.setCreatedAt(((Timestamp) objArr[10]).toLocalDateTime());
+				}
+				profile.setUpdatedBy(objArr[11].toString());
+				if (objArr[12] != null) {
+					profile.setUpdatedAt(((Timestamp) objArr[12]).toLocalDateTime());
+				}
+				profile.setIsActive(Boolean.valueOf(objArr[13].toString()));
+				profile.setVersion(Integer.valueOf(objArr[14].toString()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

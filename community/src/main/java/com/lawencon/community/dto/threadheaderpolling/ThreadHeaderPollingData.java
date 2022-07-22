@@ -3,8 +3,8 @@ package com.lawencon.community.dto.threadheaderpolling;
 public class ThreadHeaderPollingData {
 
 	private String id;
-	private String threadTypeCode;
-	private String type;
+	private String titlePolling;
+	private String contentPolling;
 	private Boolean isActive;
 	private Integer version;
 
@@ -16,28 +16,20 @@ public class ThreadHeaderPollingData {
 		this.id = id;
 	}
 
-	public String getThreadHeaderCode() {
-		return threadTypeCode;
+	public String getTitlePolling() {
+		return titlePolling;
 	}
 
-	public void setThreadHeaderCode(String threadTypeCode) {
-		this.threadTypeCode = threadTypeCode;
+	public void setTitlePolling(String titlePolling) {
+		this.titlePolling = titlePolling;
 	}
 
-	public String getThreadTypeCode() {
-		return threadTypeCode;
+	public String getContentPolling() {
+		return contentPolling;
 	}
 
-	public void setThreadTypeCode(String threadTypeCode) {
-		this.threadTypeCode = threadTypeCode;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
+	public void setContentPolling(String contentPolling) {
+		this.contentPolling = contentPolling;
 	}
 
 	public Boolean getIsActive() {

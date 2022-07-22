@@ -4,14 +4,27 @@ import javax.validation.constraints.NotBlank;
 
 public class ThreadHeaderPollingInsertReq {
 	
-	@NotBlank(message="Type can't be empty")
-	private String type;
+	@NotBlank(message = "Title can't be empty")
+	private String titlePolling;
+	
+	@NotBlank(message = "Content can't be empty")
+	private String contentPolling;
 
-	public String getType() {
-		return type;
+	public String getTitlePolling() {
+		return titlePolling;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setTitlePolling(String titlePolling) {
+		this.titlePolling = titlePolling;
 	}
+
+	public String getContentPolling() {
+		return contentPolling;
+	}
+
+	public void setContentPolling(String contentPolling) {
+		this.contentPolling = contentPolling;
+	}
+	
+	
 }
