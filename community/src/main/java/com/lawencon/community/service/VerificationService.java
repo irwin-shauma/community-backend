@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.VerificationDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -40,7 +41,7 @@ public class VerificationService extends BaseCoreService<Verification> {
 			insertRes.setId(inserted.getId());
 
 			result.setData(insertRes);
-			result.setMessage("Success");
+			result.setMessage(MessageResponse.SAVED.name());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -66,7 +67,7 @@ public class VerificationService extends BaseCoreService<Verification> {
 			dataRes.setVersion(updated.getVersion());
 
 			result.setData(dataRes);
-			result.setMessage("Success");
+			result.setMessage(MessageResponse.UPDATED.name());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -114,13 +115,13 @@ public class VerificationService extends BaseCoreService<Verification> {
 
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
-		result.setMessage("Failed");
+		result.setMessage(MessageResponse.FAILED.name());
 		try {
 			begin();
 			boolean isDeleted = verifDao.deleteById(id);
 			commit();
 			if (isDeleted) {
-				result.setMessage("Success");
+				result.setMessage(MessageResponse.DELETED.name());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.HistoryPaymentDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
@@ -51,7 +52,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 			insertDataRes.setId(historyPaymentInsert.getId());
 
 			result.setData(insertDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());	
+			result.setMessage(MessageResponse.SAVED.name());	
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -85,7 +86,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 			updateDataRes.setVersion(historyPaymentUpdate.getVersion());
 			
 			result.setData(updateDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.UPDATED.name());
 		}catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -139,7 +140,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
-//		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.name());
 
 		try {
 			begin();
@@ -147,7 +148,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 			commit();
 
 			if (isDeleted) {
-//				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.name());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

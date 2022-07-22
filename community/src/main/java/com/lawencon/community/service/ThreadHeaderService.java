@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.ThreadHeaderDao;
 import com.lawencon.community.dao.ThreadTypeDao;
 import com.lawencon.community.dto.DeleteRes;
@@ -49,7 +50,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 			insertDataRes.setId(inserted.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage("Success");
+			result.setMessage(MessageResponse.SAVED.name());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -79,7 +80,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 			dataRes.setVersion(updated.getVersion());
 			
 			result.setData(dataRes);
-			result.setMessage("Success");
+			result.setMessage(MessageResponse.UPDATED.name());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -134,13 +135,13 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 	
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
-		result.setMessage("Failed");
+		result.setMessage(MessageResponse.FAILED.name());
 		try {
 			begin();
 			boolean isDeleted = threadHdrDao.deleteById(id);
 			commit();
 			if (isDeleted) {
-				result.setMessage("Success");
+				result.setMessage(MessageResponse.DELETED.name());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

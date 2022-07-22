@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -41,7 +42,7 @@ public class FileService extends BaseCoreService<File>{
 			insertDataRes.setId(fileInsert.getId());
 
 			result.setData(insertDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());	
+			result.setMessage(MessageResponse.SAVED.name());	
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -94,7 +95,7 @@ public class FileService extends BaseCoreService<File>{
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
-//		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.name());
 
 		try {
 			begin();
@@ -102,7 +103,7 @@ public class FileService extends BaseCoreService<File>{
 			commit();
 
 			if (isDeleted) {
-//				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.name());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

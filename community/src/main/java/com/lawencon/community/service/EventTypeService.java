@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.EventTypeDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -41,7 +42,7 @@ public class EventTypeService extends BaseCoreService<EventType> {
 			insertDataRes.setId(inserted.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage("Success");
+			result.setMessage(MessageResponse.SAVED.name());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,7 +66,7 @@ public class EventTypeService extends BaseCoreService<EventType> {
 			dataRes.setVersion(update.getVersion());
 			
 			result.setData(dataRes);
-			result.setMessage("Success");
+			result.setMessage(MessageResponse.UPDATED.name());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -113,13 +114,13 @@ public class EventTypeService extends BaseCoreService<EventType> {
 
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
-		result.setMessage("Failed");
+		result.setMessage(MessageResponse.FAILED.name());
 		try {
 			begin();
 			boolean isDeleted = eventTypeDao.deleteById(id);
 			commit();
 			if (isDeleted) {
-				result.setMessage("Sucess");
+				result.setMessage(MessageResponse.DELETED.name());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.ThreadHeaderDao;
 import com.lawencon.community.dao.ThreadLikeDao;
 import com.lawencon.community.dao.UserDao;
@@ -59,7 +60,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 			insertDataRes.setId(threadLikeInsert.getId());
 
 			result.setData(insertDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());	
+			result.setMessage(MessageResponse.SAVED.name());	
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -95,7 +96,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 			updateDataRes.setVersion(threadLikeUpdate.getVersion());
 
 			result.setData(updateDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.SAVED.name());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -153,7 +154,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
-//		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.name());
 
 		try {
 			begin();
@@ -161,7 +162,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 			commit();
 
 			if (isDeleted) {
-//				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.name());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

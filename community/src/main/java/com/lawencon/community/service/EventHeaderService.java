@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.EventHeaderDao;
 import com.lawencon.community.dao.EventTypeDao;
 import com.lawencon.community.dto.DeleteRes;
@@ -52,7 +53,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 			insertDataRes.setId(eventHeaderInsert.getId());
 
 			result.setData(insertDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());	
+			result.setMessage(MessageResponse.SAVED.name());	
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -87,7 +88,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 			updateDataRes.setVersion(eventHeaderUpdate.getVersion());
 
 			result.setData(updateDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.UPDATED.name());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,8 +141,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 	
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
-
-//		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.name());
 
 		try {
 			begin();
@@ -149,7 +149,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 			commit();
 
 			if (isDeleted) {
-//				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.name());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
