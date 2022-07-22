@@ -69,7 +69,6 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 	public UpdateRes update(ArticleHeaderUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 		try {
-			begin();
 			ArticleHeader dataDb = articleHeaderDao.getById(data.getId());
 			dataDb.setTitle(data.getTitle());
 			dataDb.setContents(data.getContents());
@@ -77,6 +76,8 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 			File file = new File();
 			file.setFileName(data.getFileName());
 			file.setFileExtension(data.getFileExtension());
+			
+			begin();
 			File fileRes = fileDao.save(file);
 			dataDb.setFileId(fileRes);
 			dataDb.setIsActive(data.getIsActive());

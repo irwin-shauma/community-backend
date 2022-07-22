@@ -1,14 +1,14 @@
 package com.lawencon.community.dto.file;
 
 public class FileFindByIdRes {
-	private FileData fileData;
+	private FileData data;
 
-	public FileData getFileData() {
-		return fileData;
+	public FileData getData() {
+		return data;
 	}
 
-	public void setFileData(FileData fileData) {
-		this.fileData = fileData;
+	public void setData(FileData data) {
+		this.data = data;
 	}
 
 
