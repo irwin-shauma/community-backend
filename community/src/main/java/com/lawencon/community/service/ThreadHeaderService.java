@@ -80,7 +80,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 			dataRes.setVersion(updated.getVersion());
 			
 			result.setData(dataRes);
-			result.setMessage(MessageResponse.UPDATED.name());
+			result.setMessage(MessageResponse.SAVED.name());
 			
 		} catch (Exception e) {
 			e.printStackTrace();

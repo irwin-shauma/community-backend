@@ -87,7 +87,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 			updateDataRes.setVersion(eventHeaderUpdate.getVersion());
 
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.UPDATED.name());
+			result.setMessage(MessageResponse.SAVED.name());
 
 		} catch (Exception e) {
 			e.printStackTrace();
