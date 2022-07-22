@@ -66,6 +66,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 			threadHdr.setTitle(data.getTitle());
 			threadHdr.setContentThread(data.getContentThread());
 			threadHdr.setIsActive(data.getIsActive());
+			threadHdr.setVersion(data.getVersion());
 			
 			ThreadType threadType = threadTypeDao.getById(data.getThreadTypeId());
 			

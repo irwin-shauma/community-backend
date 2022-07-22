@@ -35,9 +35,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 			balance.setBalanceCode(data.getBalanceCode());
 			balance.setCurrentBalance(data.getCurrentBalance());
 
-			User user = new User();
-			user.setId(data.getUserId());
-
+			User user = userDao.getById(data.getUserId());
 			balance.setUser(user);
 
 			balance.setIsActive(true);
@@ -102,6 +100,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 		data.setBalanceCode(balanceDb.getBalanceCode());
 		data.setCurrentBalance(balanceDb.getCurrentBalance());
 		data.setUserId(balanceDb.getUser().getId());
+		data.setIsActive(balanceDb.getIsActive());
 		data.setVersion(balanceDb.getVersion());
 
 		BalanceFindByIdRes result = new BalanceFindByIdRes();
@@ -121,7 +120,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 			data.setBalanceCode(balance.getBalanceCode());
 			data.setCurrentBalance(balance.getCurrentBalance());
 			data.setUserId(balance.getUser().getId());
-			
+			data.setIsActive(balance.getIsActive());
 			data.setVersion(balance.getVersion());
 
 			balanceDataList.add(data);

@@ -58,6 +58,7 @@ public class VerificationService extends BaseCoreService<Verification> {
 			verif.setVerificationCode(data.getVerification());
 			verif.setExpired(data.getExpired());
 			verif.setIsActive(data.getIsActive());
+			verif.setVersion(data.getVersion());
 
 			begin();
 			Verification updated = save(verif);

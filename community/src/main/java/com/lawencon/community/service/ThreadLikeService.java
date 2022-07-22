@@ -42,12 +42,10 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 		try {
 			ThreadLike threadLike = new ThreadLike();
 			
-			User user = new User();
-			user.setId(data.getUserId());
+			User user = userDao.getById(data.getUserId());
 			threadLike.setUserId(user);
 			
-			ThreadHeader threadHeader = new ThreadHeader();
-			threadHeader.setId(data.getThreadId());
+			ThreadHeader threadHeader = threadHeaderDao.getById(data.getThreadId());
 			threadLike.setThreadHeader(threadHeader);
 			
 			threadLike.setIsActive(true);
@@ -76,7 +74,6 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 
 		try {
 			ThreadLike threadLikeDb = threadLikeDao.getById(data.getId());
-		
 
 			User userDb = userDao.getById(data.getId());
 			threadLikeDb.setUserId(userDb);

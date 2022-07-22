@@ -40,14 +40,11 @@ public class PaymentService extends BaseCoreService<Payment>{
 		try {
 			Payment payment = new Payment();
 			
-			User user = new User();
-			user.setId(data.getUserId());
+			User user = userDao.getById(data.getUserId());
 			payment.setUser(user);
 			
-			File file = new File();
-			file.setId(data.getFileId());
+			File file = fileDao.getById(data.getFileId());
 			payment.setFile(file);
-
 			payment.setIsActive(true);
 
 			begin();

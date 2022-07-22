@@ -55,10 +55,10 @@ public class EventTypeService extends BaseCoreService<EventType> {
 	public UpdateRes update(EventTypeUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 		try {
+			begin();
 			EventType eventType = eventTypeDao.getById(data.getId());
 			eventType.setType(data.getType());
 			eventType.setIsActive(data.getIsActive());
-			begin();
 			EventType update = save(eventType);
 			commit();
 			

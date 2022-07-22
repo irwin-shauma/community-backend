@@ -87,7 +87,6 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 			eventDetailDb.setEnds(data.getEnds());
 			eventDetailDb.setProvider(data.getProvider());
 			eventDetailDb.setLocations(data.getLocations());
-		
 			eventDetailDb.setIsActive(data.getIsActive());
 			eventDetailDb.setVersion(data.getVersion());
 

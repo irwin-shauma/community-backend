@@ -39,19 +39,17 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 	public InsertRes insert(ThreadPollingAnswerInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
+			begin();
 			ThreadPollingAnswer threadPollingAnswer = new ThreadPollingAnswer();
 			
 			ThreadHeaderPolling threadHeaderPolling = new ThreadHeaderPolling();
 			threadHeaderPolling.setId(data.getThreadPollingId());
 			threadPollingAnswer.setThreadHeaderPolling(threadHeaderPolling);
 			
-			User user = new User();
-			user.setId(data.getUserId());
+			User user = userDao.getById(data.getUserId());
 			threadPollingAnswer.setUser(user);
-
 			threadPollingAnswer.setIsActive(true);
 
-			begin();
 			ThreadPollingAnswer threadPollingAnswerInsert = save(threadPollingAnswer);
 			commit();
 
@@ -59,7 +57,7 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 			insertDataRes.setId(threadPollingAnswerInsert.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.name());	
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());	
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -94,7 +92,7 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 			updateDataRes.setVersion(threadPollingAnswerUpdate.getVersion());
 
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.UPDATED.name());
+			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -148,7 +146,7 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
-		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 
 		try {
 			begin();
@@ -156,7 +154,7 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 			commit();
 
 			if (isDeleted) {
-				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
