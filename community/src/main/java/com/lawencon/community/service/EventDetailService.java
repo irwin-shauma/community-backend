@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.EventDetailDao;
 import com.lawencon.community.dao.EventHeaderDao;
-import com.lawencon.community.dao.EventTypeDao;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -16,6 +16,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.eventdetail.EventDetailData;
 import com.lawencon.community.dto.eventdetail.EventDetailFindByIdRes;
 import com.lawencon.community.dto.eventdetail.EventDetailInsertReq;
+import com.lawencon.community.dto.eventdetail.EventDetailUpdateReq;
 import com.lawencon.community.model.EventDetail;
 import com.lawencon.community.model.EventHeader;
 import com.lawencon.community.model.File;
@@ -56,7 +57,7 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 			insertDataRes.setId(eventDetailInsert.getId());
 
 			result.setData(insertDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -67,17 +68,17 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 	}
 	
 	
-	public UpdateRes update(EventDetail data) throws Exception {
+	public UpdateRes update(EventDetailUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 
 		try {
 			EventDetail eventDetailDb = eventDetailDao.getById(data.getId());
 			eventDetailDb.setId(data.getId());
 			
-			EventHeader eventHeaderDb = eventHeaderDao.getById(data.getEventHeader().getId());
+			EventHeader eventHeaderDb = eventHeaderDao.getById(data.getEventHeaderId());
 			eventDetailDb.setEventHeader(eventHeaderDb);
 			
-			File fileDb = fileDao.getById(data.getFile().getId());
+			File fileDb = fileDao.getById(data.getFileId());
 			eventDetailDb.setFile(fileDb);
 			
 			eventDetailDb.setPrice(data.getPrice());
@@ -99,7 +100,7 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 			updateDataRes.setVersion(eventDetailUpdate.getVersion());
 
 			result.setData(updateDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -166,7 +167,7 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
-//		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 
 		try {
 			begin();
@@ -174,7 +175,7 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 			commit();
 
 			if (isDeleted) {
-//				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -17,6 +17,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.balance.BalanceData;
 import com.lawencon.community.dto.balance.BalanceFindByIdRes;
 import com.lawencon.community.dto.balance.BalanceInsertReq;
+import com.lawencon.community.dto.balance.BalanceUpdateReq;
 import com.lawencon.community.model.Balance;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
@@ -49,7 +50,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 			insertDataRes.setId(balanceInsert.getId());
 			
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -59,7 +60,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 		return result;
 	}
 
-	public UpdateRes update(Balance data) throws Exception {
+	public UpdateRes update(BalanceUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 
 		try {
@@ -83,7 +84,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 			updateDataRes.setVersion(balanceUpdate.getVersion());
 
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -135,7 +136,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
-		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 
 		try {
 			begin();
@@ -143,7 +144,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 			commit();
 
 			if (isDeleted) {
-				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

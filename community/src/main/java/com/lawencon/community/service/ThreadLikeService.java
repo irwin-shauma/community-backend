@@ -19,6 +19,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.threadlike.ThreadLikeData;
 import com.lawencon.community.dto.threadlike.ThreadLikeFindByIdRes;
 import com.lawencon.community.dto.threadlike.ThreadLikeInsertReq;
+import com.lawencon.community.dto.threadlike.ThreadLikeUpdateReq;
 import com.lawencon.community.model.ThreadHeader;
 import com.lawencon.community.model.ThreadLike;
 import com.lawencon.community.model.User;
@@ -59,7 +60,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 			insertDataRes.setId(threadLikeInsert.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.name());	
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());	
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -70,7 +71,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 	}
 	
 	
-	public UpdateRes update(ThreadLike data) throws Exception {
+	public UpdateRes update(ThreadLikeUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 
 		try {
@@ -95,7 +96,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 			updateDataRes.setVersion(threadLikeUpdate.getVersion());
 
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -153,7 +154,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
-		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 
 		try {
 			begin();
@@ -161,7 +162,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 			commit();
 
 			if (isDeleted) {
-				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

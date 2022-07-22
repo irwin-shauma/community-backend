@@ -18,6 +18,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.eventheader.EventHeaderData;
 import com.lawencon.community.dto.eventheader.EventHeaderFindByIdRes;
 import com.lawencon.community.dto.eventheader.EventHeaderInsertReq;
+import com.lawencon.community.dto.eventheader.EventHeaderUpdateReq;
 import com.lawencon.community.model.EventHeader;
 import com.lawencon.community.model.EventType;
 import com.lawencon.model.SearchQuery;
@@ -52,7 +53,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 			insertDataRes.setId(eventHeaderInsert.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.name());	
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());	
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -63,7 +64,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 	}
 	
 	
-	public UpdateRes update(EventHeader data) throws Exception {
+	public UpdateRes update(EventHeaderUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 
 		try {
@@ -87,7 +88,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 			updateDataRes.setVersion(eventHeaderUpdate.getVersion());
 
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,7 +141,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 	
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
-		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 
 		try {
 			begin();
@@ -148,7 +149,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 			commit();
 
 			if (isDeleted) {
-				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

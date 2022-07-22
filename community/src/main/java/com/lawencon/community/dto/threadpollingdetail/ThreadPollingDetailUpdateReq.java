@@ -28,6 +28,22 @@ public class ThreadPollingDetailUpdateReq {
 		this.id = id;
 	}
 
+	public String getThreadHeaderPollingId() {
+		return threadHeaderPollingId;
+	}
+
+	public void setThreadHeaderPollingId(String threadHeaderPollingId) {
+		this.threadHeaderPollingId = threadHeaderPollingId;
+	}
+
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+
 	public Boolean getIsActive() {
 		return isActive;
 	}
@@ -43,5 +59,4 @@ public class ThreadPollingDetailUpdateReq {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-
 }
