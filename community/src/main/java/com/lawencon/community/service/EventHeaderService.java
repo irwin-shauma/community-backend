@@ -38,9 +38,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 			eventHeader.setEventHeaderCode(data.getEventHeaderCode());
 			eventHeader.setTitle(data.getTitle());
 			
-			EventType eventType = new EventType();
-			eventType.setId(data.getEventTypeId());
-			
+			EventType eventType = eventTypeDao.getById(data.getEventTypeId());
 			eventHeader.setEventTypeId(eventType);
 			
 			eventHeader.setIsActive(true);
@@ -73,7 +71,6 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 			eventHeaderDb.setTitle(data.getTitle());
 			
 			EventType eventDb = eventTypeDao.getById(data.getId());
-			
 			eventHeaderDb.setEventTypeId(eventDb);
 
 			eventHeaderDb.setIsActive(data.getIsActive());
@@ -107,6 +104,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 		data.setEventHeaderCode(eventHeaderDb.getEventHeaderCode());
 		data.setTitle(eventHeaderDb.getTitle());
 		data.setEventTypeId(eventHeaderDb.getEventType().getId());
+		data.setIsActive(eventHeaderDb.getIsActive());
 		data.setVersion(eventHeaderDb.getVersion());
 
 		EventHeaderFindByIdRes result = new EventHeaderFindByIdRes();
@@ -127,6 +125,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 			data.setEventHeaderCode(eventHeader.getEventHeaderCode());
 			data.setTitle(eventHeader.getTitle());
 			data.setEventTypeId(eventHeader.getEventType().getId());
+			data.setIsActive(eventHeader.getIsActive());
 			data.setVersion(eventHeader.getVersion());
 
 			eventHeaderDataList.add(data);

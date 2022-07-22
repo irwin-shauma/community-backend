@@ -31,7 +31,6 @@ public class FileService extends BaseCoreService<File>{
 			
 			file.setFileName(data.getFileName());
 			file.setFileExtension(data.getFileExt());
-
 			file.setIsActive(true);
 
 			begin();

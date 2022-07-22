@@ -42,7 +42,7 @@ public class ThreadTypeService extends BaseCoreService<ThreadType>{
 			insertDataRes.setId(threadTypeInsert.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.name());	
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());	
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -72,7 +72,7 @@ public class ThreadTypeService extends BaseCoreService<ThreadType>{
 			updateDataRes.setVersion(threadTypeUpdate.getVersion());
 
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.UPDATED.name());
+			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -122,7 +122,7 @@ public class ThreadTypeService extends BaseCoreService<ThreadType>{
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
-		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 
 		try {
 			begin();
@@ -130,7 +130,7 @@ public class ThreadTypeService extends BaseCoreService<ThreadType>{
 			commit();
 
 			if (isDeleted) {
-				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
