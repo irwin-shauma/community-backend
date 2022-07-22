@@ -35,13 +35,10 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 			HistoryPayment historyPayment = new HistoryPayment();
 			historyPayment.setHistoryPaymentCode(data.getHistoryPaymentCode());
 			
-			User user = new User();
-			user.setId(data.getUserId());
-
+			User user = userDao.getById(data.getUserId());
 			historyPayment.setUser(user);
 			
 			historyPayment.setTrxNo(data.getTrxNo());
-
 			historyPayment.setIsActive(true);
 
 			begin();
@@ -103,6 +100,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 		data.setHistoryPaymentCode(historyPaymentDb.getHistoryPaymentCode());
 		data.setTrxNo(historyPaymentDb.getTrxNo());
 		data.setUserId(historyPaymentDb.getUser().getId());
+		data.setIsActive(historyPaymentDb.getIsActive());
 		data.setVersion(historyPaymentDb.getVersion());
 		
 		HistoryPaymentFindByIdRes result = new HistoryPaymentFindByIdRes();
@@ -123,7 +121,7 @@ public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 			data.setHistoryPaymentCode(historyPayment.getHistoryPaymentCode());
 			data.setTrxNo(historyPayment.getTrxNo());
 			data.setUserId(historyPayment.getUser().getId());
-			
+			data.setIsActive(historyPayment.getIsActive());
 			data.setVersion(historyPayment.getVersion());
 			
 			historyPaymentDataList.add(data);

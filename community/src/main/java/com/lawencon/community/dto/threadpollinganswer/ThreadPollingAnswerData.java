@@ -1,8 +1,9 @@
 package com.lawencon.community.dto.threadpollinganswer;
 
-public class ThreadPollingAnswerDetailData {
+public class ThreadPollingAnswerData {
 
 	private String id;
+	private String threadPollingAnswerCode;
 	private String threadPollingId;
 	private String userId;
 	private Boolean isActive;
@@ -18,6 +19,14 @@ public class ThreadPollingAnswerDetailData {
 
 	public String getThreadPollingId() {
 		return threadPollingId;
+	}
+	
+	public String getThreadPollingAnswerCode() {
+		return threadPollingAnswerCode;
+	}
+
+	public void setThreadPollingAnswerCode(String threadPollingAnswerCode) {
+		this.threadPollingAnswerCode = threadPollingAnswerCode;
 	}
 
 	public void setThreadPollingId(String threadPollingId) {

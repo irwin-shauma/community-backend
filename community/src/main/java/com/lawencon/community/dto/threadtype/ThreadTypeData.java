@@ -5,7 +5,7 @@ public class ThreadTypeData {
 	private String id;
 	private String threadTypeCode;
 	private String threadType;
-	private String version;
+	private Integer version;
 	private Boolean isActive;
 
 	public String getId() {
@@ -32,11 +32,11 @@ public class ThreadTypeData {
 		this.threadType = threadType;
 	}
 
-	public String getVersion() {
+	public Integer getVersion() {
 		return version;
 	}
 
-	public void setVersion(String version) {
+	public void setVersion(Integer version) {
 		this.version = version;
 	}
 
