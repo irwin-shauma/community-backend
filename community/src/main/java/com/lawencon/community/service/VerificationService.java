@@ -1,5 +1,6 @@
 package com.lawencon.community.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,6 @@ import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateDataRes;
 import com.lawencon.community.dto.UpdateRes;
-import com.lawencon.community.dto.verificaton.VerficationInsertReq;
 import com.lawencon.community.dto.verificaton.VerificationData;
 import com.lawencon.community.dto.verificaton.VerificationFindByIdRes;
 import com.lawencon.community.dto.verificaton.VerificationUpdateReq;
@@ -26,13 +26,13 @@ public class VerificationService extends BaseCoreService<Verification> {
 	@Autowired
 	private VerificationDao verifDao;
 
-	public InsertRes insert(VerficationInsertReq data) throws Exception {
+	public InsertRes insert() throws Exception {
 		InsertRes result = new InsertRes();
 		try {
 			Verification verif = new Verification();
 			String verification = RandomStringUtils.randomAlphanumeric(5);
 			verif.setVerificationCode(verification);
-			verif.setExpired(data.getExpired());
+			verif.setExpired(LocalDateTime.now().plusHours(2));
 			verif.setIsActive(true);
 
 			begin();
