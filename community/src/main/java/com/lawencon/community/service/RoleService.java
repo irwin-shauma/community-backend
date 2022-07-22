@@ -9,7 +9,7 @@ import com.lawencon.community.model.Role;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class RoleService extends BaseCoreService {
+public class RoleService extends BaseCoreService<Role> {
 	
 	@Autowired
 	private RoleDao roleDao;
@@ -24,7 +24,6 @@ public class RoleService extends BaseCoreService {
 			rollback();
 			throw new Exception(e);
 		}
-
 		return data;
 	}
 	

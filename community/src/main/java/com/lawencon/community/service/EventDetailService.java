@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.EventDetailDao;
 import com.lawencon.community.dao.EventHeaderDao;
-import com.lawencon.community.dao.EventTypeDao;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -57,7 +57,7 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 			insertDataRes.setId(eventDetailInsert.getId());
 
 			result.setData(insertDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -100,7 +100,7 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 			updateDataRes.setVersion(eventDetailUpdate.getVersion());
 
 			result.setData(updateDataRes);
-//			result.setMessage(MessageResponse.SAVED.name());
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,7 +167,7 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
-//		result.setMessage(MessageResponse.FAILED.name());
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 
 		try {
 			begin();
@@ -175,7 +175,7 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 			commit();
 
 			if (isDeleted) {
-//				result.setMessage(MessageResponse.DELETED.name());
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
