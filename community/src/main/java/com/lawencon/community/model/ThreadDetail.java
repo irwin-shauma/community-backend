@@ -10,16 +10,7 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "thread_details", uniqueConstraints = {
-		@UniqueConstraint(
-				name = "email_bk",
-				columnNames = {"email"}
-		),
-		@UniqueConstraint(
-				name = "verification_bk",
-				columnNames = {"nama", "univ_id"}
-				),
-})
+@Table(name = "thread_details")
 public class ThreadDetail extends BaseEntity{
 	private static final long serialVersionUID = -5196455701225322056L;
 

@@ -1,10 +1,13 @@
 package com.lawencon.community.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Payment;
 import com.lawencon.community.model.User;
 
+@Repository
 public class PaymentDao extends AbstractJpaDao<Payment> {
 	public Payment findByUserId(String userId) throws Exception{
 		StringBuilder sqlBuilder = new StringBuilder();

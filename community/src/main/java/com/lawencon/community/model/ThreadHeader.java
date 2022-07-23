@@ -20,9 +20,8 @@ public class ThreadHeader extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name = "thread_type_id")
 	private ThreadType threadType;
-	
-	@OneToOne
-	@JoinColumn(name = "content_thread_id")
+
+	@Column(name="content_thread")
 	private String contentThread;
 	
 	public String getTitle() {
