@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
@@ -26,6 +27,7 @@ import com.lawencon.community.model.Role;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
+@Service
 public class UserService extends BaseCoreService<User> implements UserDetailsService {
 
 	@Autowired

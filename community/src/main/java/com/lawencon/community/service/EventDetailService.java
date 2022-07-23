@@ -3,6 +3,8 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.EventDetailDao;
@@ -22,6 +24,7 @@ import com.lawencon.community.model.EventHeader;
 import com.lawencon.community.model.File;
 import com.lawencon.model.SearchQuery;
 
+@Service
 public class EventDetailService extends BaseCoreService<EventDetail>{
 	
 	private EventDetailDao eventDetailDao;
