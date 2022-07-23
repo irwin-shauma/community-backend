@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
@@ -22,11 +23,13 @@ import com.lawencon.community.model.HistoryPayment;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
+@Service
 public class HistoryPaymentService extends BaseCoreService<HistoryPayment> {
 
 	@Autowired
 	private HistoryPaymentDao historyPaymentDao;
 	
+	@Autowired
 	private UserDao userDao;
 	
 	public InsertRes insert(HistoryPaymentInsertReq data) throws Exception {

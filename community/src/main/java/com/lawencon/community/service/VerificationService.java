@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
@@ -21,6 +22,7 @@ import com.lawencon.community.dto.verificaton.VerificationUpdateReq;
 import com.lawencon.community.model.Verification;
 import com.lawencon.model.SearchQuery;
 
+@Service
 public class VerificationService extends BaseCoreService<Verification> {
 
 	@Autowired

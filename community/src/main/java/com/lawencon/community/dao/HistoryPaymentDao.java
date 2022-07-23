@@ -15,9 +15,9 @@ public class HistoryPaymentDao extends AbstractJpaDao<HistoryPayment>{
 	
 	public List<HistoryPayment> findAllByUserId(String userId) throws Exception{
 		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append("SELECT hp.id, hp.historyPaymentCode, hp.user, hp.trxNo FROM history_payment hp ")
-					.append("INNER JOIN users u ON u.id = hp.user ")
-					.append("WHERE hp.user =:userId");
+		sqlBuilder.append(" SELECT hp.id, hp.historyPaymentCode, hp.user, hp.trxNo FROM history_payment hp ")
+					.append(" INNER JOIN users u ON u.id = hp.user ")
+					.append(" WHERE hp.user =:userId ");
 		
 		
 		List<?> result = createNativeQuery(sqlBuilder.toString())
