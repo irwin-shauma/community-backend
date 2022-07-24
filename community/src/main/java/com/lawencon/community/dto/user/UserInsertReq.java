@@ -16,8 +16,8 @@ public class UserInsertReq {
 	@NotNull(message = "Email can't be empty")
 	private String email;
 
-	@NotBlank(message = "Passwords can't be empty")
-	private String passwords;
+	@NotBlank(message = "Password can't be empty")
+	private String password;
 
 	@NotBlank(message = "Fullname can't be empty")
 	private String fullName;
@@ -59,12 +59,12 @@ public class UserInsertReq {
 		this.email = email;
 	}
 
-	public String getPasswords() {
-		return passwords;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPasswords(String passwords) {
-		this.passwords = passwords;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getFullName() {

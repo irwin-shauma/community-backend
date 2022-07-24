@@ -37,22 +37,29 @@ public class UserDao extends AbstractJpaDao<User> {
 
 	public User findByEmail(String email) throws Exception {
 		
-		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append("SELECT u.id, u.email, r.id, r.role_code ")
-		.append(" FROM users INNER JOIN u.role_id = r.id ")
-		.append(" WHERE email = :email ");
+		StringBuilder sqlBuilder = new StringBuilder()
+				.append("SELECT us.id, us.email, us.passwords, us.role_id, rl.role_code ")
+				.append(" FROM users us ")
+				.append(" INNER JOIN roles rl ON  us.role_id = rl.id ")
+				.append(" WHERE email = :email ");
+		
 		User user = null;
 		try {
-			Object result = createNativeQuery(sqlBuilder.toString()).setParameter("email", email).getSingleResult();
+			Object result = createNativeQuery(sqlBuilder.toString())
+					.setParameter("email", email)
+					.getSingleResult();
+			
 			if (result != null) {
 				Object[] objArr = (Object[]) result;
+				
 				user = new User();
 				user.setId(objArr[0].toString());
 				user.setEmail(objArr[1].toString());
+				user.setPassword(objArr[2].toString());
 
 				Role role = new Role();
-				role.setId(objArr[2].toString());
-				role.setRoleCode(objArr[3].toString());
+				role.setId(objArr[3].toString());
+				role.setRoleCode(objArr[4].toString());
 
 				user.setRole(role);
 

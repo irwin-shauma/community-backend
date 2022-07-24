@@ -10,7 +10,12 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(name = "email_bk", columnNames = { "email" }) })
+@Table(name = "users", uniqueConstraints = { 
+		@UniqueConstraint(
+				name = "email_bk",
+				columnNames =  "email" 
+		) 
+})
 public class User extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
@@ -26,7 +31,7 @@ public class User extends BaseEntity {
 	private String email;
 
 	@Column(name = "passwords")
-	private String passwords;
+	private String password;
 
 	public Role getRole() {
 		return role;
@@ -52,12 +57,12 @@ public class User extends BaseEntity {
 		this.email = email;
 	}
 
-	public String getPasswords() {
-		return passwords;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPasswords(String passwords) {
-		this.passwords = passwords;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

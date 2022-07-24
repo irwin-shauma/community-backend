@@ -22,6 +22,7 @@ import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.user.UserData;
 import com.lawencon.community.dto.user.UserFindByIdRes;
 import com.lawencon.community.dto.user.UserInsertReq;
+import com.lawencon.community.exception.InvalidLoginException;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.Role;
@@ -52,7 +53,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			begin();
 			User user = new User();
 			user.setEmail(data.getEmail());
-			user.setPasswords(passwordEncoder.encode(data.getPasswords()));
+			user.setPassword(passwordEncoder.encode(data.getPassword()));
 			
 			Role role = roleDao.getById(data.getRoleId());
 			user.setRole(role);
@@ -163,13 +164,13 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		try {
 			userDb = userDao.findByEmail(email);
 			if (userDb == null) {
-				throw new RuntimeException("User Invalid");
+				throw new InvalidLoginException("User Invalid");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return new org.springframework.security.core.userdetails.User(email, userDb.getPasswords(), new ArrayList<>());
+		return new org.springframework.security.core.userdetails.User(email, userDb.getPassword(), new ArrayList<>());
 	}
 
 }
