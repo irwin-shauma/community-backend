@@ -8,7 +8,7 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "role" , uniqueConstraints = {
+@Table(name = "roles" , uniqueConstraints = {
 		@UniqueConstraint(
 				name = "role_bk",
 				columnNames = {"role_code"}

@@ -31,12 +31,19 @@ public class RoleController {
 	private RoleService roleService;
 	
 	@GetMapping
-	public ResponseEntity<?> getAll(@RequestParam("query") String query, 
-			@RequestParam("startPage") Integer startPage,
-			@RequestParam("maxPage") Integer maxPage) throws Exception {
+	public ResponseEntity<?> getAll(@RequestParam(required = false) String query, 
+			@RequestParam(required = false) Integer startPage,
+			@RequestParam(required = false) Integer maxPage) throws Exception {
 		SearchQuery<RoleData> mhs = roleService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(mhs, HttpStatus.OK);
 	}
+//	@GetMapping
+//	public ResponseEntity<?> getAll(@RequestParam("query") String query, 
+//			@RequestParam("startPage") Integer startPage,
+//			@RequestParam("maxPage") Integer maxPage) throws Exception {
+//		SearchQuery<RoleData> mhs = roleService.findAll(query, startPage, maxPage);
+//		return new ResponseEntity<>(mhs, HttpStatus.OK);
+//	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<?> getMhs(@PathVariable("id") String id) throws Exception {
@@ -61,7 +68,5 @@ public class RoleController {
 		DeleteRes result = roleService.deleteById(id);
 		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
 	}
-	
-	
 
 }
