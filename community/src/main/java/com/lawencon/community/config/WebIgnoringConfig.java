@@ -28,6 +28,13 @@ public class WebIgnoringConfig {
 		
 		matchers.add(new AntPathRequestMatcher("/roles/**", HttpMethod.GET.name()));
 		matchers.add(new AntPathRequestMatcher("/roles/**", HttpMethod.POST.name()));
+		matchers.add(new AntPathRequestMatcher("/roles/**", HttpMethod.DELETE.name()));
+		matchers.add(new AntPathRequestMatcher("/roles/**", HttpMethod.PUT.name()));
+		
+		
+		matchers.add(new AntPathRequestMatcher("/login/**", HttpMethod.POST.name()));
+		
+		
 		
 		return matchers;
 	}

@@ -8,18 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "event_detail")
-//@Table(name = "event_detail", uniqueConstraints = {
-//		@UniqueConstraint(
-//				name = "event_detail_bk", 
-//				columnNames = "event_detail_bk"
-//				) 
-//})
 public class EventDetail extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;

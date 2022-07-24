@@ -24,7 +24,7 @@ public class File extends BaseEntity{
 	@Column(name = "file_name")
 	private String fileName;
 	
-	@Column(name = "file_extension")
+	@Column(name = "file_ext")
 	private String fileExtension;
 
 	public String getFileCode() {
