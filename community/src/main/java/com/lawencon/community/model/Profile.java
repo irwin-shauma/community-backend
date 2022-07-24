@@ -33,7 +33,7 @@ public class Profile extends BaseEntity {
 	@Column(name = "industry")
 	private String industry;
 
-	@Column(name = "position")
+	@Column(name = "positions")
 	private String position;
 
 	@Column(name = "status")

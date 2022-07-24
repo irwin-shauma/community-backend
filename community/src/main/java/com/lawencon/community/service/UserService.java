@@ -52,10 +52,12 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			begin();
 			User user = new User();
 			user.setEmail(data.getEmail());
-			user.setPassword(passwordEncoder.encode(data.getPasswords()));
+			user.setPasswords(passwordEncoder.encode(data.getPasswords()));
+			
 			Role role = roleDao.getById(data.getRoleId());
 			user.setRole(role);
 			user.setIsActive(true);
+			
 			User insertUser = saveNonLogin(user, () -> {
 				return user.getId();
 			});
@@ -77,6 +79,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 			profile.setFile(insertedFile);
 			profileDao.save(profile);
+			userDao.save(user);
 			commit();
 
 			InsertDataRes insertRes = new InsertDataRes();
@@ -166,7 +169,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			e.printStackTrace();
 		}
 
-		return new org.springframework.security.core.userdetails.User(email, userDb.getPassword(), new ArrayList<>());
+		return new org.springframework.security.core.userdetails.User(email, userDb.getPasswords(), new ArrayList<>());
 	}
 
 }

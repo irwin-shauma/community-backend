@@ -100,6 +100,7 @@ public class RoleService extends BaseCoreService<Role> {
 		
 		roleDb.getData().forEach(role -> {
 			RoleData data = new RoleData();
+			data.setId(role.getId());
 			data.setRoleCode(role.getRoleCode());
 			data.setRoleName(role.getRoleName());
 			data.setIsActive(role.getIsActive());
