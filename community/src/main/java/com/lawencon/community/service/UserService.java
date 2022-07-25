@@ -64,6 +64,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			});
 
 			Profile profile = new Profile();
+			profile.setUser(insertUser);
 			profile.setFullName(data.getFullName());
 			profile.setCompany(data.getCompany());
 			profile.setIndustry(data.getIndustry());
@@ -101,20 +102,29 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 		List<UserData> users = new ArrayList<>();
 		dataDb.getData().forEach(user -> {
+			
 			UserData data = new UserData();
 			data.setId(user.getId());
+			data.setRoleId(user.getRole().getId());
 			data.setEmail(user.getEmail());
+			data.setIsActive(user.getIsActive());
+			data.setVersion(user.getVersion());
+			
 			Profile profile = null;
+			
 			try {
 				profile = profileDao.findByUserId(user.getId());
-				data.setProfileId(profile.getId());
-				data.setFullName(profile.getFullName());
-				data.setCompany(profile.getCompany());
-				data.setIndustry(profile.getIndustry());
-				data.setPosition(profile.getPosition());
-				data.setFileId(profile.getFile().getId());
-				data.setStatus(profile.getStatus());
-				data.setStatusDuration(profile.getStatusDuration());
+				if(profile != null) {
+					data.setProfileId(profile.getId());
+					data.setFullName(profile.getFullName());
+					data.setCompany(profile.getCompany());
+					data.setIndustry(profile.getIndustry());
+					data.setPosition(profile.getPosition());
+					data.setFileId(profile.getFile().getId());
+					data.setStatus(profile.getStatus());
+					data.setStatusDuration(profile.getStatusDuration());
+				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

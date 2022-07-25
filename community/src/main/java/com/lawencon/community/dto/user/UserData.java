@@ -9,9 +9,7 @@ public class UserData {
 	private String verificationId;
 	private String userCode;
 	private String email;
-	private String passwords;
 	private String profileId;
-	private String userId;
 	private String profileCode;
 	private String fullName;
 	private String company;
@@ -63,28 +61,12 @@ public class UserData {
 		this.email = email;
 	}
 
-	public String getPasswords() {
-		return passwords;
-	}
-
-	public void setPasswords(String passwords) {
-		this.passwords = passwords;
-	}
-
 	public String getProfileId() {
 		return profileId;
 	}
 
 	public void setProfileId(String profileId) {
 		this.profileId = profileId;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 	public String getProfileCode() {

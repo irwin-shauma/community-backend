@@ -26,9 +26,9 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping
-	public ResponseEntity<?> showAll(@RequestParam("query") String query, 
-			@RequestParam("startPage") Integer startPage,
-			@RequestParam("maxPage") Integer maxPage) throws Exception {
+	public ResponseEntity<?> showAll(@RequestParam(required = false) String query, 
+			@RequestParam(required = false)Integer startPage,
+			@RequestParam(required = false)Integer maxPage) throws Exception {
 		SearchQuery<UserData> data = userService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}

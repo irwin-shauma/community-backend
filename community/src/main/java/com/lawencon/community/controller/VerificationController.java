@@ -19,15 +19,16 @@ import com.lawencon.community.service.VerificationService;
 import com.lawencon.model.SearchQuery;
 
 @RestController
-@RequestMapping("verification")
+@RequestMapping("verifications")
 public class VerificationController {
 	
 	@Autowired
 	private VerificationService verifService;
 	
 	@GetMapping
-	public ResponseEntity<?> findAll(@RequestParam("query") String query, @RequestParam("startPage") Integer startPage,
-			@RequestParam("maxPage") Integer maxPage) throws Exception {
+	public ResponseEntity<?> findAll(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage,
+			@RequestParam(required = false) Integer maxPage) throws Exception {
 		SearchQuery<VerificationData> result = verifService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
