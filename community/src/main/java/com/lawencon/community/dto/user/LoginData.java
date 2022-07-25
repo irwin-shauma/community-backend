@@ -1,16 +1,16 @@
 package com.lawencon.community.dto.user;
 
 public class LoginData {
-	private Long id;
+	private String id;
 	private String email;
 	private String token;
 	private String roleCode;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

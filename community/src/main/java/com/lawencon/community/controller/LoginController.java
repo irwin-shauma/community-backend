@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +19,7 @@ import com.lawencon.community.dto.user.LoginRes;
 import com.lawencon.community.exception.InvalidLoginException;
 import com.lawencon.community.model.User;
 import com.lawencon.community.service.UserService;
+import com.lawencon.security.ApiSecurity;
 import com.lawencon.util.JwtUtil;
 import com.lawencon.util.JwtUtil.ClaimKey;
 
@@ -29,10 +29,7 @@ import com.lawencon.util.JwtUtil.ClaimKey;
 public class LoginController {
 	
 	@Autowired
-	private AuthenticationManager authManager;
-
-//	@Autowired
-//	private JwtComponent jwtComponent;
+	private ApiSecurity apiSecurity;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -46,7 +43,7 @@ public class LoginController {
 		LoginData data = new LoginData();
 		
 		try {
-			authManager.authenticate(new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword()))
+			apiSecurity.authenticationManagerBean().authenticate(new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword()))
 			.isAuthenticated();
 		} catch (Exception e) {
 			throw new InvalidLoginException("Email/Password is wrong");
@@ -60,6 +57,7 @@ public class LoginController {
 		
 		String token = jwtUtil.generateToken(claims, Duration.ofMinutes(30));
 		
+		data.setId(user.getId());
 		data.setEmail(user.getEmail());
 		data.setRoleCode(user.getRole().getRoleCode());
 		data.setToken(token);
