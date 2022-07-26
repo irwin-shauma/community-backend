@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.lawencon")
-@EntityScan({"com.lawencon"})
+@EntityScan(basePackages = "com.lawencon")
 public class CommunityApplication {
 	
 	public static void main(String[] args) {
