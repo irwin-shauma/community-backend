@@ -55,12 +55,13 @@ public class LoginController {
 		claims.put(ClaimKey.ID.name(), user.getId());
 		claims.put(ClaimKey.ROLE.name(), user.getRole().getRoleCode());
 		
-		String token = jwtUtil.generateToken(claims, Duration.ofMinutes(30));
+		String token = jwtUtil.generateToken(claims, Duration.ofMinutes(45));
 		
 		data.setId(user.getId());
 		data.setEmail(user.getEmail());
 		data.setRoleCode(user.getRole().getRoleCode());
 		data.setToken(token);
+		data.setRefreshToken(userService.updateToken(user.getId()));
 		
 		response.setLoginData(data);
 		

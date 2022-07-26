@@ -4,6 +4,7 @@ public class LoginData {
 	private String id;
 	private String email;
 	private String token;
+	private String refreshToken;
 	private String roleCode;
 
 	public String getId() {
@@ -37,5 +38,14 @@ public class LoginData {
 	public void setRoleCode(String roleCode) {
 		this.roleCode = roleCode;
 	}
+
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
+	
 
 }
