@@ -77,7 +77,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			});
 
 			Profile profile = new Profile();
-			profile.setUser(insertUser);
+//			profile.setUser(insertUser);
 			profile.setFullName(data.getFullName());
 			profile.setCompany(data.getCompany());
 			profile.setIndustry(data.getIndustry());

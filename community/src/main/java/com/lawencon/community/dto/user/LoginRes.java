@@ -1,14 +1,16 @@
 package com.lawencon.community.dto.user;
 
 public class LoginRes {
-	private LoginData loginData;
+	private LoginData data;
 
-	public LoginData getLoginData() {
-		return loginData;
+	public LoginData getData() {
+		return data;
 	}
 
-	public void setLoginData(LoginData loginData) {
-		this.loginData = loginData;
+	public void setData(LoginData data) {
+		this.data = data;
 	}
+
+	
 
 }

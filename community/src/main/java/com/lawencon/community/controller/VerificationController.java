@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.verificaton.VerficationInsertReq;
 import com.lawencon.community.dto.verificaton.VerificationData;
 import com.lawencon.community.dto.verificaton.VerificationFindByIdRes;
 import com.lawencon.community.service.VerificationService;
@@ -40,8 +42,8 @@ public class VerificationController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<InsertRes> insert() throws Exception {
-		InsertRes result = verifService.insert();
+	public ResponseEntity<InsertRes> insert(@RequestBody VerficationInsertReq email) throws Exception {
+		InsertRes result = verifService.insert(email);
 		return new ResponseEntity<InsertRes>(result, HttpStatus.OK);
 	}
 	

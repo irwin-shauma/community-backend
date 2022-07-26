@@ -65,7 +65,7 @@ public class LoginController {
 		data.setToken(token);
 		data.setRefreshToken(userService.updateToken(user.getId()));
 		
-		response.setLoginData(data);
+		response.setData(data);
 		
 		return new ResponseEntity<LoginRes>(response, HttpStatus.OK);
 			
