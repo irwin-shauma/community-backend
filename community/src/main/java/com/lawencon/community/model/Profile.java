@@ -36,15 +36,10 @@ public class Profile extends BaseEntity {
 	@Column(name = "positions")
 	private String position;
 
-	@Column(name = "status")
-	private String status;
-
 	@OneToOne
 	@JoinColumn(name = "file_id")
 	private File file;
 
-	@Column(name = "status_duration")
-	private LocalDateTime statusDuration;
 
 	public String getProfileCode() {
 		return profileCode;
@@ -94,14 +89,6 @@ public class Profile extends BaseEntity {
 		this.position = position;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public File getFile() {
 		return file;
 	}
@@ -110,12 +97,5 @@ public class Profile extends BaseEntity {
 		this.file = file;
 	}
 
-	public LocalDateTime getStatusDuration() {
-		return statusDuration;
-	}
-
-	public void setStatusDuration(LocalDateTime statusDuration) {
-		this.statusDuration = statusDuration;
-	}
 
 }
