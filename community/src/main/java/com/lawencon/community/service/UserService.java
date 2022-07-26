@@ -109,6 +109,8 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		}
 		return result;
 	}
+	
+
 
 	public SearchQuery<UserData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
 		SearchQuery<User> dataDb = userDao.findAll(query, startPage, maxPage);
@@ -134,8 +136,8 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 					data.setIndustry(profile.getIndustry());
 					data.setPosition(profile.getPosition());
 					data.setFileId(profile.getFile().getId());
-					data.setStatus(profile.getStatus());
-					data.setStatusDuration(profile.getStatusDuration());
+//					data.setStatus(profile.getStatus());
+//					data.setStatusDuration(profile.getStatusDuration());
 				}
 				
 			} catch (Exception e) {
@@ -167,8 +169,8 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			data.setIndustry(profile.getIndustry());
 			data.setPosition(profile.getPosition());
 			data.setFileId(profile.getFile().getId());
-			data.setStatus(profile.getStatus());
-			data.setStatusDuration(profile.getStatusDuration());
+//			data.setStatus(profile.getStatus());
+//			data.setStatusDuration(profile.getStatusDuration());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -27,6 +27,10 @@ public class User extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "verification_id")
 	private Verification verification;
+	
+	@OneToOne
+	@JoinColumn(name = "profile_id")
+	private Profile profile;
 
 	@Column(name = "email")
 	private String email;
@@ -53,6 +57,14 @@ public class User extends BaseEntity {
 
 	public void setVerification(Verification verification) {
 		this.verification = verification;
+	}
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 
 	public String getEmail() {
