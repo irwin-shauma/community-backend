@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.lawencon")
-@EntityScan(basePackages = "com.lawencon")
+@ComponentScan({"com.lawencon"})
+@EntityScan({"com.lawencon"})
 public class CommunityApplication {
 	
 	public static void main(String[] args) {

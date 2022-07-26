@@ -20,9 +20,9 @@ public class Profile extends BaseEntity {
 	@Column(name = "profile_code")
 	private String profileCode;
 
-	@OneToOne
-	@JoinColumn(name = "user_id")
-	private User user;
+//	@OneToOne
+//	@JoinColumn(name = "user_id")
+//	private User user;
 
 	@Column(name = "full_name")
 	private String fullName;
@@ -49,13 +49,13 @@ public class Profile extends BaseEntity {
 		this.profileCode = profileCode;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 	public String getFullName() {
 		return fullName;

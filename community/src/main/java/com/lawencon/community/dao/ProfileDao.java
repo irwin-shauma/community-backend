@@ -35,7 +35,7 @@ public class ProfileDao extends AbstractJpaDao<Profile> {
 //			profile.setStatusDuration(((Timestamp) objArr[6]).toLocalDateTime());
 			User user = new User();
 			user.setId(objArr[7].toString());
-			profile.setUser(user);
+//			profile.setUser(user);
 			File file = new File();
 			if (objArr[8] != null) {
 				file.setId(objArr[8].toString());
@@ -81,7 +81,7 @@ public class ProfileDao extends AbstractJpaDao<Profile> {
 //				profile.setStatusDuration(((Timestamp) objArr[7]).toLocalDateTime());
 				User user = new User();
 				user.setId(objArr[8].toString());
-				profile.setUser(user);
+//				profile.setUser(user);
 				File file = new File();
 				if (objArr[9] != null) {
 					file.setId(objArr[9].toString());
