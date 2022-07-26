@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
+import com.lawencon.security.RefreshTokenEntity;
 
 @Entity
 @Table(name = "users", uniqueConstraints = { 
@@ -32,6 +33,11 @@ public class User extends BaseEntity {
 
 	@Column(name = "passwords")
 	private String password;
+	
+	@OneToOne
+	@JoinColumn(name = "token_id")
+	private RefreshTokenEntity token;
+
 
 	public Role getRole() {
 		return role;
@@ -63,6 +69,14 @@ public class User extends BaseEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public RefreshTokenEntity getToken() {
+		return token;
+	}
+
+	public void setToken(RefreshTokenEntity token) {
+		this.token = token;
 	}
 
 }

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.base.ConnHandler;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ProfileDao;
@@ -28,6 +29,9 @@ import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.Role;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
+import com.lawencon.security.RefreshTokenEntity;
+import com.lawencon.security.RefreshTokenService;
+import com.lawencon.util.JwtUtil;
 
 @Service
 public class UserService extends BaseCoreService<User> implements UserDetailsService {
@@ -43,6 +47,12 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 	@Autowired
 	private RoleDao roleDao;
+	
+	@Autowired
+	private JwtUtil jwtUtil;
+	
+	@Autowired
+	private RefreshTokenService tokenService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -182,5 +192,27 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 		return new org.springframework.security.core.userdetails.User(email, userDb.getPassword(), new ArrayList<>());
 	}
+	
+	public String updateToken(String id) throws Exception {
+        User user = userDao.getById(id);
+
+        RefreshTokenEntity refreshToken = jwtUtil.generateRefreshToken();
+        if(user.getToken() != null) {                        
+            RefreshTokenEntity token = ConnHandler.getManager().find(RefreshTokenEntity.class, user.getToken().getId());
+            token.setToken(refreshToken.getToken());
+            token.setExpiredDate(refreshToken.getExpiredDate());
+            begin();
+            tokenService.saveToken(token);
+        } else {
+            begin();
+            RefreshTokenEntity tokenNew = tokenService.saveToken(refreshToken);
+            user.setToken(tokenNew);
+        }
+        
+        User res = save(user);
+        String token = res.getToken().getToken();
+        commit();
+        return token;
+    }
 
 }
