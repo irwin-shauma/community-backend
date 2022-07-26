@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -189,6 +192,8 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		Authentication auth = new UsernamePasswordAuthenticationToken(userDb.getId(), null);
+        SecurityContextHolder.getContext().setAuthentication(auth);
 
 		return new org.springframework.security.core.userdetails.User(email, userDb.getPassword(), new ArrayList<>());
 	}

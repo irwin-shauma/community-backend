@@ -43,7 +43,9 @@ public class LoginController {
 		LoginData data = new LoginData();
 		
 		try {
-			apiSecurity.authenticationManagerBean().authenticate(new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword()))
+			apiSecurity
+			.authenticationManagerBean()
+			.authenticate(new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword()))
 			.isAuthenticated();
 		} catch (Exception e) {
 			throw new InvalidLoginException("Email/Password is wrong");
