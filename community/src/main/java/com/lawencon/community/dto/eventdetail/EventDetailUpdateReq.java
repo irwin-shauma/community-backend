@@ -1,46 +1,42 @@
 package com.lawencon.community.dto.eventdetail;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EventDetailUpdateReq {
 
 	@NotNull(message = "ID can't be empty")
 	private String id;
 
-	@NotBlank(message = "Event Header Code can't be empty")
-	@Size(min =3, max = 50, message = "Event Header Code size must be between 3 to 50")
+	@NotBlank(message = "Event Header Id can't be empty")
 	private String eventHeaderId;
-	
-	@NotNull
+
 	private String fileId;
-	
+
 	@NotNull
 	private Float price;
-	
-	@NotNull
-	private LocalDate dates;
-	
-	@NotNull
-	private LocalTime starts;
-	
-	@NotNull
-	private LocalTime ends;
-	
+
+	@NotNull(message = "Start date can't be empty")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime startDate;
+
+	@NotNull(message = "End date can't be empty")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime endDate;
+
 	@NotBlank(message = "Provider can't be null")
 	private String provider;
-	
+
 	@NotBlank(message = "Location can't be null")
 	private String locations;
+
 	@NotBlank(message = "Active can't be empty")
 	private Boolean isActive;
 
-	@NotBlank(message = " version can't be empty")
-	private Integer version;
 
 	public String getId() {
 		return id;
@@ -49,8 +45,6 @@ public class EventDetailUpdateReq {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-
 
 	public String getEventHeaderId() {
 		return eventHeaderId;
@@ -76,28 +70,20 @@ public class EventDetailUpdateReq {
 		this.price = price;
 	}
 
-	public LocalDate getDates() {
-		return dates;
+	public LocalDateTime getStartDate() {
+		return startDate;
 	}
 
-	public void setDates(LocalDate dates) {
-		this.dates = dates;
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
 	}
 
-	public LocalTime getStarts() {
-		return starts;
+	public LocalDateTime getEndDate() {
+		return endDate;
 	}
 
-	public void setStarts(LocalTime starts) {
-		this.starts = starts;
-	}
-
-	public LocalTime getEnds() {
-		return ends;
-	}
-
-	public void setEnds(LocalTime ends) {
-		this.ends = ends;
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
 	}
 
 	public String getProvider() {
@@ -122,13 +108,5 @@ public class EventDetailUpdateReq {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
 	}
 }

@@ -41,11 +41,14 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 			articleHdr.setTitle(data.getTitle());
 			articleHdr.setContents(data.getContents());
 			
-			File file = new File();
-			file.setFileName(data.getFileName());
-			file.setFileExtension(data.getFileExtension());
-			File fileRes = fileDao.save(file);
-			articleHdr.setFileId(fileRes);
+			if(data.getFileName() != null) {
+				File file = new File();
+				file.setFileName(data.getFileName());
+				file.setFileExtension(data.getFileExtension());
+				File fileRes = fileDao.save(file);
+				articleHdr.setFile(fileRes);
+			}
+			
 			articleHdr.setIsActive(true);
 			
 			ArticleHeader inserted = articleHeaderDao.save(articleHdr);
@@ -68,21 +71,35 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 	
 	public UpdateRes update(ArticleHeaderUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
+		begin();
 		try {
 			ArticleHeader dataDb = articleHeaderDao.getById(data.getId());
 			dataDb.setTitle(data.getTitle());
 			dataDb.setContents(data.getContents());
-			
-			File file = new File();
-			file.setFileName(data.getFileName());
-			file.setFileExtension(data.getFileExtension());
-			
-			begin();
-			File fileRes = fileDao.save(file);
-			dataDb.setFileId(fileRes);
 			dataDb.setIsActive(data.getIsActive());
 			
-			ArticleHeader updated = save(dataDb);
+			ArticleHeader updated = null;
+			if(data.getFileId() != null && data.getFileName() != null) {
+				File file = fileDao.getById(data.getFileId());
+				file.setFileName(data.getFileName());
+				file.setFileExtension(data.getFileExtension());
+				fileDao.save(file);
+				updated = save(dataDb);
+			} 
+			else if (data.getFileId() == null && data.getFileName() != null){
+				File file = new File();
+				file.setFileName(data.getFileName());
+				file.setFileExtension(data.getFileExtension());
+				File fileRes = fileDao.save(file);
+				dataDb.setFile(fileRes);
+				updated = save(dataDb);
+			}
+			else if(data.getFileId() == null){
+				File formerFile = fileDao.getByIdWithoutDetach(dataDb.getFile().getId());
+				dataDb.setFile(null);
+				fileDao.delete(formerFile);
+				updated = save(dataDb);
+			}
 			commit();
 			
 			UpdateDataRes dataRes = new UpdateDataRes();
@@ -104,6 +121,9 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 		
 		ArticleHeaderData data = new ArticleHeaderData();
 		data.setId(articleHdr.getId());
+		if(articleHdr.getFile() != null) {
+			data.setFileId(articleHdr.getFile().getId());
+		}
 		data.setTitle(articleHdr.getTitle());
 		data.setContents(articleHdr.getContents());
 		data.setIsActive(articleHdr.getIsActive());
@@ -122,6 +142,9 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 		dataDb.getData().forEach(articleHdr -> {
 			ArticleHeaderData data = new ArticleHeaderData();
 			data.setId(articleHdr.getId());
+			if(articleHdr.getFile() != null) {
+				data.setFileId(articleHdr.getFile().getId());
+			}
 			data.setTitle(articleHdr.getTitle());
 			data.setContents(articleHdr.getContents());
 			data.setIsActive(articleHdr.getIsActive());
@@ -141,6 +164,10 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 		try {
 			begin();
+			
+			ArticleHeader articleHeader = articleHeaderDao.getById(id);
+			fileDao.deleteById(articleHeader.getFile().getId());
+			
 			boolean isDeleted = articleHeaderDao.deleteById(id);
 			commit();
 			if (isDeleted) {

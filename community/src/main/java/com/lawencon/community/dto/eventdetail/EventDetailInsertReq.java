@@ -1,32 +1,31 @@
 package com.lawencon.community.dto.eventdetail;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EventDetailInsertReq {
 	
-	@NotBlank(message = "Event Header Code can't be empty")
-	@Size(min =3, max = 50, message = "Event Header Code size must be between 3 to 50")
+	@NotBlank(message = "Event Detail Id can't be empty")
 	private String eventHeaderId;
 	
-	@NotNull
 	private String fileId;
 	
-	@NotNull
+	@NotNull(message = "Price can't be empty")
 	private Float price;
 	
-	@NotNull
-	private LocalDate dates;
+	@NotNull(message = "Start date can't be empty")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+//	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.000'Z'")
+	private LocalDateTime startDate;
 	
-	@NotNull
-	private LocalTime starts;
-	
-	@NotNull
-	private LocalTime ends;
+	@NotNull(message = "End date can't be empty")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+//	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.000'Z'")
+	private LocalDateTime endDate;
 	
 	@NotBlank(message = "Provider can't be null")
 	private String provider;
@@ -57,29 +56,21 @@ public class EventDetailInsertReq {
 	public void setPrice(Float price) {
 		this.price = price;
 	}
-
-	public LocalDate getDates() {
-		return dates;
+	
+	public LocalDateTime getStartDate() {
+		return startDate;
 	}
 
-	public void setDates(LocalDate dates) {
-		this.dates = dates;
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
 	}
 
-	public LocalTime getStarts() {
-		return starts;
+	public LocalDateTime getEndDate() {
+		return endDate;
 	}
 
-	public void setStarts(LocalTime starts) {
-		this.starts = starts;
-	}
-
-	public LocalTime getEnds() {
-		return ends;
-	}
-
-	public void setEnds(LocalTime ends) {
-		this.ends = ends;
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
 	}
 
 	public String getProvider() {
@@ -97,6 +88,7 @@ public class EventDetailInsertReq {
 	public void setLocations(String locations) {
 		this.locations = locations;
 	}
+
 	
 	
 }

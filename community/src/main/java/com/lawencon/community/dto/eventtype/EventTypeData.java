@@ -16,10 +16,6 @@ public class EventTypeData {
 		this.id = id;
 	}
 
-	public String getThreadHeaderCode() {
-		return threadTypeCode;
-	}
-
 	public String getThreadTypeCode() {
 		return threadTypeCode;
 	}
@@ -52,5 +48,4 @@ public class EventTypeData {
 		this.version = version;
 	}
 
-	
 }
