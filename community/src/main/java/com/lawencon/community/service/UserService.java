@@ -77,7 +77,6 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			});
 
 			Profile profile = new Profile();
-//			profile.setUser(insertUser);
 			profile.setFullName(data.getFullName());
 			profile.setCompany(data.getCompany());
 			profile.setIndustry(data.getIndustry());
@@ -93,7 +92,8 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			File insertedFile = fileDao.save(file);
 
 			profile.setFile(insertedFile);
-			profileDao.save(profile);
+			Profile profileResult = profileDao.save(profile);
+			user.setProfile(profileResult);
 			userDao.save(user);
 			commit();
 
@@ -128,16 +128,14 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			Profile profile = null;
 			
 			try {
-				profile = profileDao.findByUserId(user.getId());
+				profile = profileDao.getById(user.getId());
 				if(profile != null) {
 					data.setProfileId(profile.getId());
 					data.setFullName(profile.getFullName());
 					data.setCompany(profile.getCompany());
 					data.setIndustry(profile.getIndustry());
 					data.setPosition(profile.getPosition());
-					data.setFileId(profile.getFile().getId());
-//					data.setStatus(profile.getStatus());
-//					data.setStatusDuration(profile.getStatusDuration());
+//					data.setFileId(profile.getFile().getId());
 				}
 				
 			} catch (Exception e) {
