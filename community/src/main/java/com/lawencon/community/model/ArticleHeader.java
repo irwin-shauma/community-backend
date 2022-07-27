@@ -40,7 +40,7 @@ public class ArticleHeader extends BaseEntity {
 		return file;
 	}
 
-	public void setFileId(File file) {
+	public void setFile(File file) {
 		this.file = file;
 	}
 

@@ -7,6 +7,7 @@ public class ArticleHeaderUpdateReq {
 
 	@NotNull
 	private String id;
+	private String fileId;
 	private String fileName;
 	private String fileExtension;
 	private Boolean isActive;
@@ -23,6 +24,14 @@ public class ArticleHeaderUpdateReq {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 	public String getFileName() {

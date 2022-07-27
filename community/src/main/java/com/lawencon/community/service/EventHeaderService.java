@@ -35,7 +35,6 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 		InsertRes result = new InsertRes();
 		try {
 			EventHeader eventHeader = new EventHeader();
-			eventHeader.setEventHeaderCode(data.getEventHeaderCode());
 			eventHeader.setTitle(data.getTitle());
 			
 			EventType eventType = eventTypeDao.getById(data.getEventTypeId());
@@ -66,17 +65,15 @@ public class EventHeaderService extends BaseCoreService<EventHeader>{
 		UpdateRes result = new UpdateRes();
 
 		try {
+			begin();
 			EventHeader eventHeaderDb = eventHeaderDao.getById(data.getId());
-			eventHeaderDb.setEventHeaderCode(data.getEventHeaderCode());
 			eventHeaderDb.setTitle(data.getTitle());
 			
-			EventType eventDb = eventTypeDao.getById(data.getId());
+			EventType eventDb = eventTypeDao.getByIdWithoutDetach(data.getId());
 			eventHeaderDb.setEventTypeId(eventDb);
 
 			eventHeaderDb.setIsActive(data.getIsActive());
-			eventHeaderDb.setVersion(data.getVersion());
 
-			begin();
 			EventHeader eventHeaderUpdate = eventHeaderDao.save(eventHeaderDb);
 			commit();
 

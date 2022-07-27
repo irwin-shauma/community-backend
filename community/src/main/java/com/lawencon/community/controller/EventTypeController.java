@@ -3,6 +3,7 @@ package com.lawencon.community.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.eventtype.EventTypeData;
@@ -29,8 +31,9 @@ public class EventTypeController {
 	private EventTypeService eventTypeService;
 	
 	@GetMapping
-	public ResponseEntity<?> getAll(@RequestParam("query") String query, @RequestParam("startPage") Integer startPage,
-			@RequestParam("maxPage") Integer maxPage) throws Exception {
+	public ResponseEntity<?> getAll(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage,
+			@RequestParam(required = false) Integer maxPage) throws Exception {
 		SearchQuery<EventTypeData> result = eventTypeService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
@@ -51,6 +54,12 @@ public class EventTypeController {
 	public ResponseEntity<UpdateRes> update(@RequestBody EventTypeUpdateReq data) throws Exception {
 		UpdateRes result = eventTypeService.update(data);
 		return new ResponseEntity<UpdateRes>(result, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("{id}")
+	public ResponseEntity<DeleteRes> delete(@PathVariable("id") String id) throws Exception {
+		DeleteRes result = eventTypeService.deleteById(id);
+		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
 	}
 
 }

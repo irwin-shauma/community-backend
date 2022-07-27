@@ -29,8 +29,9 @@ public class EventDetailController {
 	private EventDetailService eventDetailService;
 
 	@GetMapping
-	public ResponseEntity<?> getAll(@RequestParam("query") String query, @RequestParam("startPage") Integer startPage,
-			@RequestParam("maxPage") Integer maxPage) throws Exception {
+	public ResponseEntity<?> getAll(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage,
+			@RequestParam(required = false) Integer maxPage) throws Exception {
 		SearchQuery<EventDetailData> result = eventDetailService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

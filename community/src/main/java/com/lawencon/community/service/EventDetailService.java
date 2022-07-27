@@ -3,6 +3,7 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
@@ -25,34 +26,40 @@ import com.lawencon.community.model.File;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class EventDetailService extends BaseCoreService<EventDetail>{
-	
+public class EventDetailService extends BaseCoreService<EventDetail> {
+
+	@Autowired
 	private EventDetailDao eventDetailDao;
+
+	@Autowired
 	private EventHeaderDao eventHeaderDao;
+
+	@Autowired
 	private FileDao fileDao;
-	
+
 	public InsertRes insert(EventDetailInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
+			begin();
 			EventDetail eventDetail = new EventDetail();
-			
-			EventHeader eventHeader = new EventHeader();
-			eventHeader.setId(data.getEventHeaderId());
+
+			EventHeader eventHeader = eventHeaderDao.getByIdWithoutDetach(data.getEventHeaderId());
+
 			eventDetail.setEventHeader(eventHeader);
-			
-			File  file = new File();
-			file.setId(data.getFileId());
-			eventDetail.setFile(file);
-			
+
+			if (data.getFileId() != null) {
+
+				File file = fileDao.getByIdWithoutDetach(data.getFileId());
+				eventDetail.setFile(file);
+			}
+
 			eventDetail.setPrice(data.getPrice());
-			eventDetail.setDates(data.getDates());
-			eventDetail.setStarts(data.getStarts());
-			eventDetail.setEnds(data.getEnds());
+			eventDetail.setStartDate(data.getStartDate());
+			eventDetail.setEndDate(data.getEndDate());
 			eventDetail.setProvider(data.getProvider());
 			eventDetail.setLocations(data.getLocations());
 			eventDetail.setIsActive(true);
 
-			begin();
 			EventDetail eventDetailInsert = save(eventDetail);
 			commit();
 
@@ -69,29 +76,28 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 
 		return result;
 	}
-	
-	
+
 	public UpdateRes update(EventDetailUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 
 		try {
 			EventDetail eventDetailDb = eventDetailDao.getById(data.getId());
 			eventDetailDb.setId(data.getId());
-			
-			EventHeader eventHeaderDb = eventHeaderDao.getById(data.getEventHeaderId());
+
+			EventHeader eventHeaderDb = eventHeaderDao.getByIdWithoutDetach(data.getEventHeaderId());
 			eventDetailDb.setEventHeader(eventHeaderDb);
 			
-			File fileDb = fileDao.getById(data.getFileId());
-			eventDetailDb.setFile(fileDb);
-			
+			if (data.getFileId() != null) {
+				File fileDb = fileDao.getByIdWithoutDetach(data.getFileId());
+				eventDetailDb.setFile(fileDb);
+			}
+
 			eventDetailDb.setPrice(data.getPrice());
-			eventDetailDb.setDates(data.getDates());
-			eventDetailDb.setStarts(data.getStarts());
-			eventDetailDb.setEnds(data.getEnds());
+			eventDetailDb.setStartDate(data.getStartDate());
+			eventDetailDb.setEndDate(data.getEndDate());
 			eventDetailDb.setProvider(data.getProvider());
 			eventDetailDb.setLocations(data.getLocations());
 			eventDetailDb.setIsActive(data.getIsActive());
-			eventDetailDb.setVersion(data.getVersion());
 
 			begin();
 			EventDetail eventDetailUpdate = eventDetailDao.save(eventDetailDb);
@@ -112,7 +118,6 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 		return result;
 	}
 
-	
 	public EventDetailFindByIdRes getById(String id) throws Exception {
 		EventDetail eventDetailDb = eventDetailDao.getById(id);
 
@@ -120,10 +125,11 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 		data.setId(eventDetailDb.getId());
 		data.setEventDetailCode(eventDetailDb.getEventDetailCode());
 		data.setEventHeaderId(eventDetailDb.getEventHeader().getId());
-		data.setFileId(eventDetailDb.getFile().getId());
-		data.setDates(eventDetailDb.getDates());
-		data.setStarts(eventDetailDb.getStarts());
-		data.setEnds(eventDetailDb.getEnds());
+		if(eventDetailDb.getFile() != null) {
+			data.setFileId(eventDetailDb.getFile().getId());
+		}
+		data.setStartDate(eventDetailDb.getStartDate());
+		data.setEndDate(eventDetailDb.getEndDate());
 		data.setProvider(eventDetailDb.getProvider());
 		data.setLocations(eventDetailDb.getLocations());
 		data.setIsActive(eventDetailDb.getIsActive());
@@ -134,8 +140,7 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 
 		return result;
 	}
-	
-	
+
 	public SearchQuery<EventDetailData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
 		SearchQuery<EventDetail> dataDb = eventDetailDao.findAll(query, startPage, maxPage);
 
@@ -146,10 +151,11 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 			data.setId(eventDetail.getId());
 			data.setEventDetailCode(eventDetail.getEventDetailCode());
 			data.setEventHeaderId(eventDetail.getEventHeader().getId());
-			data.setFileId(eventDetail.getFile().getId());
-			data.setDates(eventDetail.getDates());
-			data.setStarts(eventDetail.getStarts());
-			data.setEnds(eventDetail.getEnds());
+			if(eventDetail.getFile() != null) {
+				data.setFileId(eventDetail.getFile().getId());
+			}
+			data.setStartDate(eventDetail.getStartDate());
+			data.setEndDate(eventDetail.getEndDate());
 			data.setProvider(eventDetail.getProvider());
 			data.setLocations(eventDetail.getLocations());
 			data.setIsActive(eventDetail.getIsActive());
@@ -164,8 +170,7 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 
 		return result;
 	}
-	
-	
+
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
@@ -187,7 +192,5 @@ public class EventDetailService extends BaseCoreService<EventDetail>{
 
 		return result;
 	}
-	
-	
 
 }

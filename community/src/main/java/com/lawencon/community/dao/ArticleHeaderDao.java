@@ -32,7 +32,7 @@ public class ArticleHeaderDao extends AbstractJpaDao<ArticleHeader> {
 			File file = new File();
 			file.setId(objArr[2].toString());
 			
-			articleHeader.setFileId(file);
+			articleHeader.setFile(file);
 			articleHeader.setTitle(objArr[3].toString());
 			articleHeader.setContents(objArr[4].toString());
 			articleHeader.setCreatedBy(objArr[5].toString());

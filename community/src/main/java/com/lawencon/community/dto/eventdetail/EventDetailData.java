@@ -1,22 +1,19 @@
 package com.lawencon.community.dto.eventdetail;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class EventDetailData {
 	private String id;
 	private String eventDetailCode;
 	private String eventHeaderId;
 	private String fileId;
-	private LocalDate dates;
-	private LocalTime starts;
-	private LocalTime ends;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
 	private String provider;
 	private String locations;
 	private Boolean isActive;
 	private Integer version;
 
-	
 	public String getId() {
 		return id;
 	}
@@ -49,24 +46,20 @@ public class EventDetailData {
 		this.fileId = fileId;
 	}
 
-	public LocalDate getDates() {
-		return dates;
+	public LocalDateTime getStartDate() {
+		return startDate;
 	}
 
-	public void setDates(LocalDate dates) {
-		this.dates = dates;
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
 	}
 
-	public LocalTime getStarts() {
-		return starts;
+	public LocalDateTime getEndDate() {
+		return endDate;
 	}
 
-	public void setStarts(LocalTime starts) {
-		this.starts = starts;
-	}
-
-	public LocalTime getEnds() {
-		return ends;
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
 	}
 
 	public String getProvider() {
@@ -85,10 +78,6 @@ public class EventDetailData {
 		this.locations = locations;
 	}
 
-	public void setEnds(LocalTime ends) {
-		this.ends = ends;
-	}
-
 	public Boolean getIsActive() {
 		return isActive;
 	}
@@ -104,8 +93,5 @@ public class EventDetailData {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-	
-	
 
-	
 }

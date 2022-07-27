@@ -1,7 +1,6 @@
 package com.lawencon.community.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,11 +27,19 @@ public class EventDetail extends BaseEntity {
 	@JoinColumn(name = "file_id")
 	private File file;
 
+	@Column(name = "price")
 	private Float price;
-	private LocalDate dates;
-	private LocalTime starts;
-	private LocalTime ends;
+	
+	@Column(name = "start_date")
+	private LocalDateTime startDate;
+	
+	@Column(name = "end_date")
+	private LocalDateTime endDate;
+	
+	@Column(name = "provider")
 	private String provider;
+	
+	@Column(name = "locations")
 	private String locations;
 
 	public String getEventDetailCode() {
@@ -67,28 +74,20 @@ public class EventDetail extends BaseEntity {
 		this.price = price;
 	}
 
-	public LocalDate getDates() {
-		return dates;
+	public LocalDateTime getStartDate() {
+		return startDate;
 	}
 
-	public void setDates(LocalDate dates) {
-		this.dates = dates;
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
 	}
 
-	public LocalTime getStarts() {
-		return starts;
+	public LocalDateTime getEndDate() {
+		return endDate;
 	}
 
-	public void setStarts(LocalTime starts) {
-		this.starts = starts;
-	}
-
-	public LocalTime getEnds() {
-		return ends;
-	}
-
-	public void setEnds(LocalTime ends) {
-		this.ends = ends;
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
 	}
 
 	public String getProvider() {
