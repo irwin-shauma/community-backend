@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
+import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ThreadHeaderDao;
-import com.lawencon.community.dao.ThreadTypeDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
@@ -19,6 +19,7 @@ import com.lawencon.community.dto.threadheader.ThreadHeaderData;
 import com.lawencon.community.dto.threadheader.ThreadHeaderFindByIdRes;
 import com.lawencon.community.dto.threadheader.ThreadHeaderInsertReq;
 import com.lawencon.community.dto.threadheader.ThreadHeaderUpdateReq;
+import com.lawencon.community.model.File;
 import com.lawencon.community.model.ThreadHeader;
 import com.lawencon.community.model.ThreadType;
 import com.lawencon.model.SearchQuery;
@@ -30,7 +31,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 	private ThreadHeaderDao threadHdrDao;
 	
 	@Autowired
-	private ThreadTypeDao threadTypeDao;
+	private FileDao fileDao;
 	
 	public InsertRes insert(ThreadHeaderInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -39,12 +40,20 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 			threadHdr.setTitle(data.getTitle());
 			threadHdr.setContentThread(data.getContentThread());
 			
-			ThreadType threadType = threadTypeDao.getById(data.getThreadTypeId());
+			ThreadType threadType = new ThreadType();
+			threadType.setId(data.getThreadTypeId());
 			
 			threadHdr.setThreadType(threadType);
 			threadHdr.setIsActive(true);
 			
+			File file = new File();
+			file.setFileName(data.getFileName());
+			file.setFileExtension(data.getFileExtension());
+			
 			begin();
+			File insertedFile = fileDao.save(file);
+			threadHdr.setFile(insertedFile);
+			
 			ThreadHeader inserted = save(threadHdr);
 			commit();
 			
@@ -68,14 +77,20 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 			threadHdr.setTitle(data.getTitle());
 			threadHdr.setContentThread(data.getContentThread());
 			threadHdr.setIsActive(data.getIsActive());
-			threadHdr.setVersion(data.getVersion());
 			
-			ThreadType threadType = threadTypeDao.getById(data.getThreadTypeId());
+			ThreadType threadType = new ThreadType();
+			threadType.setId(data.getThreadTypeId());
 			
 			threadHdr.setThreadType(threadType);
 			threadHdr.setIsActive(true);
 			
+			File file = new File();
+			file.setFileName(data.getFileName());
+			file.setFileExtension(data.getFileExtension());
+			
 			begin();
+			File insertedFile = fileDao.save(file);
+			threadHdr.setFile(insertedFile);
 			ThreadHeader updated = save(threadHdr);
 			commit();
 			
@@ -101,8 +116,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 		thread.setId(threadHdr.getId());
 		thread.setTitle(threadHdr.getTitle());
 		
-		ThreadType threadType = threadTypeDao.getById(thread.getThreadTypeId());
-		thread.setThreadTypeId(threadType.getId());
+		thread.setThreadTypeId(threadHdr.getThreadType().getId());
 		thread.setContentThread(threadHdr.getContentThread());
 		thread.setVersion(threadHdr.getVersion());
 		thread.setIsActive(threadHdr.getIsActive());
@@ -122,8 +136,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 			thread.setId(threadHdr.getId());
 			thread.setTitle(threadHdr.getTitle());
 			
-			ThreadType threadType = threadTypeDao.getById(thread.getThreadTypeId());
-			thread.setThreadTypeId(threadType.getId());
+			thread.setThreadTypeId(threadHdr.getThreadType().getId());
 			thread.setContentThread(threadHdr.getContentThread());
 			thread.setVersion(threadHdr.getVersion());
 			thread.setIsActive(threadHdr.getIsActive());

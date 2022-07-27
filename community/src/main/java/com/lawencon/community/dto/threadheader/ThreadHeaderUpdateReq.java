@@ -6,16 +6,17 @@ import javax.validation.constraints.NotNull;
 public class ThreadHeaderUpdateReq {
 
 	private String id;
-	
+
 	@NotBlank(message = "Title can't be empty")
 	private String title;
-	
+
 	@NotBlank(message = "Content cant' be empty")
 	private String contentThread;
-	
+
 	@NotNull(message = "Thread type can't be empty")
 	private String threadTypeId;
-	private Integer version;
+	private String fileName;
+	private String fileExtension;
 	private Boolean isActive;
 
 	public String getId() {
@@ -50,12 +51,20 @@ public class ThreadHeaderUpdateReq {
 		this.threadTypeId = threadTypeId;
 	}
 
-	public Integer getVersion() {
-		return version;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setVersion(Integer version) {
-		this.version = version;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
 	}
 
 	public Boolean getIsActive() {

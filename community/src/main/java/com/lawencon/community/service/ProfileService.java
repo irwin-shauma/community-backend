@@ -1,8 +1,5 @@
 package com.lawencon.community.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,15 +66,6 @@ public class ProfileService extends BaseCoreService<Profile> {
 		}
 	}
 	
-	public List<Profile> findByStatus(String status) throws Exception {
-		List<Profile> profile = new ArrayList<Profile>();
-		try {
-			profile = profileDao.findByStatus(status);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return profile;
-	}
 
 
 }
