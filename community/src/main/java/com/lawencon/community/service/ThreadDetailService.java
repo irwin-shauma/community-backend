@@ -47,10 +47,12 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 		try {
 			ThreadDetail threadDetail = new ThreadDetail();
 			
-			ThreadHeader threadHeader = threadHeaderDao.getById(data.getThreadHeaderId());
+			ThreadHeader threadHeader = new ThreadHeader();
+			threadHeader.setId(data.getThreadHeaderId());
 			threadDetail.setThreadHeader(threadHeader);
 			
-			User user = userDao.getById(data.getUserId());
+			User user = new User();
+			user.setId(getAuthPrincipal());
 			threadDetail.setUser(user);
 			threadDetail.setCommentThread(data.getCommentThread());
 			
