@@ -48,7 +48,7 @@ public class VerificationService extends BaseCoreService<Verification> {
 			template.put("code", verification);
 
 			begin();
-			Verification inserted = save(verif);
+			Verification inserted = verifDao.save(verif);
 			commit();
 
 			new Thread(() -> {

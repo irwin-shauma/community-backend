@@ -32,30 +32,30 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 
 	@Autowired
 	private ThreadDetailDao threadDetailDao;
-	
+
 	@Autowired
 	private ThreadHeaderDao threadHeaderDao;
-	
+
 	@Autowired
 	private FileDao fileDao;
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
 	public InsertRes insert(ThreadDetailInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
 			ThreadDetail threadDetail = new ThreadDetail();
-			
+
 			ThreadHeader threadHeader = new ThreadHeader();
 			threadHeader.setId(data.getThreadHeaderId());
 			threadDetail.setThreadHeader(threadHeader);
-			
+
 			User user = new User();
 			user.setId(getAuthPrincipal());
 			threadDetail.setUser(user);
 			threadDetail.setCommentThread(data.getCommentThread());
-			
+
 			threadDetail.setIsActive(true);
 
 			begin();
@@ -66,7 +66,7 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 			insertDataRes.setId(threadDetailInsert.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.getMessageResponse());	
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -75,23 +75,22 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 
 		return result;
 	}
-	
-	
+
 	public UpdateRes update(ThreadDetailUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 
 		try {
 			ThreadDetail threadDetailInsert = threadDetailDao.getById(data.getId());
-			
+
 			ThreadHeader threadHeader = threadHeaderDao.getById(data.getThreadHeaderId());
 			threadDetailInsert.setThreadHeader(threadHeader);
-			
+
 			File file = fileDao.getById(data.getFileId());
 			threadDetailInsert.setFile(file);
-			
+
 			User user = userDao.getById(data.getUserId());
 			threadDetailInsert.setUser(user);
-			
+
 			threadDetailInsert.setCommentThread(data.getCommentThread());
 			threadDetailInsert.setIsActive(true);
 			threadDetailInsert.setVersion(data.getVersion());
@@ -114,15 +113,16 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 		}
 		return result;
 	}
-	
-	
+
 	public ThreadDetailFindByIdRes getById(String id) throws Exception {
 		ThreadDetail threadDetailDb = threadDetailDao.getById(id);
 
 		ThreadDetailData data = new ThreadDetailData();
 		data.setId(threadDetailDb.getId());
 		data.setThreadHeaderId(threadDetailDb.getThreadHeader().getId());
-		data.setFileId(threadDetailDb.getFile().getId());
+		if(threadDetailDb.getFile() != null) {
+			data.setFileId(threadDetailDb.getFile().getId());				
+		}
 		data.setUserId(threadDetailDb.getUser().getId());
 		data.setCommentThread(threadDetailDb.getCommentThread());
 		data.setIsActive(threadDetailDb.getIsActive());
@@ -133,8 +133,7 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 
 		return result;
 	}
-	
-	
+
 	public SearchQuery<ThreadDetailData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
 		SearchQuery<ThreadDetail> dataDb = threadDetailDao.findAll(query, startPage, maxPage);
 
@@ -144,7 +143,9 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 			ThreadDetailData data = new ThreadDetailData();
 			data.setId(threadDetail.getId());
 			data.setThreadHeaderId(threadDetail.getThreadHeader().getId());
-			data.setFileId(threadDetail.getFile().getId());
+			if(threadDetail.getFile() != null) {
+				data.setFileId(threadDetail.getFile().getId());				
+			}
 			data.setUserId(threadDetail.getUser().getId());
 			data.setVersion(threadDetail.getVersion());
 
@@ -157,7 +158,7 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 
 		return result;
 	}
-	
+
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
@@ -179,5 +180,5 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 
 		return result;
 	}
-	
+
 }
