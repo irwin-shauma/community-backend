@@ -1,26 +1,22 @@
 package com.lawencon.community.dto.user;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 public class UserUpdateReq {
 
 	private String id;
 
-	@NotBlank(message = "User Id can't be empty")
-	private String userId;
+	@NotBlank(message = "Fullname can't be empty")
+	private String fullName;
 
-	@NotBlank(message = "Role Id can't be empty")
-	private String roleId;
+	@NotBlank(message = "Company can't be empty")
+	private String company;
 
-	@NotBlank(message = "Verification Id can't be empty")
-	private String verificationId;
+	@NotBlank(message = "Industry can't be empty")
+	private String industry;
 
-	@NotNull(message = "Email can't be empty")
-	private String email;
-
-	@NotBlank(message = "Passwords can't be empty")
-	private String passwords;
+	@NotBlank(message = "Position can't be empty")
+	private String position;
 
 	public String getId() {
 		return id;
@@ -30,44 +26,36 @@ public class UserUpdateReq {
 		this.id = id;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getFullName() {
+		return fullName;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
-	public String getRoleId() {
-		return roleId;
+	public String getCompany() {
+		return company;
 	}
 
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
-	public String getVerificationId() {
-		return verificationId;
+	public String getIndustry() {
+		return industry;
 	}
 
-	public void setVerificationId(String verificationId) {
-		this.verificationId = verificationId;
+	public void setIndustry(String industry) {
+		this.industry = industry;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getPosition() {
+		return position;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPasswords() {
-		return passwords;
-	}
-
-	public void setPasswords(String passwords) {
-		this.passwords = passwords;
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 }

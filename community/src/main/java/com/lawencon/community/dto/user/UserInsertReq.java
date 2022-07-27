@@ -1,7 +1,5 @@
 package com.lawencon.community.dto.user;
 
-import java.time.LocalDateTime;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -30,10 +28,6 @@ public class UserInsertReq {
 
 	@NotBlank(message = "Position can't be empty")
 	private String position;
-	private String status;
-	private String fileName;
-	private String fileExtension;
-	private LocalDateTime statusDuration;
 
 	public String getRoleId() {
 		return roleId;
@@ -97,38 +91,6 @@ public class UserInsertReq {
 
 	public void setPosition(String position) {
 		this.position = position;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public String getFileExtension() {
-		return fileExtension;
-	}
-
-	public void setFileExtension(String fileExtension) {
-		this.fileExtension = fileExtension;
-	}
-
-	public LocalDateTime getStatusDuration() {
-		return statusDuration;
-	}
-
-	public void setStatusDuration(LocalDateTime statusDuration) {
-		this.statusDuration = statusDuration;
 	}
 
 }

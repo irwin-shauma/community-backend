@@ -1,7 +1,5 @@
 package com.lawencon.community.dto.user;
 
-import java.time.LocalDateTime;
-
 public class UserData {
 
 	private String id;
@@ -15,9 +13,7 @@ public class UserData {
 	private String company;
 	private String industry;
 	private String position;
-	private String status;
 	private String fileId;
-	private LocalDateTime statusDuration;
 	private Boolean isActive;
 	private Integer version;
 
@@ -109,13 +105,6 @@ public class UserData {
 		this.position = position;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
 
 	public String getFileId() {
 		return fileId;
@@ -123,14 +112,6 @@ public class UserData {
 
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
-	}
-
-	public LocalDateTime getStatusDuration() {
-		return statusDuration;
-	}
-
-	public void setStatusDuration(LocalDateTime statusDuration) {
-		this.statusDuration = statusDuration;
 	}
 
 	public Boolean getIsActive() {

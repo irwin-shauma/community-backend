@@ -19,14 +19,9 @@ public class WebIgnoringConfig {
 	@Qualifier("webIgnoring")
 	public List<RequestMatcher> antMatchers() {
 		matchers.add(new AntPathRequestMatcher("/users", HttpMethod.POST.name()));
-		matchers.add(new AntPathRequestMatcher("/swagger-ui.html", HttpMethod.GET.name()));
-		matchers.add(new AntPathRequestMatcher("/students", HttpMethod.POST.name()));
-		
-		matchers.add(new AntPathRequestMatcher("/users/**", HttpMethod.POST.name()));
 		matchers.add(new AntPathRequestMatcher("/users/**", HttpMethod.GET.name()));
 		
 		matchers.add(new AntPathRequestMatcher("/login/**", HttpMethod.POST.name()));
-		matchers.add(new AntPathRequestMatcher("/verifications/**", HttpMethod.POST.name()));
 		
 		return matchers;
 	}

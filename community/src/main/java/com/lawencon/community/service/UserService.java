@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +22,13 @@ import com.lawencon.community.dao.RoleDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.UpdateDataRes;
+import com.lawencon.community.dto.UpdateRes;
+import com.lawencon.community.dto.user.UpdatePhotoProfileReq;
 import com.lawencon.community.dto.user.UserData;
 import com.lawencon.community.dto.user.UserFindByIdRes;
 import com.lawencon.community.dto.user.UserInsertReq;
+import com.lawencon.community.dto.user.UserUpdateReq;
 import com.lawencon.community.exception.InvalidLoginException;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Profile;
@@ -50,10 +53,10 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 	@Autowired
 	private RoleDao roleDao;
-	
+
 	@Autowired
 	private JwtUtil jwtUtil;
-	
+
 	@Autowired
 	private RefreshTokenService tokenService;
 
@@ -63,45 +66,38 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 	public InsertRes insert(UserInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
-			begin();
-			User user = new User();
-			user.setEmail(data.getEmail());
-			user.setPassword(passwordEncoder.encode(data.getPassword()));
-			
-			Role role = roleDao.getById(data.getRoleId());
-			user.setRole(role);
-			user.setIsActive(true);
-			
-			User insertUser = saveNonLogin(user, () -> {
-				return user.getId();
-			});
+			User userSystem = userDao.findByRoleCode("SYSTEM");
 
 			Profile profile = new Profile();
 			profile.setFullName(data.getFullName());
 			profile.setCompany(data.getCompany());
 			profile.setIndustry(data.getIndustry());
 			profile.setPosition(data.getPosition());
-			profile.setCreatedBy(insertUser.getCreatedBy());
 			profile.setIsActive(true);
+			profile.setCreatedBy(userSystem.getId());
 
-			File file = new File();
-			file.setFileName(data.getFileName());
-			file.setFileExtension(data.getFileExtension());
-			file.setCreatedBy(insertUser.getCreatedBy());
-			file.setIsActive(true);
-			File insertedFile = fileDao.save(file);
+			User user = new User();
+			user.setEmail(data.getEmail());
+			user.setPassword(passwordEncoder.encode(data.getPassword()));
+			user.setIsActive(true);
 
-			profile.setFile(insertedFile);
-			Profile profileResult = profileDao.save(profile);
-			user.setProfile(profileResult);
-			userDao.save(user);
+			Role role = roleDao.findByRoleMember();
+			user.setRole(role);
+
+			begin();
+			Profile profResult = profileDao.save(profile);
+			user.setProfile(profResult);
+			User userRes = saveNonLogin(user, () -> {
+				return userSystem.getId();
+			});
 			commit();
 
-			InsertDataRes insertRes = new InsertDataRes();
-			insertRes.setId(insertUser.getId());
+			InsertDataRes dataRes = new InsertDataRes();
+			dataRes.setId(userRes.getId());
 
-			result.setData(insertRes);
+			result.setData(dataRes);
 			result.setMessage(MessageResponse.SAVED.name());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -109,37 +105,88 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		}
 		return result;
 	}
-	
 
+	public UpdateRes update(UserUpdateReq data) throws Exception {
+		UpdateRes result = new UpdateRes();
+		try {
+			User userDb = userDao.getById(data.getId());
+			Profile profile = profileDao.getById(userDb.getProfile().getId());
+			profile.setFullName(data.getFullName());
+			profile.setCompany(data.getCompany());
+			profile.setIndustry(data.getIndustry());
+			profile.setPosition(data.getPosition());
+
+			begin();
+			Profile updated = profileDao.save(profile);
+			commit();
+
+			UpdateDataRes dataRes = new UpdateDataRes();
+			dataRes.setVersion(updated.getVersion());
+
+			result.setData(dataRes);
+			result.setMessage(MessageResponse.SAVED.name());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public UpdateRes updateProfilePic(UpdatePhotoProfileReq data) throws Exception {
+		UpdateRes result = new UpdateRes();
+
+		try {
+			User user = userDao.getById(getAuthPrincipal());
+			Profile profile = profileDao.getById(user.getProfile().getId());
+
+			File newFile = new File();
+			newFile.setFileName(data.getFileName());
+			newFile.setFileExtension(data.getFileExtension());
+			newFile.setCreatedBy(getAuthPrincipal());
+			newFile.setIsActive(true);
+			begin();
+			File inserted = fileDao.save(newFile);
+			profile.setFile(inserted);
+
+			Profile updated = profileDao.save(profile);
+			commit();
+
+			UpdateDataRes dataRes = new UpdateDataRes();
+			dataRes.setVersion(updated.getVersion());
+
+			result.setData(dataRes);
+			result.setMessage(MessageResponse.SAVED.name());
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+
+		return result;
+	}
 
 	public SearchQuery<UserData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
 		SearchQuery<User> dataDb = userDao.findAll(query, startPage, maxPage);
 
 		List<UserData> users = new ArrayList<>();
 		dataDb.getData().forEach(user -> {
-			
+
 			UserData data = new UserData();
 			data.setId(user.getId());
 			data.setRoleId(user.getRole().getId());
 			data.setEmail(user.getEmail());
 			data.setIsActive(user.getIsActive());
 			data.setVersion(user.getVersion());
-			
-			Profile profile = null;
-			
-			try {
-				profile = profileDao.getById(user.getId());
-				if(profile != null) {
-					data.setProfileId(profile.getId());
-					data.setFullName(profile.getFullName());
-					data.setCompany(profile.getCompany());
-					data.setIndustry(profile.getIndustry());
-					data.setPosition(profile.getPosition());
-//					data.setFileId(profile.getFile().getId());
-				}
-				
-			} catch (Exception e) {
-				e.printStackTrace();
+
+			if (user.getProfile().getId() != null) {
+				Profile profile = profileDao.getById(user.getProfile().getId());
+
+				data.setProfileId(profile.getId());
+				data.setFullName(profile.getFullName());
+				data.setCompany(profile.getCompany());
+				data.setIndustry(profile.getIndustry());
+				data.setPosition(profile.getPosition());
 			}
 
 			users.add(data);
@@ -159,19 +206,15 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		data.setId(user.getId());
 		data.setEmail(user.getEmail());
 		Profile profile = null;
-		try {
-			profile = profileDao.findByUserId(user.getId());
-			data.setProfileId(profile.getId());
-			data.setFullName(profile.getFullName());
-			data.setCompany(profile.getCompany());
-			data.setIndustry(profile.getIndustry());
-			data.setPosition(profile.getPosition());
-			data.setFileId(profile.getFile().getId());
-//			data.setStatus(profile.getStatus());
-//			data.setStatusDuration(profile.getStatusDuration());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
+		profile = profileDao.getById(user.getProfile().getId());
+		data.setProfileId(profile.getId());
+		data.setFullName(profile.getFullName());
+		data.setCompany(profile.getCompany());
+		data.setIndustry(profile.getIndustry());
+		data.setPosition(profile.getPosition());
+		data.setFileId(profile.getFile().getId());
+
 		UserFindByIdRes result = new UserFindByIdRes();
 		return result;
 	}
@@ -193,31 +236,31 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			e.printStackTrace();
 		}
 		Authentication auth = new UsernamePasswordAuthenticationToken(userDb.getId(), null);
-        SecurityContextHolder.getContext().setAuthentication(auth);
+		SecurityContextHolder.getContext().setAuthentication(auth);
 
 		return new org.springframework.security.core.userdetails.User(email, userDb.getPassword(), new ArrayList<>());
 	}
-	
-	public String updateToken(String id) throws Exception {
-        User user = userDao.getById(id);
 
-        RefreshTokenEntity refreshToken = jwtUtil.generateRefreshToken();
-        if(user.getToken() != null) {                        
-            RefreshTokenEntity token = ConnHandler.getManager().find(RefreshTokenEntity.class, user.getToken().getId());
-            token.setToken(refreshToken.getToken());
-            token.setExpiredDate(refreshToken.getExpiredDate());
-            begin();
-            tokenService.saveToken(token);
-        } else {
-            begin();
-            RefreshTokenEntity tokenNew = tokenService.saveToken(refreshToken);
-            user.setToken(tokenNew);
-        }
-        
-        User res = save(user);
-        String token = res.getToken().getToken();
-        commit();
-        return token;
-    }
+	public String updateToken(String id) throws Exception {
+		User user = userDao.getById(id);
+
+		RefreshTokenEntity refreshToken = jwtUtil.generateRefreshToken();
+		if (user.getToken() != null) {
+			RefreshTokenEntity token = ConnHandler.getManager().find(RefreshTokenEntity.class, user.getToken().getId());
+			token.setToken(refreshToken.getToken());
+			token.setExpiredDate(refreshToken.getExpiredDate());
+			begin();
+			tokenService.saveToken(token);
+		} else {
+			begin();
+			RefreshTokenEntity tokenNew = tokenService.saveToken(refreshToken);
+			user.setToken(tokenNew);
+		}
+
+		User res = save(user);
+		String token = res.getToken().getToken();
+		commit();
+		return token;
+	}
 
 }
