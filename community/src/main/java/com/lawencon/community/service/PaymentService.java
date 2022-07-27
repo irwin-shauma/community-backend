@@ -38,16 +38,17 @@ public class PaymentService extends BaseCoreService<Payment>{
 	public InsertRes insert(PaymentInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
+			begin();
 			Payment payment = new Payment();
 			
 			User user = userDao.getById(data.getUserId());
 			payment.setUser(user);
 			
-			File file = fileDao.getById(data.getFileId());
+			File file = fileDao.getByIdWithoutDetach(data.getFileId());
 			payment.setFile(file);
 			payment.setIsActive(true);
 
-			begin();
+			
 			Payment paymentInsert = save(payment);
 			commit();
 

@@ -46,10 +46,12 @@ public class EventDetailService extends BaseCoreService<EventDetail> {
 			EventHeader eventHeader = eventHeaderDao.getByIdWithoutDetach(data.getEventHeaderId());
 
 			eventDetail.setEventHeader(eventHeader);
+			
 
 			if (data.getFileId() != null) {
-
 				File file = fileDao.getByIdWithoutDetach(data.getFileId());
+//				File file = new File();
+				
 				eventDetail.setFile(file);
 			}
 
@@ -108,7 +110,7 @@ public class EventDetailService extends BaseCoreService<EventDetail> {
 			updateDataRes.setVersion(eventDetailUpdate.getVersion());
 
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.SAVED.getMessageResponse());
+			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
 
 		} catch (Exception e) {
 			e.printStackTrace();
