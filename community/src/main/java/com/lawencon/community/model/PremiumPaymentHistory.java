@@ -19,10 +19,10 @@ public class PremiumPaymentHistory extends BaseEntity {
 	private User user;
 	
 	@OneToOne
-	@JoinColumn(name = "premium_payment_history")
+	@JoinColumn(name = "premium_type_id")
 	private PremiumType premiumType;
 	
-	@Column
+	@Column(name = "trx_no")
 	private String trxNo;
 
 	public User getUser() {
@@ -48,9 +48,4 @@ public class PremiumPaymentHistory extends BaseEntity {
 	public void setTrxNo(String trxNo) {
 		this.trxNo = trxNo;
 	}
-	
-	
-	
-	
-
 }

@@ -1,7 +1,5 @@
 package com.lawencon.community.model;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -20,10 +18,6 @@ public class Profile extends BaseEntity {
 	@Column(name = "profile_code")
 	private String profileCode;
 
-//	@OneToOne
-//	@JoinColumn(name = "user_id")
-//	private User user;
-
 	@Column(name = "full_name")
 	private String fullName;
 
@@ -35,11 +29,14 @@ public class Profile extends BaseEntity {
 
 	@Column(name = "positions")
 	private String position;
+	
+	@OneToOne
+	@JoinColumn(name = "premium_payment_history_id")
+	private PremiumPaymentHistory premiumPaymentHistory;
 
 	@OneToOne
 	@JoinColumn(name = "file_id")
 	private File file;
-
 
 	public String getProfileCode() {
 		return profileCode;
@@ -48,14 +45,6 @@ public class Profile extends BaseEntity {
 	public void setProfileCode(String profileCode) {
 		this.profileCode = profileCode;
 	}
-
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
 
 	public String getFullName() {
 		return fullName;
@@ -87,6 +76,14 @@ public class Profile extends BaseEntity {
 
 	public void setPosition(String position) {
 		this.position = position;
+	}
+
+	public PremiumPaymentHistory getPremiumPaymentHistory() {
+		return premiumPaymentHistory;
+	}
+
+	public void setPremiumPaymentHistory(PremiumPaymentHistory premiumPaymentHistory) {
+		this.premiumPaymentHistory = premiumPaymentHistory;
 	}
 
 	public File getFile() {
