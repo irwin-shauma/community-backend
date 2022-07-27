@@ -216,6 +216,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		data.setFileId(profile.getFile().getId());
 
 		UserFindByIdRes result = new UserFindByIdRes();
+		result.setData(data);
 		return result;
 	}
 
