@@ -17,6 +17,9 @@ public class UserUpdateReq {
 
 	@NotBlank(message = "Position can't be empty")
 	private String position;
+	private String fileId;
+	private String fileName;
+	private String fileExtension;
 
 	public String getId() {
 		return id;
@@ -56,6 +59,30 @@ public class UserUpdateReq {
 
 	public void setPosition(String position) {
 		this.position = position;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 }
