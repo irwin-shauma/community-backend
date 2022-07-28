@@ -1,7 +1,15 @@
 package com.lawencon.community.controller;
 
+<<<<<<< HEAD
+import java.util.Base64;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> d6b107f10294e8fbaa4fd4a8e12079a7af27abc2
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.file.FileData;
-import com.lawencon.community.dto.file.FileFindByIdRes;
 import com.lawencon.community.dto.file.FileInsertReq;
+import com.lawencon.community.model.File;
 import com.lawencon.community.service.FileService;
 import com.lawencon.model.SearchQuery;
 
@@ -35,10 +43,14 @@ public class FileController {
 	}
 
 	@GetMapping("{id}")
-	public ResponseEntity<?> getById(@PathVariable("id") String id) throws Exception {
-		FileFindByIdRes result = fileService.getById(id);
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
+    public ResponseEntity<byte[]> downloadFile(@PathVariable("id") String id) throws Exception {
+        File file = fileService.getById(id);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=attachment." + file.getFileExtension());
+
+        byte[] fileInBytes = Base64.getDecoder().decode(file.getFileName());
+        return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_OCTET_STREAM).body(fileInBytes);
+    }
 
 	@PostMapping
 	public ResponseEntity<?> insert(@RequestBody FileInsertReq data) throws Exception {

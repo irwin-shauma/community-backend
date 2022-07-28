@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.DeleteRes;
@@ -31,9 +30,8 @@ public class BookmarkController {
 	private BookmarkService bookmarkService;
 	
 	@GetMapping
-	public ResponseEntity<?> findAll(@RequestParam("query") String query, @RequestParam("startPage") Integer startPage,
-			@RequestParam("maxPage") Integer maxPage) throws Exception {
-		SearchQuery<BookmarkData> result = bookmarkService.findAll(query, startPage, maxPage);
+	public ResponseEntity<?> findAllByUser(Integer startPage, Integer maxPage) throws Exception {
+		SearchQuery<BookmarkData> result = bookmarkService.findAllByUser(startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	

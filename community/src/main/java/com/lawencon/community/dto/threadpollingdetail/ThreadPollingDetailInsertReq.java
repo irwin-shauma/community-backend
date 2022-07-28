@@ -1,11 +1,9 @@
 package com.lawencon.community.dto.threadpollingdetail;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 public class ThreadPollingDetailInsertReq {
 
-	@NotNull(message = "Thread Polling Id can't be empty")
 	private String threadHeaderPollingId;
 
 	@NotBlank(message = "Question can't be empty")

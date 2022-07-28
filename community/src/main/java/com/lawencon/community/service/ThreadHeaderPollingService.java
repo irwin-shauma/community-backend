@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.ThreadHeaderPollingDao;
+import com.lawencon.community.dao.ThreadPollingDetailDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
@@ -19,6 +20,7 @@ import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingFindByI
 import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingInsertReq;
 import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingUpdateReq;
 import com.lawencon.community.model.ThreadHeaderPolling;
+import com.lawencon.community.model.ThreadPollingDetail;
 import com.lawencon.model.SearchQuery;
 
 @Service
@@ -26,6 +28,9 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 
 	@Autowired
 	private ThreadHeaderPollingDao threadHeaderPollingDao;
+	
+	@Autowired
+	private ThreadPollingDetailDao pollingDetailDao;
 
 	public InsertRes insert(ThreadHeaderPollingInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -38,6 +43,15 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 
 			begin();
 			ThreadHeaderPolling threadHeaderPollingResult = save(threadHeaderPollingInsert);
+			for (int i = 0; i < data.getThreadPollingDetail().size(); i++) {
+				ThreadPollingDetail threadDtl = new ThreadPollingDetail();
+				threadDtl.setThreadHeaderPolling(threadHeaderPollingResult);
+				threadDtl.setQuestion(data.getThreadPollingDetail().get(i).getQuestion());
+				threadDtl.setIsActive(true);
+				threadDtl.setCreatedBy(getAuthPrincipal());
+				
+				pollingDetailDao.save(threadDtl);
+			}
 			commit();
 
 			InsertDataRes insertDataRes = new InsertDataRes();
