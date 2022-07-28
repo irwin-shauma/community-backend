@@ -98,6 +98,7 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 
 	public ThreadHeaderPollingFindByIdRes getById(String id) throws Exception {
 		ThreadHeaderPolling threadDetailDb = threadHeaderPollingDao.getById(id);
+		List<ThreadPollingDetailData> threadDtlPollings = new ArrayList<ThreadPollingDetailData>();
 
 		ThreadHeaderPollingData data = new ThreadHeaderPollingData();
 		data.setId(threadDetailDb.getId());
@@ -105,6 +106,18 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 		data.setContentPolling(threadDetailDb.getContentPolling());
 		data.setIsActive(threadDetailDb.getIsActive());
 		data.setVersion(threadDetailDb.getVersion());
+
+		List<ThreadPollingDetail> threadDtl = pollingDetailDao.findByHeader(threadDetailDb.getId());
+		for (int i = 0; i < threadDtl.size(); i++) {
+			ThreadPollingDetailData threadDtlPolling = new ThreadPollingDetailData();
+			threadDtlPolling.setId(threadDtl.get(i).getId());
+			threadDtlPolling.setQuestion(threadDtl.get(i).getQuestion());
+			threadDtlPolling.setIsActive(threadDtl.get(i).getIsActive());
+			threadDtlPolling.setVersion(threadDtl.get(i).getVersion());
+
+			threadDtlPollings.add(threadDtlPolling);
+		}
+		data.setThreadDtlPolling(threadDtlPollings);
 
 		ThreadHeaderPollingFindByIdRes result = new ThreadHeaderPollingFindByIdRes();
 		result.setData(data);
