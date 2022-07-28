@@ -1,5 +1,7 @@
 package com.lawencon.community.dto.threadheaderpolling;
 
+import java.util.List;
+
 public class ThreadHeaderPollingData {
 
 	private String id;
@@ -7,6 +9,7 @@ public class ThreadHeaderPollingData {
 	private String contentPolling;
 	private Boolean isActive;
 	private Integer version;
+	private List<ThreadPollingDetailData> threadDtlPolling;
 
 	public String getId() {
 		return id;
@@ -48,5 +51,12 @@ public class ThreadHeaderPollingData {
 		this.version = version;
 	}
 
-	
+	public List<ThreadPollingDetailData> getThreadDtlPolling() {
+		return threadDtlPolling;
+	}
+
+	public void setThreadDtlPolling(List<ThreadPollingDetailData> threadDtlPolling) {
+		this.threadDtlPolling = threadDtlPolling;
+	}
+
 }
