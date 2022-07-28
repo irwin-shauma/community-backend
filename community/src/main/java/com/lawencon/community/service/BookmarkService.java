@@ -96,7 +96,7 @@ public class BookmarkService extends BaseCoreService<Bookmark> {
 	public SearchQuery<BookmarkData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
 		SearchQuery<Bookmark> dataDb = bookmarkDao.findAll(query, startPage, maxPage);
 		List<BookmarkData> bookmarks = new ArrayList<>();
-
+		int count = bookmarkDao.countAll().intValue();
 		dataDb.getData().forEach(bookmark -> {
 			BookmarkData data = new BookmarkData();
 			data.setId(bookmark.getId());
@@ -106,7 +106,7 @@ public class BookmarkService extends BaseCoreService<Bookmark> {
 			bookmarks.add(data);
 		});
 		SearchQuery<BookmarkData> result = new SearchQuery<>();
-		result.setCount(dataDb.getCount());
+		result.setCount(count);
 		result.setData(bookmarks);
 		return result;
 	}

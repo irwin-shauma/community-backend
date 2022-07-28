@@ -189,7 +189,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			data.setIsActive(user.getIsActive());
 			data.setVersion(user.getVersion());
 
-			if (user.getProfile().getId() != null) {
+			if (user.getProfile() != null) {
 				Profile profile = profileDao.getById(user.getProfile().getId());
 
 				data.setProfileId(profile.getId());

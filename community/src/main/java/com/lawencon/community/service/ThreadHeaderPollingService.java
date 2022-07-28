@@ -19,6 +19,7 @@ import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingData;
 import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingFindByIdRes;
 import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingInsertReq;
 import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingUpdateReq;
+import com.lawencon.community.dto.threadheaderpolling.ThreadPollingDetailData;
 import com.lawencon.community.model.ThreadHeaderPolling;
 import com.lawencon.community.model.ThreadPollingDetail;
 import com.lawencon.model.SearchQuery;
@@ -28,7 +29,7 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 
 	@Autowired
 	private ThreadHeaderPollingDao threadHeaderPollingDao;
-	
+
 	@Autowired
 	private ThreadPollingDetailDao pollingDetailDao;
 
@@ -49,7 +50,7 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 				threadDtl.setQuestion(data.getThreadPollingDetail().get(i).getQuestion());
 				threadDtl.setIsActive(true);
 				threadDtl.setCreatedBy(getAuthPrincipal());
-				
+
 				pollingDetailDao.save(threadDtl);
 			}
 			commit();
@@ -116,7 +117,7 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 		SearchQuery<ThreadHeaderPolling> dataDb = threadHeaderPollingDao.findAll(query, startPage, maxPage);
 
 		List<ThreadHeaderPollingData> threadHeaderPollings = new ArrayList<ThreadHeaderPollingData>();
-
+		List<ThreadPollingDetailData> threadDtlPollings = new ArrayList<ThreadPollingDetailData>();
 		dataDb.getData().forEach(threadHeader -> {
 			ThreadHeaderPollingData data = new ThreadHeaderPollingData();
 			data.setId(threadHeader.getId());
@@ -125,6 +126,21 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 			data.setIsActive(threadHeader.getIsActive());
 			data.setVersion(threadHeader.getVersion());
 
+			try {
+				List<ThreadPollingDetail> threadDtl = pollingDetailDao.findByHeader(threadHeader.getId());
+				for (int i = 0; i < threadDtl.size(); i++) {
+					ThreadPollingDetailData threadDtlPolling = new ThreadPollingDetailData();
+					threadDtlPolling.setId(threadDtl.get(i).getId());
+					threadDtlPolling.setQuestion(threadDtl.get(i).getQuestion());
+					threadDtlPolling.setIsActive(threadDtl.get(i).getIsActive());
+					threadDtlPolling.setVersion(threadDtl.get(i).getVersion());
+
+					threadDtlPollings.add(threadDtlPolling);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			data.setThreadDtlPolling(threadDtlPollings);
 			threadHeaderPollings.add(data);
 		});
 
