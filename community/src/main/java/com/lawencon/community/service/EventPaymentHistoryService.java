@@ -74,19 +74,18 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 		UpdateRes result = new UpdateRes();
 		
 		try {
+			begin();
 			EventPaymentHistory eventPaymentHistoryDb = eventPaymentHistoryDao.getById(data.getId());
 			
-			User userDb = userDao.getById(data.getId());
+			User userDb = userDao.getByIdWithoutDetach(data.getId());
 			eventPaymentHistoryDb.setUser(userDb);
 			
-			EventHeader eventHeader = eventHeaderDao.getById(data.getEventHeaderId());
+			EventHeader eventHeader = eventHeaderDao.getByIdWithoutDetach(data.getEventHeaderId());
 			eventPaymentHistoryDb.setEventHeader(eventHeader);
 			
 			eventPaymentHistoryDb.setTrxNo(data.getTrxNo());
 			eventPaymentHistoryDb.setIsActive(data.getIsActive());
-			eventPaymentHistoryDb.setVersion(data.getVersion());
 			
-			begin();
 			EventPaymentHistory eventPaymentHistoryUpdate = eventPaymentHistoryDao.save(eventPaymentHistoryDb);
 			commit();
 			

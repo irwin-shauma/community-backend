@@ -20,9 +20,6 @@ public class EventPaymentHistoryUpdateReq {
 	@NotBlank(message = "Active can't be empty")
 	private Boolean isActive;
 
-	@NotBlank(message = " version can't be empty")
-	private Integer version;
-
 	public String getId() {
 		return id;
 	}
@@ -62,13 +59,4 @@ public class EventPaymentHistoryUpdateReq {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
 }

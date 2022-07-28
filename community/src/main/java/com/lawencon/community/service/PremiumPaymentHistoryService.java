@@ -40,6 +40,7 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 	public InsertRes insert(PremiumPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
+			begin();
 			PremiumPaymentHistory premiumPaymentHistory = new PremiumPaymentHistory();
 			
 			User user = userDao.getById(data.getUserId());
@@ -51,7 +52,6 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 			premiumPaymentHistory.setTrxNo(data.getTrxNo());
 			premiumPaymentHistory.setIsActive(true);
 
-			begin();
 			PremiumPaymentHistory premiumPaymentHistoryInsert = save(premiumPaymentHistory);
 			commit();
 
@@ -71,21 +71,19 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 	
 	public UpdateRes update(PremiumPaymentHistoryUpdateReq data) throws Exception{
 		UpdateRes result = new UpdateRes();
-		
 		try {
+			begin();
 			PremiumPaymentHistory premiumPaymentHistoryDb = premiumPaymentHistoryDao.getById(data.getId());
 			
-			User userDb = userDao.getById(data.getId());
+			User userDb = userDao.getByIdWithoutDetach(data.getId());
 			premiumPaymentHistoryDb.setUser(userDb);
 			
-			PremiumType premiumType = premiumTypeDao.getById(data.getPremiumTypeId());
+			PremiumType premiumType = premiumTypeDao.getByIdWithoutDetach(data.getPremiumTypeId());
 			premiumPaymentHistoryDb.setPremiumType(premiumType);
 			
 			premiumPaymentHistoryDb.setTrxNo(data.getTrxNo());
 			premiumPaymentHistoryDb.setIsActive(data.getIsActive());
-			premiumPaymentHistoryDb.setVersion(data.getVersion());
 			
-			begin();
 			PremiumPaymentHistory premiumPaymentHistoryUpdate = premiumPaymentHistoryDao.save(premiumPaymentHistoryDb);
 			commit();
 			
