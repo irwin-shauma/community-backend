@@ -43,11 +43,12 @@ public class PaymentService extends BaseCoreService<Payment>{
 			
 			User user = userDao.getById(data.getUserId());
 			payment.setUser(user);
-			
-			File file = fileDao.getByIdWithoutDetach(data.getFileId());
+
+			File file = new File();
+				
+			fileDao.save(file);
 			payment.setFile(file);
 			payment.setIsActive(true);
-
 			
 			Payment paymentInsert = save(payment);
 			commit();
@@ -71,18 +72,19 @@ public class PaymentService extends BaseCoreService<Payment>{
 		UpdateRes result = new UpdateRes();
 
 		try {
+			begin();
 			Payment paymentDb = paymentDao.getById(data.getId());
 
-			User userDb = userDao.getById(data.getId());
+			User userDb = userDao.getByIdWithoutDetach(data.getUserId());
 			paymentDb.setUser(userDb);
 			
-			File fileDb = fileDao.getById(data.getId());
+			File fileDb = fileDao.getByIdWithoutDetach(data.getFileId());
+			fileDb.setFileName(data.getFileName());
+			fileDb.setFileExtension(data.getFileExtension());
+			
 			paymentDb.setFile(fileDb);
-
 			paymentDb.setIsActive(data.getIsActive());
-			paymentDb.setVersion(data.getVersion());
 
-			begin();
 			Payment paymentUpdate = paymentDao.save(paymentDb);
 			commit();
 

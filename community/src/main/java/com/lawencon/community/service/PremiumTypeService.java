@@ -58,14 +58,14 @@ public class PremiumTypeService extends BaseCoreService<PremiumType> {
 		UpdateRes result = new UpdateRes();
 
 		try {
-			PremiumType premiumTypeDb = premiumTypeDao.getById(data.getId());
+			begin();
+			PremiumType premiumTypeDb = premiumTypeDao.getByIdWithoutDetach(data.getId());
 
 			premiumTypeDb.setPrice(data.getPrice());
 			premiumTypeDb.setDuration(data.getDuration());
 			premiumTypeDb.setIsActive(data.getIsActive());
 			premiumTypeDb.setVersion(data.getVersion());
 
-			begin();
 			PremiumType premiumTypeUpdate = premiumTypeDao.save(premiumTypeDb);
 			commit();
 
