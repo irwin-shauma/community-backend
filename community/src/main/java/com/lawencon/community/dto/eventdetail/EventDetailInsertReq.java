@@ -12,19 +12,15 @@ public class EventDetailInsertReq {
 	@NotBlank(message = "Event Detail Id can't be empty")
 	private String eventHeaderId;
 	
-	private String fileId;
-	
 	@NotNull(message = "Price can't be empty")
 	private Float price;
 	
 	@NotNull(message = "Start date can't be empty")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-//	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.000'Z'")
 	private LocalDateTime startDate;
 	
 	@NotNull(message = "End date can't be empty")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-//	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.000'Z'")
 	private LocalDateTime endDate;
 	
 	@NotBlank(message = "Provider can't be null")
@@ -39,14 +35,6 @@ public class EventDetailInsertReq {
 
 	public void setEventHeaderId(String eventHeaderId) {
 		this.eventHeaderId = eventHeaderId;
-	}
-
-	public String getFileId() {
-		return fileId;
-	}
-
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
 	}
 
 	public Float getPrice() {

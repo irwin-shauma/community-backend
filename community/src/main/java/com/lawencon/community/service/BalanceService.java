@@ -3,6 +3,7 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
@@ -25,14 +26,18 @@ import com.lawencon.model.SearchQuery;
 @Service
 public class BalanceService extends BaseCoreService<Balance> {
 
+	@Autowired
 	private BalanceDao balanceDao;
+	
+	@Autowired
 	private UserDao userDao;
 
 	public InsertRes insert(BalanceInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
+			begin();
 			Balance balance = new Balance();
-			balance.setBalanceCode(data.getBalanceCode());
+//			balance.setBalanceCode(data.getBalanceCode());
 			balance.setCurrentBalance(data.getCurrentBalance());
 
 			User user = userDao.getById(data.getUserId());
@@ -40,7 +45,6 @@ public class BalanceService extends BaseCoreService<Balance> {
 
 			balance.setIsActive(true);
 
-			begin();
 			Balance balanceInsert = save(balance);
 			commit();
 
@@ -62,18 +66,18 @@ public class BalanceService extends BaseCoreService<Balance> {
 		UpdateRes result = new UpdateRes();
 
 		try {
-			Balance balanceDb = balanceDao.getById(data.getId());
-			balanceDb.setBalanceCode(data.getBalanceCode());
+			begin();
+			Balance balanceDb = balanceDao.getByIdWithoutDetach(data.getId());
+//			balanceDb.setBalanceCode(data.getBalanceCode());
 			balanceDb.setCurrentBalance(data.getCurrentBalance());
 
-			User userDb = userDao.getById(data.getId());
+			User userDb = userDao.getByIdWithoutDetach(data.getId());
 
 			balanceDb.setUser(userDb);
 
 			balanceDb.setIsActive(data.getIsActive());
 			balanceDb.setVersion(data.getVersion());
 
-			begin();
 			Balance balanceUpdate = balanceDao.save(balanceDb);
 			commit();
 

@@ -11,12 +11,18 @@ public class EventHeaderUpdateReq {
 	@NotBlank(message = "Event Type Id can't be empty")
 	private String eventTypeId;
 	
+	@NotNull(message = "File Id can't be empty")
+	private String fileId;
+	
 	@NotBlank(message = "Title can't be empty")
 	private String title;
+	
+	private String fileName;
+	private String fileExtension;
 
 	@NotBlank(message = "Active can't be empty")
 	private Boolean isActive;
-
+	
 
 	public String getId() {
 		return id;
@@ -42,6 +48,14 @@ public class EventHeaderUpdateReq {
 		this.eventTypeId = eventTypeId;
 	}
 
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+
 	public Boolean getIsActive() {
 		return isActive;
 	}
@@ -49,4 +63,21 @@ public class EventHeaderUpdateReq {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
+	
 }

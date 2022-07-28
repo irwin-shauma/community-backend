@@ -5,6 +5,7 @@ public class EventHeaderData {
 	private String eventHeaderCode;
 	private String title;
 	private String eventTypeId;
+	private String fileId;
 	private Boolean isActive;
 	private Integer version;
 
@@ -38,6 +39,14 @@ public class EventHeaderData {
 
 	public void setEventTypeId(String eventTypeId) {
 		this.eventTypeId = eventTypeId;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 	public Boolean getIsActive() {
