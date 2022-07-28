@@ -13,7 +13,6 @@ import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.file.FileData;
-import com.lawencon.community.dto.file.FileFindByIdRes;
 import com.lawencon.community.dto.file.FileInsertReq;
 import com.lawencon.community.model.File;
 import com.lawencon.model.SearchQuery;
@@ -52,20 +51,9 @@ public class FileService extends BaseCoreService<File>{
 	}
 	
 	
-	public FileFindByIdRes getById(String id) throws Exception {
-		File fileDb = fileDao.getById(id);
-
-		FileData data = new FileData();
-		data.setId(fileDb.getId());
-		data.setFileName(fileDb.getFileName());
-		data.setFileExt(fileDb.getFileExtension());
-		data.setIsActive(fileDb.getIsActive());
-		data.setVersion(fileDb.getVersion());
-
-		FileFindByIdRes result = new FileFindByIdRes();
-		result.setData(data);
-
-		return result;
+	public File getById(String id) {
+		File file = fileDao.getById(id);
+		return file;
 	}
 	
 	public SearchQuery<FileData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
-import com.lawencon.community.dao.ThreadHeaderPollingDao;
 import com.lawencon.community.dao.ThreadPollingAnswerDao;
+import com.lawencon.community.dao.ThreadPollingDetailDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -20,8 +20,8 @@ import com.lawencon.community.dto.threadpollinganswer.ThreadPollingAnswerData;
 import com.lawencon.community.dto.threadpollinganswer.ThreadPollingAnswerFindByIdRes;
 import com.lawencon.community.dto.threadpollinganswer.ThreadPollingAnswerInsertReq;
 import com.lawencon.community.dto.threadpollinganswer.ThreadPollingAnswerUpdateReq;
-import com.lawencon.community.model.ThreadHeaderPolling;
 import com.lawencon.community.model.ThreadPollingAnswer;
+import com.lawencon.community.model.ThreadPollingDetail;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
@@ -34,7 +34,7 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 	@Autowired
 	private UserDao userDao;
 	
-	private ThreadHeaderPollingDao threadHeaderPollingDao;
+	private ThreadPollingDetailDao threadPollingDetailDao;
 	
 	public InsertRes insert(ThreadPollingAnswerInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -42,9 +42,9 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 			begin();
 			ThreadPollingAnswer threadPollingAnswer = new ThreadPollingAnswer();
 			
-			ThreadHeaderPolling threadHeaderPolling = new ThreadHeaderPolling();
-			threadHeaderPolling.setId(data.getThreadPollingId());
-			threadPollingAnswer.setThreadHeaderPolling(threadHeaderPolling);
+			ThreadPollingDetail threadPollingDetail = new ThreadPollingDetail();
+			threadPollingDetail.setId(data.getThreadPollingId());
+			threadPollingAnswer.setThreadPollingDetail(threadPollingDetail);
 			
 			User user = userDao.getById(data.getUserId());
 			threadPollingAnswer.setUser(user);
@@ -74,8 +74,8 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 		try {
 			ThreadPollingAnswer threadPollingAnswerDb = threadPollingAnswerDao.getById(data.getId());
 
-			ThreadHeaderPolling threadHeaderPollingDb = threadHeaderPollingDao.getById(data.getId());
-			threadPollingAnswerDb.setThreadHeaderPolling(threadHeaderPollingDb);
+			ThreadPollingDetail threadHeaderPollingDb = threadPollingDetailDao.getById(data.getId());
+			threadPollingAnswerDb.setThreadPollingDetail(threadHeaderPollingDb);
 			
 			User userDb = userDao.getById(data.getId());
 			threadPollingAnswerDb.setUser(userDb);
@@ -110,7 +110,7 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 		data.setId(threadPollingAnswerDb.getId());
 		data.setThreadPollingAnswerCode(threadPollingAnswerDb.getThreadPollingAnswerCode());
 		data.setUserId(threadPollingAnswerDb.getUser().getId());
-		data.setThreadPollingId(threadPollingAnswerDb.getThreadHeaderPolling().getId());
+		data.setThreadPollingId(threadPollingAnswerDb.getThreadPollingDetail().getId());
 		data.setIsActive(threadPollingAnswerDb.getIsActive());
 		data.setVersion(threadPollingAnswerDb.getVersion());
 
@@ -130,7 +130,7 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 			data.setId(threadPollingAnswer.getId());
 			data.setThreadPollingAnswerCode(threadPollingAnswer.getThreadPollingAnswerCode());
 			data.setUserId(threadPollingAnswer.getUser().getId());
-			data.setThreadPollingId(threadPollingAnswer.getThreadHeaderPolling().getId());
+			data.setThreadPollingId(threadPollingAnswer.getThreadPollingDetail().getId());
 			data.setIsActive(threadPollingAnswer.getIsActive());
 			data.setVersion(threadPollingAnswer.getVersion());
 			threadPollingAnswerDataList.add(data);

@@ -13,7 +13,7 @@ import com.lawencon.community.model.User;
 @Repository
 public class BookmarkDao extends AbstractJpaDao<Bookmark> {
 	
-	public List<Bookmark> findByUserId(String userId) throws Exception {
+	public List<Bookmark> findByUserId(String userId, Integer startPage, Integer maxPage) throws Exception {
 		StringBuilder sql = new StringBuilder()
 				.append("SELECT id, user_id, thread_id, is_active, version")
 				.append(" FROM bookmark WHERE user_id = :user_id");

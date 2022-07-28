@@ -10,22 +10,17 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "thread_polling_answer",
-		uniqueConstraints = {
-		@UniqueConstraint(
-				name = "thread_polling_answer_bk", 
-				columnNames =  "thread_polling_answer_code" 
-				) 
-		})
+@Table(name = "thread_polling_answer", uniqueConstraints = {
+		@UniqueConstraint(name = "thread_polling_answer_bk", columnNames = "thread_polling_answer_code") })
 public class ThreadPollingAnswer extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
-	
-	@Column(name="thread_polling_answer_code")
+
+	@Column(name = "thread_polling_answer_code")
 	private String threadPollingAnswerCode;
 
 	@OneToOne
-	@JoinColumn(name = "thread_polling_id")
-	private ThreadHeaderPolling threadHeaderPolling;
+	@JoinColumn(name = "thread_detail_polling_id")
+	private ThreadPollingDetail threadPollingDetail;
 
 	@OneToOne
 	@JoinColumn(name = "user_id")
@@ -39,12 +34,12 @@ public class ThreadPollingAnswer extends BaseEntity {
 		this.threadPollingAnswerCode = threadPollingAnswerCode;
 	}
 
-	public ThreadHeaderPolling getThreadHeaderPolling() {
-		return threadHeaderPolling;
+	public ThreadPollingDetail getThreadPollingDetail() {
+		return threadPollingDetail;
 	}
 
-	public void setThreadHeaderPolling(ThreadHeaderPolling threadHeaderPolling) {
-		this.threadHeaderPolling = threadHeaderPolling;
+	public void setThreadPollingDetail(ThreadPollingDetail threadPollingDetail) {
+		this.threadPollingDetail = threadPollingDetail;
 	}
 
 	public User getUser() {
