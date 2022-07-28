@@ -1,12 +1,17 @@
 package com.lawencon.community.controller;
 
+<<<<<<< HEAD
 import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> d6b107f10294e8fbaa4fd4a8e12079a7af27abc2
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.file.FileData;
 import com.lawencon.community.dto.file.FileInsertReq;
@@ -50,6 +56,12 @@ public class FileController {
 	public ResponseEntity<?> insert(@RequestBody FileInsertReq data) throws Exception {
 		InsertRes result = fileService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("{id}")
+	public ResponseEntity<DeleteRes> delete(@PathVariable("id") String id) throws Exception {
+		DeleteRes result = fileService.deleteById(id);
+		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
 	}
 
 }

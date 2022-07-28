@@ -11,24 +11,24 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "event_header", uniqueConstraints = {
-		@UniqueConstraint(
-				name = "event_header_bk",
-				columnNames = "event_header_code"
-				)
-})
+		@UniqueConstraint(name = "event_header_bk", columnNames = "event_header_code") })
 public class EventHeader extends BaseEntity {
-	
-	private static final long  serialVersionUID = -5196455701225322056L;
-	
-	@Column(name="event_header_code")
+
+	private static final long serialVersionUID = -5196455701225322056L;
+
+	@Column(name = "event_header_code")
 	private String eventHeaderCode;
-	
+
 	@Column(name = "title")
 	private String title;
-	
+
 	@OneToOne
 	@JoinColumn(name = "event_type_id")
 	private EventType eventType;
+
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private File file;
 
 	public String getEventHeaderCode() {
 		return eventHeaderCode;
@@ -51,6 +51,18 @@ public class EventHeader extends BaseEntity {
 	}
 
 	public void setEventTypeId(EventType eventType) {
+		this.eventType = eventType;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public void setEventType(EventType eventType) {
 		this.eventType = eventType;
 	}
 

@@ -31,8 +31,9 @@ public class PaymentController {
 	private PaymentService paymentService;
 	
 	@GetMapping
-	public ResponseEntity<?> getAll(@RequestParam("query") String query, @RequestParam("startPage") Integer startPage,
-			@RequestParam("maxPage") Integer maxPage) throws Exception {
+	public ResponseEntity<?> getAll(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage,
+			@RequestParam(required = false) Integer maxPage) throws Exception {
 		SearchQuery<PaymentData> result = paymentService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

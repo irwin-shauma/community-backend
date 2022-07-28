@@ -4,21 +4,21 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class PaymentUpdateReq {
-	
+
 	@NotNull(message = "ID can't be empty")
 	private String id;
-	
+
 	@NotBlank(message = "File Id can't be empty")
 	private String fileId;
-	
+
+	private String fileName;
+	private String fileExtension;
+
 	@NotBlank(message = "User Id can't be empty")
 	private String userId;
-	
+
 	@NotBlank(message = "Active can't be empty")
 	private Boolean isActive;
-	
-	@NotBlank(message = " version can't be empty")
-	private Integer version;
 
 	public String getId() {
 		return id;
@@ -36,6 +36,22 @@ public class PaymentUpdateReq {
 		this.fileId = fileId;
 	}
 
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
@@ -50,13 +66,5 @@ public class PaymentUpdateReq {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
 	}
 }

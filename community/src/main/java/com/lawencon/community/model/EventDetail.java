@@ -23,10 +23,6 @@ public class EventDetail extends BaseEntity {
 	@JoinColumn(name = "event_header_id")
 	private EventHeader eventHeader;
 
-	@OneToOne
-	@JoinColumn(name = "file_id")
-	private File file;
-
 	@Column(name = "price")
 	private Float price;
 	
@@ -56,14 +52,6 @@ public class EventDetail extends BaseEntity {
 
 	public void setEventHeader(EventHeader eventHeader) {
 		this.eventHeader = eventHeader;
-	}
-
-	public File getFile() {
-		return file;
-	}
-
-	public void setFile(File file) {
-		this.file = file;
 	}
 
 	public Float getPrice() {

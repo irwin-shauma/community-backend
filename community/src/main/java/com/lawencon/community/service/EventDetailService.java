@@ -10,7 +10,6 @@ import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.EventDetailDao;
 import com.lawencon.community.dao.EventHeaderDao;
-import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
@@ -22,7 +21,6 @@ import com.lawencon.community.dto.eventdetail.EventDetailInsertReq;
 import com.lawencon.community.dto.eventdetail.EventDetailUpdateReq;
 import com.lawencon.community.model.EventDetail;
 import com.lawencon.community.model.EventHeader;
-import com.lawencon.community.model.File;
 import com.lawencon.model.SearchQuery;
 
 @Service
@@ -34,9 +32,6 @@ public class EventDetailService extends BaseCoreService<EventDetail> {
 	@Autowired
 	private EventHeaderDao eventHeaderDao;
 
-	@Autowired
-	private FileDao fileDao;
-
 	public InsertRes insert(EventDetailInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
@@ -46,14 +41,6 @@ public class EventDetailService extends BaseCoreService<EventDetail> {
 			EventHeader eventHeader = eventHeaderDao.getByIdWithoutDetach(data.getEventHeaderId());
 
 			eventDetail.setEventHeader(eventHeader);
-			
-
-			if (data.getFileId() != null) {
-				File file = fileDao.getByIdWithoutDetach(data.getFileId());
-//				File file = new File();
-				
-				eventDetail.setFile(file);
-			}
 
 			eventDetail.setPrice(data.getPrice());
 			eventDetail.setStartDate(data.getStartDate());
@@ -88,11 +75,6 @@ public class EventDetailService extends BaseCoreService<EventDetail> {
 
 			EventHeader eventHeaderDb = eventHeaderDao.getByIdWithoutDetach(data.getEventHeaderId());
 			eventDetailDb.setEventHeader(eventHeaderDb);
-			
-			if (data.getFileId() != null) {
-				File fileDb = fileDao.getByIdWithoutDetach(data.getFileId());
-				eventDetailDb.setFile(fileDb);
-			}
 
 			eventDetailDb.setPrice(data.getPrice());
 			eventDetailDb.setStartDate(data.getStartDate());
@@ -127,9 +109,7 @@ public class EventDetailService extends BaseCoreService<EventDetail> {
 		data.setId(eventDetailDb.getId());
 		data.setEventDetailCode(eventDetailDb.getEventDetailCode());
 		data.setEventHeaderId(eventDetailDb.getEventHeader().getId());
-		if(eventDetailDb.getFile() != null) {
-			data.setFileId(eventDetailDb.getFile().getId());
-		}
+		
 		data.setStartDate(eventDetailDb.getStartDate());
 		data.setEndDate(eventDetailDb.getEndDate());
 		data.setProvider(eventDetailDb.getProvider());
@@ -153,9 +133,7 @@ public class EventDetailService extends BaseCoreService<EventDetail> {
 			data.setId(eventDetail.getId());
 			data.setEventDetailCode(eventDetail.getEventDetailCode());
 			data.setEventHeaderId(eventDetail.getEventHeader().getId());
-			if(eventDetail.getFile() != null) {
-				data.setFileId(eventDetail.getFile().getId());
-			}
+			
 			data.setStartDate(eventDetail.getStartDate());
 			data.setEndDate(eventDetail.getEndDate());
 			data.setProvider(eventDetail.getProvider());
