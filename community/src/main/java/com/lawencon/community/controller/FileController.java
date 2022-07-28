@@ -1,13 +1,9 @@
 package com.lawencon.community.controller;
 
-<<<<<<< HEAD
 import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-=======
-import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> d6b107f10294e8fbaa4fd4a8e12079a7af27abc2
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

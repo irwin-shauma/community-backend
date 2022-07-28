@@ -75,6 +75,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			profile.setPosition(data.getPosition());
 			profile.setIsActive(true);
 			profile.setCreatedBy(userSystem.getId());
+			
 
 			User user = new User();
 			user.setEmail(data.getEmail());
@@ -115,8 +116,17 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			profile.setCompany(data.getCompany());
 			profile.setIndustry(data.getIndustry());
 			profile.setPosition(data.getPosition());
+			
+			
+			File newFile = new File();
+			newFile.setFileName(data.getFileName());
+			newFile.setFileExtension(data.getFileExtension());
+			newFile.setCreatedBy(getAuthPrincipal());
+			newFile.setIsActive(true);
 
 			begin();
+			File inserted = fileDao.save(newFile);
+			profile.setFile(inserted);
 			Profile updated = profileDao.save(profile);
 			commit();
 
