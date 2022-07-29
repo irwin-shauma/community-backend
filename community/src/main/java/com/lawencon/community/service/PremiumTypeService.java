@@ -64,7 +64,6 @@ public class PremiumTypeService extends BaseCoreService<PremiumType> {
 			premiumTypeDb.setPrice(data.getPrice());
 			premiumTypeDb.setDuration(data.getDuration());
 			premiumTypeDb.setIsActive(data.getIsActive());
-			premiumTypeDb.setVersion(data.getVersion());
 
 			PremiumType premiumTypeUpdate = premiumTypeDao.save(premiumTypeDb);
 			commit();
