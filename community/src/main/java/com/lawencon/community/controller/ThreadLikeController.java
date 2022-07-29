@@ -34,6 +34,12 @@ public class ThreadLikeController {
 		SearchQuery<ThreadLikeData> result = threadLikeService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("threads/{id}")
+	public ResponseEntity<?> getAllByThread(@PathVariable("id") String id, Integer startPage, Integer maxPage) throws Exception {
+		SearchQuery<ThreadLikeData> result = threadLikeService.findAllByThread(id, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<?> getById(@PathVariable("id") String id) throws Exception {
