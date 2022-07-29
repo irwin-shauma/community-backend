@@ -42,7 +42,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 		try {
 			ThreadLike threadLike = new ThreadLike();
 			
-			User user = userDao.getById(data.getUserId());
+			User user = userDao.getById(getAuthPrincipal());
 			threadLike.setUserId(user);
 			
 			ThreadHeader threadHeader = threadHeaderDao.getById(data.getThreadId());
@@ -149,8 +149,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 	
 	public SearchQuery<ThreadLikeData> findAllByThread(String id, Integer startPage, Integer maxPage) throws Exception {
 		List<ThreadLike> likes = threadLikeDao.findByThread(id, startPage, maxPage);
-		int count = threadLikeDao.countAll().intValue();
-		
+		int count = threadLikeDao.countLikes(id).intValue();
 		List<ThreadLikeData> result = new ArrayList<>();
 		
 		likes.forEach(like -> {
