@@ -11,7 +11,8 @@ public class ThreadHeaderData {
 	private String threadHeaderCode;
 	private String title;
 	private String contentThread;
-	
+	private String fileId;
+
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdAt;
 	private Integer version;
@@ -55,6 +56,14 @@ public class ThreadHeaderData {
 
 	public void setThreadTypeId(String threadTypeId) {
 		this.threadTypeId = threadTypeId;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 	public LocalDateTime getCreatedAt() {

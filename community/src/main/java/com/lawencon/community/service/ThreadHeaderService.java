@@ -121,6 +121,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 
 		thread.setThreadTypeId(threadHdr.getThreadType().getId());
 		thread.setContentThread(threadHdr.getContentThread());
+		thread.setFileId(threadHdr.getFile().getId());
 		thread.setCreatedAt(threadHdr.getCreatedAt());
 		thread.setVersion(threadHdr.getVersion());
 		thread.setIsActive(threadHdr.getIsActive());
@@ -142,6 +143,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 
 			thread.setThreadTypeId(threadHdr.getThreadType().getId());
 			thread.setContentThread(threadHdr.getContentThread());
+			thread.setFileId(threadHdr.getFile().getId());
 			thread.setCreatedAt(threadHdr.getCreatedAt());
 			thread.setVersion(threadHdr.getVersion());
 			thread.setIsActive(threadHdr.getIsActive());
