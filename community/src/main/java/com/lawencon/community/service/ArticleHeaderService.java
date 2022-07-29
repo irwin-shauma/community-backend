@@ -166,7 +166,9 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 			begin();
 			
 			ArticleHeader articleHeader = articleHeaderDao.getById(id);
-			fileDao.deleteById(articleHeader.getFile().getId());
+			if(articleHeader.getFile() != null) {
+				fileDao.deleteById(articleHeader.getFile().getId());
+			}
 			
 			boolean isDeleted = articleHeaderDao.deleteById(id);
 			commit();

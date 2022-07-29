@@ -1,7 +1,6 @@
 package com.lawencon.community.dto.premiumpaymenthistory;
 
 public class PremiumPaymentHistoryData {
-
 	private String id;
 	private String premiumPaymentHistoryCode;
 	private String userId;
