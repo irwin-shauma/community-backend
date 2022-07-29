@@ -39,14 +39,14 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 	public InsertRes insert(ThreadPollingAnswerInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
-			begin();
 			ThreadPollingAnswer threadPollingAnswer = new ThreadPollingAnswer();
 			
 			ThreadPollingDetail threadPollingDetail = new ThreadPollingDetail();
 			threadPollingDetail.setId(data.getThreadPollingId());
 			threadPollingAnswer.setThreadPollingDetail(threadPollingDetail);
 			
-			User user = userDao.getById(data.getUserId());
+			begin();
+			User user = userDao.getById(getAuthPrincipal());
 			threadPollingAnswer.setUser(user);
 			threadPollingAnswer.setIsActive(true);
 

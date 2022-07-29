@@ -147,6 +147,26 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 		return result;
 	}
 	
+	public SearchQuery<ThreadLikeData> findAllByThread(String id, Integer startPage, Integer maxPage) throws Exception {
+		List<ThreadLike> likes = threadLikeDao.findByThread(id, startPage, maxPage);
+		int count = threadLikeDao.countAll().intValue();
+		
+		List<ThreadLikeData> result = new ArrayList<>();
+		
+		likes.forEach(like -> {
+			ThreadLikeData data = new ThreadLikeData();
+			data.setId(like.getId());
+			data.setUserId(like.getUserId().getId());
+			data.setThreadId(like.getThreadHeader().getId());
+			
+			result.add(data);
+		});
+		SearchQuery<ThreadLikeData> res = new SearchQuery<>();
+		res.setCount(count);
+		res.setData(result);
+		return res;
+	}
+	
 	
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
