@@ -53,9 +53,9 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 				file.setFileExtension(data.getFileExtension());
 				File insertedFile = fileDao.save(file);
 				threadHdr.setFile(insertedFile);
+			} else {
+				threadHdr.setFile(null);
 			}
-
-
 
 			ThreadHeader inserted = save(threadHdr);
 			commit();
@@ -121,6 +121,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 
 		thread.setThreadTypeId(threadHdr.getThreadType().getId());
 		thread.setContentThread(threadHdr.getContentThread());
+		thread.setCreatedAt(threadHdr.getCreatedAt());
 		thread.setVersion(threadHdr.getVersion());
 		thread.setIsActive(threadHdr.getIsActive());
 
@@ -141,6 +142,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 
 			thread.setThreadTypeId(threadHdr.getThreadType().getId());
 			thread.setContentThread(threadHdr.getContentThread());
+			thread.setCreatedAt(threadHdr.getCreatedAt());
 			thread.setVersion(threadHdr.getVersion());
 			thread.setIsActive(threadHdr.getIsActive());
 
