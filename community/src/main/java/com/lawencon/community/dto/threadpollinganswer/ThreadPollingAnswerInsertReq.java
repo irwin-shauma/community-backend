@@ -1,6 +1,5 @@
 package com.lawencon.community.dto.threadpollinganswer;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class ThreadPollingAnswerInsertReq {
@@ -8,8 +7,6 @@ public class ThreadPollingAnswerInsertReq {
 	@NotNull(message = "Thread Polling Id can't be empty")
 	private String threadPollingId;
 
-//	@NotBlank(message = "User Id can't be empty")
-//	private String userId;
 	
 	public String getThreadPollingId() {
 		return threadPollingId;
