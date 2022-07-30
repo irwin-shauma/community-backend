@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.BookmarkDao;
 import com.lawencon.community.dao.ThreadHeaderDao;
@@ -26,7 +25,7 @@ import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class BookmarkService extends BaseCoreService<Bookmark> {
+public class BookmarkService extends BaseService<Bookmark> {
 
 	@Autowired
 	private BookmarkDao bookmarkDao;
@@ -42,7 +41,7 @@ public class BookmarkService extends BaseCoreService<Bookmark> {
 		try {
 			Bookmark bookmark = new Bookmark();
 			ThreadHeader thread = threadDao.getById(data.getThreadId());
-			User user = userDao.getById(getAuthPrincipal());
+			User user = userDao.getById(getUserId());
 
 			bookmark.setThread(thread);
 			bookmark.setUser(user);
@@ -70,7 +69,7 @@ public class BookmarkService extends BaseCoreService<Bookmark> {
 		try {
 			Bookmark bookmark = bookmarkDao.getById(data.getId());
 			ThreadHeader thread = threadDao.getById(data.getThreadId());
-			User user = userDao.getById(data.getUserId());
+			User user = userDao.getById(getUserId());
 
 			bookmark.setThread(thread);
 			bookmark.setUser(user);
