@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.ThreadHeaderDao;
 import com.lawencon.community.dao.ThreadLikeDao;
@@ -26,7 +25,7 @@ import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class ThreadLikeService extends BaseCoreService<ThreadLike>{
+public class ThreadLikeService extends BaseService<ThreadLike>{
 	
 	@Autowired
 	private ThreadLikeDao threadLikeDao;
@@ -42,7 +41,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 		try {
 			ThreadLike threadLike = new ThreadLike();
 			
-			User user = userDao.getById(getAuthPrincipal());
+			User user = userDao.getById(getUserId());
 			threadLike.setUserId(user);
 			
 			ThreadHeader threadHeader = threadHeaderDao.getById(data.getThreadId());
@@ -75,7 +74,7 @@ public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 		try {
 			ThreadLike threadLikeDb = threadLikeDao.getById(data.getId());
 
-			User userDb = userDao.getById(data.getId());
+			User userDb = userDao.getById(getUserId());
 			threadLikeDb.setUserId(userDb);
 			
 			ThreadHeader threadHeader = threadHeaderDao.getById(data.getId());

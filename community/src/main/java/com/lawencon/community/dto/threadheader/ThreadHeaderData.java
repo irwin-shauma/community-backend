@@ -1,6 +1,7 @@
 package com.lawencon.community.dto.threadheader;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -8,15 +9,18 @@ public class ThreadHeaderData {
 
 	private String id;
 	private String threadTypeId;
-	private String threadHeaderCode;
+	private UUID threadHeaderCode;
 	private String title;
 	private String contentThread;
 	private String fileId;
+	private String fullName;
+	private String createdBy;
 
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdAt;
 	private Integer version;
 	private Boolean isActive;
+	private Integer countLike;
 
 	public String getId() {
 		return id;
@@ -26,11 +30,11 @@ public class ThreadHeaderData {
 		this.id = id;
 	}
 
-	public String getThreadHeaderCode() {
+	public UUID getThreadHeaderCode() {
 		return threadHeaderCode;
 	}
 
-	public void setThreadHeaderCode(String threadHeaderCode) {
+	public void setThreadHeaderCode(UUID threadHeaderCode) {
 		this.threadHeaderCode = threadHeaderCode;
 	}
 
@@ -66,6 +70,22 @@ public class ThreadHeaderData {
 		this.fileId = fileId;
 	}
 
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
@@ -88,6 +108,14 @@ public class ThreadHeaderData {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public Integer getCountLike() {
+		return countLike;
+	}
+
+	public void setCountLike(Integer countLike) {
+		this.countLike = countLike;
 	}
 
 }
