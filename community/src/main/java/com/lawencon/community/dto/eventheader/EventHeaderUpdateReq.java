@@ -20,7 +20,7 @@ public class EventHeaderUpdateReq {
 	private String fileName;
 	private String fileExtension;
 
-	@NotBlank(message = "Active can't be empty")
+	@NotBlank(message = "Active status can't be empty")
 	private Boolean isActive;
 	
 

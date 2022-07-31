@@ -10,6 +10,8 @@ public class EventTypeUpdateReq {
 
 	@NotBlank(message = "Type can't be empty")
 	private String type;
+
+	@NotNull(message = "Active status can't be empty")
 	private Boolean isActive;
 
 	public String getId() {

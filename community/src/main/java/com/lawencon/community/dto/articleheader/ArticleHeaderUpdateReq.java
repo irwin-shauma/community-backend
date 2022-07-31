@@ -5,18 +5,20 @@ import javax.validation.constraints.NotNull;
 
 public class ArticleHeaderUpdateReq {
 
-	@NotNull
+	@NotNull(message = "Id can't be empty")
 	private String id;
 	private String fileId;
 	private String fileName;
 	private String fileExtension;
-	private Boolean isActive;
 
 	@NotBlank(message = "Title can't be empty")
 	private String title;
 
 	@NotBlank(message = "Contents can't be empty")
 	private String contents;
+
+	@NotNull(message = "Active status can't be empty")
+	private Boolean isActive;
 
 	public String getId() {
 		return id;

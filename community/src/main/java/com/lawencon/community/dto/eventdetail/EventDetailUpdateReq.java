@@ -17,7 +17,7 @@ public class EventDetailUpdateReq {
 
 	private String fileId;
 
-	@NotNull
+	@NotNull(message = "Price can't be empty")
 	private Float price;
 
 	@NotNull(message = "Start date can't be empty")
@@ -36,7 +36,6 @@ public class EventDetailUpdateReq {
 
 	@NotBlank(message = "Active can't be empty")
 	private Boolean isActive;
-
 
 	public String getId() {
 		return id;

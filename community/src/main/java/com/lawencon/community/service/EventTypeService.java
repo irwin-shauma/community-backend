@@ -26,18 +26,18 @@ public class EventTypeService extends BaseCoreService<EventType> {
 
 	@Autowired
 	private EventTypeDao eventTypeDao;
-	
+
 	public InsertRes insert(EventTypeInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
 			EventType eventType = new EventType();
 			eventType.setType(data.getType());
 			eventType.setIsActive(true);
-			
+
 			begin();
-			EventType inserted= save(eventType);
+			EventType inserted = save(eventType);
 			commit();
-			
+
 			InsertDataRes insertDataRes = new InsertDataRes();
 			insertDataRes.setId(inserted.getId());
 
@@ -51,7 +51,7 @@ public class EventTypeService extends BaseCoreService<EventType> {
 		}
 		return result;
 	}
-	
+
 	public UpdateRes update(EventTypeUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 		try {
@@ -61,10 +61,10 @@ public class EventTypeService extends BaseCoreService<EventType> {
 			eventType.setIsActive(data.getIsActive());
 			EventType update = save(eventType);
 			commit();
-			
+
 			UpdateDataRes dataRes = new UpdateDataRes();
 			dataRes.setVersion(update.getVersion());
-			
+
 			result.setData(dataRes);
 			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
 		} catch (Exception e) {
@@ -78,22 +78,22 @@ public class EventTypeService extends BaseCoreService<EventType> {
 
 	public EventTypeFindByIdRes getById(String id) throws Exception {
 		EventType eventType = eventTypeDao.getById(id);
-		
+
 		EventTypeData event = new EventTypeData();
 		event.setId(eventType.getId());
 		event.setType(eventType.getType());
 		event.setIsActive(eventType.getIsActive());
 		event.setVersion(eventType.getVersion());
-		
+
 		EventTypeFindByIdRes result = new EventTypeFindByIdRes();
 		result.setData(event);
-		
+
 		return result;
 	}
 
 	public SearchQuery<EventTypeData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
 		SearchQuery<EventType> dataDb = eventTypeDao.findAll(query, startPage, maxPage);
-		
+
 		List<EventTypeData> data = new ArrayList<>();
 		dataDb.getData().forEach(eventType -> {
 			EventTypeData event = new EventTypeData();
@@ -101,10 +101,10 @@ public class EventTypeService extends BaseCoreService<EventType> {
 			event.setType(eventType.getType());
 			event.setIsActive(eventType.getIsActive());
 			event.setVersion(eventType.getVersion());
-			
+
 			data.add(event);
 		});
-		
+
 		SearchQuery<EventTypeData> result = new SearchQuery<>();
 		result.setCount(dataDb.getCount());
 		result.setData(data);
@@ -129,5 +129,5 @@ public class EventTypeService extends BaseCoreService<EventType> {
 		}
 		return result;
 	}
-	
+
 }
