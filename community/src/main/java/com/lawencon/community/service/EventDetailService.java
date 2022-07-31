@@ -109,7 +109,7 @@ public class EventDetailService extends BaseCoreService<EventDetail> {
 		data.setId(eventDetailDb.getId());
 		data.setEventDetailCode(eventDetailDb.getEventDetailCode());
 		data.setEventHeaderId(eventDetailDb.getEventHeader().getId());
-		
+
 		data.setStartDate(eventDetailDb.getStartDate());
 		data.setEndDate(eventDetailDb.getEndDate());
 		data.setProvider(eventDetailDb.getProvider());
@@ -133,7 +133,7 @@ public class EventDetailService extends BaseCoreService<EventDetail> {
 			data.setId(eventDetail.getId());
 			data.setEventDetailCode(eventDetail.getEventDetailCode());
 			data.setEventHeaderId(eventDetail.getEventHeader().getId());
-			
+
 			data.setStartDate(eventDetail.getStartDate());
 			data.setEndDate(eventDetail.getEndDate());
 			data.setProvider(eventDetail.getProvider());

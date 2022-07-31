@@ -8,24 +8,24 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EventDetailInsertReq {
-	
+
 	@NotBlank(message = "Event Detail Id can't be empty")
 	private String eventHeaderId;
-	
+
 	@NotNull(message = "Price can't be empty")
 	private Float price;
-	
+
 	@NotNull(message = "Start date can't be empty")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime startDate;
-	
+
 	@NotNull(message = "End date can't be empty")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime endDate;
-	
+
 	@NotBlank(message = "Provider can't be null")
 	private String provider;
-	
+
 	@NotBlank(message = "Location can't be null")
 	private String locations;
 
@@ -44,7 +44,7 @@ public class EventDetailInsertReq {
 	public void setPrice(Float price) {
 		this.price = price;
 	}
-	
+
 	public LocalDateTime getStartDate() {
 		return startDate;
 	}
@@ -77,6 +77,4 @@ public class EventDetailInsertReq {
 		this.locations = locations;
 	}
 
-	
-	
 }
