@@ -3,12 +3,14 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.ThreadHeaderPollingDao;
+import com.lawencon.community.dao.ThreadPollingAnswerDao;
 import com.lawencon.community.dao.ThreadPollingDetailDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -32,12 +34,17 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 
 	@Autowired
 	private ThreadPollingDetailDao pollingDetailDao;
+	
+	@Autowired
+	private ThreadPollingAnswerDao answerDao;
 
 	public InsertRes insert(ThreadHeaderPollingInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
+		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
 
 			ThreadHeaderPolling threadHeaderPollingInsert = new ThreadHeaderPolling();
+			threadHeaderPollingInsert.setThreadHeaderPollingCode(code);
 			threadHeaderPollingInsert.setTitlePolling(data.getTitlePolling());
 			threadHeaderPollingInsert.setContentPolling(data.getContentPolling());
 			threadHeaderPollingInsert.setIsActive(true);
@@ -114,10 +121,15 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 			threadDtlPolling.setQuestion(threadDtl.get(i).getQuestion());
 			threadDtlPolling.setIsActive(threadDtl.get(i).getIsActive());
 			threadDtlPolling.setVersion(threadDtl.get(i).getVersion());
+			
+			int countAnswer = answerDao.countAnswer(threadDtl.get(i).getId()).intValue();
+			threadDtlPolling.setCountAnswer(countAnswer);
 
 			threadDtlPollings.add(threadDtlPolling);
 		}
 		data.setThreadDtlPolling(threadDtlPollings);
+		int countAll = answerDao.countAllAnswer(threadDetailDb.getId()).intValue();
+		data.setCountAllAnswer(countAll);
 
 		ThreadHeaderPollingFindByIdRes result = new ThreadHeaderPollingFindByIdRes();
 		result.setData(data);
@@ -130,7 +142,6 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 		SearchQuery<ThreadHeaderPolling> dataDb = threadHeaderPollingDao.findAll(query, startPage, maxPage);
 
 		List<ThreadHeaderPollingData> threadHeaderPollings = new ArrayList<ThreadHeaderPollingData>();
-		List<ThreadPollingDetailData> threadDtlPollings = new ArrayList<ThreadPollingDetailData>();
 		dataDb.getData().forEach(threadHeader -> {
 			ThreadHeaderPollingData data = new ThreadHeaderPollingData();
 			data.setId(threadHeader.getId());
@@ -139,6 +150,7 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 			data.setIsActive(threadHeader.getIsActive());
 			data.setVersion(threadHeader.getVersion());
 
+			List<ThreadPollingDetailData> threadDtlPollings = new ArrayList<ThreadPollingDetailData>();
 			try {
 				List<ThreadPollingDetail> threadDtl = pollingDetailDao.findByHeader(threadHeader.getId());
 				for (int i = 0; i < threadDtl.size(); i++) {
@@ -147,13 +159,19 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 					threadDtlPolling.setQuestion(threadDtl.get(i).getQuestion());
 					threadDtlPolling.setIsActive(threadDtl.get(i).getIsActive());
 					threadDtlPolling.setVersion(threadDtl.get(i).getVersion());
+					int countAnswer = answerDao.countAnswer(threadDtl.get(i).getId()).intValue();
+					threadDtlPolling.setCountAnswer(countAnswer);
 
 					threadDtlPollings.add(threadDtlPolling);
+					
 				}
+				data.setThreadDtlPolling(threadDtlPollings);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			data.setThreadDtlPolling(threadDtlPollings);
+			
+			int count = answerDao.countAllAnswer(threadHeader.getId()).intValue();
+			data.setCountAllAnswer(count);
 			threadHeaderPollings.add(data);
 		});
 

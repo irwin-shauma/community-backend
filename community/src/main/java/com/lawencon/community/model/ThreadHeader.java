@@ -19,7 +19,7 @@ public class ThreadHeader extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
 	@Column(name = "thread_header_code")
-	private UUID threadHeaderCode;
+	private String threadHeaderCode;
 
 	@Column(name = "title")
 	private String title;
@@ -39,11 +39,11 @@ public class ThreadHeader extends BaseEntity {
 	@JoinColumn(name = "file_id")
 	private File file;
 
-	public UUID getThreadHeaderCode() {
+	public String getThreadHeaderCode() {
 		return threadHeaderCode;
 	}
 
-	public void setThreadHeaderCode(UUID threadHeaderCode) {
+	public void setThreadHeaderCode(String threadHeaderCode) {
 		this.threadHeaderCode = threadHeaderCode;
 	}
 

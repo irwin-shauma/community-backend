@@ -3,6 +3,7 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,9 +45,11 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 	public InsertRes insert(EventHeaderInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
+		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			begin();
 			EventHeader eventHeader = new EventHeader();
+			eventHeader.setEventHeaderCode(code);
 			eventHeader.setTitle(data.getTitle());
 
 			EventType eventType = eventTypeDao.getByIdWithoutDetach(data.getEventTypeId());

@@ -3,6 +3,7 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,10 +38,11 @@ public class PaymentService extends BaseCoreService<Payment>{
 	
 	public InsertRes insert(PaymentInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
+		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			begin();
 			Payment payment = new Payment();
-			
+			payment.setPaymentCode(code);
 			User user = userDao.getById(data.getUserId());
 			payment.setUser(user);
 

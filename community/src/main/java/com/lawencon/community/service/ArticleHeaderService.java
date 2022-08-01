@@ -3,6 +3,7 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +35,12 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 
 	public InsertRes insert(ArticleHeaderInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
+		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			begin();
 
 			ArticleHeader articleHdr = new ArticleHeader();
+			articleHdr.setArticleHeaderCode(code);
 			articleHdr.setTitle(data.getTitle());
 			articleHdr.setContents(data.getContents());
 

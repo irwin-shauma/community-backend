@@ -3,6 +3,7 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,9 +45,10 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 
 	public InsertRes insert(ThreadDetailInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
+		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			ThreadDetail threadDetail = new ThreadDetail();
-
+			threadDetail.setThreadDetailCode(code);
 			ThreadHeader threadHeader = new ThreadHeader();
 			threadHeader.setId(data.getThreadHeaderId());
 			threadDetail.setThreadHeader(threadHeader);

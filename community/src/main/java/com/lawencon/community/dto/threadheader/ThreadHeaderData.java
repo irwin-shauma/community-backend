@@ -1,6 +1,7 @@
 package com.lawencon.community.dto.threadheader;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -22,6 +23,8 @@ public class ThreadHeaderData {
 	private Integer version;
 	private Boolean isActive;
 	private Integer countLike;
+	private Integer countComment;
+	private List<ThreadDetailData> threadDetail;
 
 	public String getId() {
 		return id;
@@ -127,4 +130,19 @@ public class ThreadHeaderData {
 		this.countLike = countLike;
 	}
 
+	public Integer getCountComment() {
+		return countComment;
+	}
+
+	public void setCountComment(Integer countComment) {
+		this.countComment = countComment;
+	}
+
+	public List<ThreadDetailData> getThreadDetail() {
+		return threadDetail;
+	}
+
+	public void setThreadDetail(List<ThreadDetailData> threadDetail) {
+		this.threadDetail = threadDetail;
+	}
 }

@@ -3,6 +3,7 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +39,10 @@ public class BookmarkService extends BaseService<Bookmark> {
 
 	public InsertRes insert(BookmarkInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
+		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			Bookmark bookmark = new Bookmark();
+			bookmark.setBookmarkCode(code);
 			ThreadHeader thread = threadDao.getById(data.getThreadId());
 			User user = userDao.getById(getUserId());
 
