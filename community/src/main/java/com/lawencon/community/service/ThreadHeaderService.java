@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ProfileDao;
+<<<<<<< HEAD
+import com.lawencon.community.dao.ThreadDetailDao;
+=======
+>>>>>>> d3fbf6e1a726c7e160c5e80c777a8d3b0947c607
 import com.lawencon.community.dao.ThreadHeaderDao;
 import com.lawencon.community.dao.ThreadLikeDao;
 import com.lawencon.community.dao.UserDao;
@@ -18,12 +22,17 @@ import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateDataRes;
 import com.lawencon.community.dto.UpdateRes;
+import com.lawencon.community.dto.threadheader.ThreadDetailData;
 import com.lawencon.community.dto.threadheader.ThreadHeaderData;
 import com.lawencon.community.dto.threadheader.ThreadHeaderFindByIdRes;
 import com.lawencon.community.dto.threadheader.ThreadHeaderInsertReq;
 import com.lawencon.community.dto.threadheader.ThreadHeaderUpdateReq;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Profile;
+<<<<<<< HEAD
+import com.lawencon.community.model.ThreadDetail;
+=======
+>>>>>>> d3fbf6e1a726c7e160c5e80c777a8d3b0947c607
 import com.lawencon.community.model.ThreadHeader;
 import com.lawencon.community.model.ThreadType;
 import com.lawencon.community.model.User;
@@ -37,6 +46,12 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 	
 	@Autowired
 	private ThreadLikeDao threadLikeDao;
+<<<<<<< HEAD
+	
+	@Autowired
+	private ThreadDetailDao threadDetailDao;
+=======
+>>>>>>> d3fbf6e1a726c7e160c5e80c777a8d3b0947c607
 
 	@Autowired
 	private FileDao fileDao;
@@ -159,6 +174,7 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		SearchQuery<ThreadHeader> dataDb = threadHdrDao.findAll(query, startPage, maxPage);
 
 		List<ThreadHeaderData> data = new ArrayList<>();
+		
 		dataDb.getData().forEach(threadHdr -> {
 			ThreadHeaderData thread = new ThreadHeaderData();
 			thread.setId(threadHdr.getId());
@@ -166,9 +182,12 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 
 			thread.setThreadTypeId(threadHdr.getThreadType().getId());
 			thread.setContentThread(threadHdr.getContentThread());
+<<<<<<< HEAD
+=======
 			if(threadHdr.getFile() != null) {
 				thread.setFileId(threadHdr.getFile().getId());				
 			}
+>>>>>>> d3fbf6e1a726c7e160c5e80c777a8d3b0947c607
 			
 			thread.setCreatedBy(threadHdr.getCreatedBy());
 			User user = userDao.getById(threadHdr.getCreatedBy());
@@ -182,6 +201,35 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			
 			int countLike = threadLikeDao.countLikes(threadHdr.getId()).intValue();
 			thread.setCountLike(countLike);
+<<<<<<< HEAD
+			
+			int countComment = threadDetailDao.countComment(threadHdr.getId()).intValue();
+			thread.setCountComment(countComment);
+			
+			List<ThreadDetailData> listDetail = new ArrayList<>();
+			try {
+				List<ThreadDetail> threadDtls = threadDetailDao.findAllByHeader(threadHdr.getId());
+				for (int i = 0; i < threadDtls.size(); i++) {
+					ThreadDetailData threadDtl = new ThreadDetailData();
+					threadDtl.setId(threadDtls.get(i).getId());
+					threadDtl.setThreadHeaderId(threadDtls.get(i).getThreadHeader().getId());
+					threadDtl.setUserId(threadDtls.get(i).getUser().getId());
+					
+					User users = userDao.getById(threadDtls.get(i).getUser().getId());
+					Profile profiles = profileDao.getById(users.getProfile().getId());
+					
+					threadDtl.setFullName(profiles.getFullName());
+					threadDtl.setCommentThread(threadDtls.get(i).getCommentThread());
+					threadDtl.setCreatedAt(threadDtls.get(i).getCreatedAt());
+					
+					listDetail.add(threadDtl);
+				}
+				thread.setThreadDetail(listDetail);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+=======
+>>>>>>> d3fbf6e1a726c7e160c5e80c777a8d3b0947c607
 
 			data.add(thread);
 		});
