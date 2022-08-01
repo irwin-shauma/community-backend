@@ -10,6 +10,7 @@ public class ThreadHeaderPollingData {
 	private Boolean isActive;
 	private Integer version;
 	private List<ThreadPollingDetailData> threadDtlPolling;
+	private Integer countAllAnswer;
 
 	public String getId() {
 		return id;
@@ -57,6 +58,14 @@ public class ThreadHeaderPollingData {
 
 	public void setThreadDtlPolling(List<ThreadPollingDetailData> threadDtlPolling) {
 		this.threadDtlPolling = threadDtlPolling;
+	}
+
+	public Integer getCountAllAnswer() {
+		return countAllAnswer;
+	}
+
+	public void setCountAllAnswer(Integer countAllAnswer) {
+		this.countAllAnswer = countAllAnswer;
 	}
 
 }

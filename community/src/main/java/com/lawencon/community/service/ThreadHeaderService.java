@@ -2,47 +2,69 @@ package com.lawencon.community.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.FileDao;
+import com.lawencon.community.dao.ProfileDao;
+import com.lawencon.community.dao.ThreadDetailDao;
 import com.lawencon.community.dao.ThreadHeaderDao;
+import com.lawencon.community.dao.ThreadLikeDao;
+import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateDataRes;
 import com.lawencon.community.dto.UpdateRes;
+import com.lawencon.community.dto.threadheader.ThreadDetailData;
 import com.lawencon.community.dto.threadheader.ThreadHeaderData;
 import com.lawencon.community.dto.threadheader.ThreadHeaderFindByIdRes;
 import com.lawencon.community.dto.threadheader.ThreadHeaderInsertReq;
 import com.lawencon.community.dto.threadheader.ThreadHeaderUpdateReq;
 import com.lawencon.community.model.File;
+import com.lawencon.community.model.Profile;
+import com.lawencon.community.model.ThreadDetail;
 import com.lawencon.community.model.ThreadHeader;
 import com.lawencon.community.model.ThreadType;
+import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
+public class ThreadHeaderService extends BaseService<ThreadHeader> {
 
 	@Autowired
 	private ThreadHeaderDao threadHdrDao;
+	
+	@Autowired
+	private ThreadLikeDao threadLikeDao;
+	
+	@Autowired
+	private ThreadDetailDao threadDetailDao;
 
 	@Autowired
 	private FileDao fileDao;
+	
+	@Autowired
+	private ProfileDao profileDao;
+	
+	@Autowired
+	private UserDao userDao;
 
 	public InsertRes insert(ThreadHeaderInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
+		UUID uuid = UUID.randomUUID();
 		try {
 			ThreadHeader threadHdr = new ThreadHeader();
+			threadHdr.setThreadHeaderCode(uuid);
 			threadHdr.setTitle(data.getTitle());
 			threadHdr.setContentThread(data.getContentThread());
 
 			ThreadType threadType = new ThreadType();
 			threadType.setId(data.getThreadTypeId());
-
+			
 			threadHdr.setThreadType(threadType);
 			threadHdr.setIsActive(true);
 
@@ -124,6 +146,11 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 		if(threadHdr.getFile() != null) {
 			thread.setFileId(threadHdr.getFile().getId());			
 		}
+		thread.setCreatedBy(threadHdr.getCreatedBy());
+		User user = userDao.getById(threadHdr.getCreatedBy());
+		
+		Profile profile = profileDao.getById(user.getProfile().getId());
+		thread.setFullName(profile.getFullName());
 		thread.setCreatedAt(threadHdr.getCreatedAt());
 		thread.setVersion(threadHdr.getVersion());
 		thread.setIsActive(threadHdr.getIsActive());
@@ -138,6 +165,7 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 		SearchQuery<ThreadHeader> dataDb = threadHdrDao.findAll(query, startPage, maxPage);
 
 		List<ThreadHeaderData> data = new ArrayList<>();
+		
 		dataDb.getData().forEach(threadHdr -> {
 			ThreadHeaderData thread = new ThreadHeaderData();
 			thread.setId(threadHdr.getId());
@@ -145,12 +173,45 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 
 			thread.setThreadTypeId(threadHdr.getThreadType().getId());
 			thread.setContentThread(threadHdr.getContentThread());
-			if(threadHdr.getFile() != null) {
-				thread.setFileId(threadHdr.getFile().getId());				
-			}
+			
+			thread.setCreatedBy(threadHdr.getCreatedBy());
+			User user = userDao.getById(threadHdr.getCreatedBy());
+			
+			Profile profile = profileDao.getById(user.getProfile().getId());
+			thread.setFullName(profile.getFullName());
+			
 			thread.setCreatedAt(threadHdr.getCreatedAt());
 			thread.setVersion(threadHdr.getVersion());
 			thread.setIsActive(threadHdr.getIsActive());
+			
+			int countLike = threadLikeDao.countLikes(threadHdr.getId()).intValue();
+			thread.setCountLike(countLike);
+			
+			int countComment = threadDetailDao.countComment(threadHdr.getId()).intValue();
+			thread.setCountComment(countComment);
+			
+			List<ThreadDetailData> listDetail = new ArrayList<>();
+			try {
+				List<ThreadDetail> threadDtls = threadDetailDao.findAllByHeader(threadHdr.getId());
+				for (int i = 0; i < threadDtls.size(); i++) {
+					ThreadDetailData threadDtl = new ThreadDetailData();
+					threadDtl.setId(threadDtls.get(i).getId());
+					threadDtl.setThreadHeaderId(threadDtls.get(i).getThreadHeader().getId());
+					threadDtl.setUserId(threadDtls.get(i).getUser().getId());
+					
+					User users = userDao.getById(threadDtls.get(i).getUser().getId());
+					Profile profiles = profileDao.getById(users.getProfile().getId());
+					
+					threadDtl.setFullName(profiles.getFullName());
+					threadDtl.setCommentThread(threadDtls.get(i).getCommentThread());
+					threadDtl.setCreatedAt(threadDtls.get(i).getCreatedAt());
+					
+					listDetail.add(threadDtl);
+				}
+				thread.setThreadDetail(listDetail);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 			data.add(thread);
 		});

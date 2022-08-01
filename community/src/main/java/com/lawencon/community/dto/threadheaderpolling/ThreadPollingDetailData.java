@@ -8,6 +8,7 @@ public class ThreadPollingDetailData {
 	private String question;
 	private Boolean isActive;
 	private Integer version;
+	private Integer countAnswer;
 
 	public String getId() {
 		return id;
@@ -57,7 +58,12 @@ public class ThreadPollingDetailData {
 		this.version = version;
 	}
 
-	
+	public Integer getCountAnswer() {
+		return countAnswer;
+	}
 
-	
+	public void setCountAnswer(Integer countAnswer) {
+		this.countAnswer = countAnswer;
+	}
+
 }
