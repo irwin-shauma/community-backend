@@ -11,6 +11,7 @@ import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.EventHeaderDao;
 import com.lawencon.community.dao.EventTypeDao;
 import com.lawencon.community.dao.FileDao;
+import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
@@ -23,6 +24,7 @@ import com.lawencon.community.dto.eventheader.EventHeaderUpdateReq;
 import com.lawencon.community.model.EventHeader;
 import com.lawencon.community.model.EventType;
 import com.lawencon.community.model.File;
+import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
@@ -30,6 +32,9 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 	@Autowired
 	private EventHeaderDao eventHeaderDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	@Autowired
 	private EventTypeDao eventTypeDao;
@@ -44,8 +49,11 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			EventHeader eventHeader = new EventHeader();
 			eventHeader.setTitle(data.getTitle());
 
-			EventType eventType = eventTypeDao.getById(data.getEventTypeId());
-			eventHeader.setEventTypeId(eventType);
+			EventType eventType = eventTypeDao.getByIdWithoutDetach(data.getEventTypeId());
+			eventHeader.setEventType(eventType);
+
+			User user = userDao.getByIdWithoutDetach(data.getUserId());
+			eventHeader.setUser(user);
 
 			if (data.getFileName() != null) {
 				File file = new File();
@@ -84,7 +92,11 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			eventHeaderDb.setTitle(data.getTitle());
 
 			EventType eventDb = eventTypeDao.getByIdWithoutDetach(data.getId());
-			eventHeaderDb.setEventTypeId(eventDb);
+			eventHeaderDb.setEventType(eventDb);
+
+			User user = userDao.getByIdWithoutDetach(data.getUserId());
+			eventHeaderDb.setUser(user);
+
 			eventHeaderDb.setIsActive(data.getIsActive());
 
 			if (data.getFileId() != null && data.getFileName() != null) {
@@ -94,8 +106,8 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 				fileDao.save(file);
 
 				eventHeaderDb.setFile(file);
-				
-			} else if(data.getFileId() == null && data.getFileName() != null) {
+
+			} else if (data.getFileId() == null && data.getFileName() != null) {
 				File file = new File();
 				file.setFileName(data.getFileName());
 				file.setFileExtension(data.getFileExtension());
@@ -105,7 +117,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 				File formerFile = fileDao.getByIdWithoutDetach(eventHeaderDb.getFile().getId());
 				eventHeaderDb.setFile(null);
 				fileDao.delete(formerFile);
-				
+
 			}
 
 			EventHeader eventHeaderUpdate = eventHeaderDao.save(eventHeaderDb);
@@ -137,6 +149,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 		}
 		data.setTitle(eventHeaderDb.getTitle());
 		data.setEventTypeId(eventHeaderDb.getEventType().getId());
+		data.setUserId(eventHeaderDb.getUser().getId());
 		data.setIsActive(eventHeaderDb.getIsActive());
 		data.setVersion(eventHeaderDb.getVersion());
 
@@ -160,6 +173,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			}
 			data.setTitle(eventHeader.getTitle());
 			data.setEventTypeId(eventHeader.getEventType().getId());
+			data.setUserId(eventHeader.getUser().getId());
 			data.setIsActive(eventHeader.getIsActive());
 			data.setVersion(eventHeader.getVersion());
 
@@ -179,12 +193,12 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 		try {
 			begin();
-			
+
 			EventHeader eventHeader = eventHeaderDao.getById(id);
-			if(eventHeader.getFile() != null) {
+			if (eventHeader.getFile() != null) {
 				fileDao.deleteById(eventHeader.getFile().getId());
 			}
-			
+
 			boolean isDeleted = eventHeaderDao.deleteById(id);
 			commit();
 
