@@ -16,6 +16,8 @@ import com.lawencon.base.BaseEntity;
 })
 public class ThreadType extends BaseEntity{
 	private static final long serialVersionUID = -5196455701225322056L;
+	
+	
 
 	@Column(name = "thread_type")
 	private String threadType;

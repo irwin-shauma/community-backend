@@ -2,8 +2,8 @@ package com.lawencon.community.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,10 +55,10 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 
 	public InsertRes insert(ThreadHeaderInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
-		UUID uuid = UUID.randomUUID();
+		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			ThreadHeader threadHdr = new ThreadHeader();
-			threadHdr.setThreadHeaderCode(uuid);
+			threadHdr.setThreadHeaderCode(code);
 			threadHdr.setTitle(data.getTitle());
 			threadHdr.setContentThread(data.getContentThread());
 
@@ -154,6 +154,29 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		thread.setCreatedAt(threadHdr.getCreatedAt());
 		thread.setVersion(threadHdr.getVersion());
 		thread.setIsActive(threadHdr.getIsActive());
+		
+		List<ThreadDetailData> listDetail = new ArrayList<>();
+		try {
+			List<ThreadDetail> threadDtls = threadDetailDao.findAllByHeader(threadHdr.getId());
+			for (int i = 0; i < threadDtls.size(); i++) {
+				ThreadDetailData threadDtl = new ThreadDetailData();
+				threadDtl.setId(threadDtls.get(i).getId());
+				threadDtl.setThreadHeaderId(threadDtls.get(i).getThreadHeader().getId());
+				threadDtl.setUserId(threadDtls.get(i).getUser().getId());
+				
+				User users = userDao.getById(threadDtls.get(i).getUser().getId());
+				Profile profiles = profileDao.getById(users.getProfile().getId());
+				
+				threadDtl.setFullName(profiles.getFullName());
+				threadDtl.setCommentThread(threadDtls.get(i).getCommentThread());
+				threadDtl.setCreatedAt(threadDtls.get(i).getCreatedAt());
+				
+				listDetail.add(threadDtl);
+			}
+			thread.setThreadDetail(listDetail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		ThreadHeaderFindByIdRes result = new ThreadHeaderFindByIdRes();
 		result.setData(thread);
