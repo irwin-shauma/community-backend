@@ -8,5 +8,9 @@ import com.lawencon.community.model.PremiumPaymentHistory;
 @Repository
 public class PremiumPaymentHistoryDao extends AbstractJpaDao<PremiumPaymentHistory> {
 	
+	public PremiumPaymentHistory getByUser(String userId) throws Exception {
+		String sql = "SELECT * FROM premium_payment_history WHERE user_id = :id";
+		return null;
+	}
 
 }

@@ -37,8 +37,10 @@ public class VerificationService extends BaseCoreService<Verification> {
 
 	public InsertRes insert(VerficationInsertReq email) throws Exception {
 		InsertRes result = new InsertRes();
+		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			Verification verif = new Verification();
+			verif.setVerificationCode(code);
 			String verification = RandomStringUtils.randomAlphanumeric(5);
 			verif.setVerificationCode(verification);
 			verif.setExpired(LocalDateTime.now().plusHours(2));

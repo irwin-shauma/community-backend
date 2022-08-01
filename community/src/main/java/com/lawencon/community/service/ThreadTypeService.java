@@ -32,6 +32,7 @@ public class ThreadTypeService extends BaseCoreService<ThreadType>{
 		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			ThreadType threadType = new ThreadType();
+			threadType.setThreadTypeCode(code);
 			threadType.setThreadType(data.getThreadType());
 			
 			threadType.setIsActive(true);
