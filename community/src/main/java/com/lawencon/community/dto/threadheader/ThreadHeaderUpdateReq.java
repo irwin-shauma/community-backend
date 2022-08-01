@@ -6,6 +6,9 @@ import javax.validation.constraints.NotNull;
 public class ThreadHeaderUpdateReq {
 
 	private String id;
+	
+	@NotNull(message = "User Id can't be empty")
+	private String userId;
 
 	@NotBlank(message = "Title can't be empty")
 	private String title;
@@ -25,6 +28,14 @@ public class ThreadHeaderUpdateReq {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getTitle() {
