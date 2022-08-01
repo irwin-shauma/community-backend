@@ -11,5 +11,4 @@ public class ArticleHeaderFindByIdRes {
 		this.data = data;
 	}
 
-
 }

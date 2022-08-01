@@ -17,8 +17,6 @@ public class BalanceUpdateReq {
 	@NotNull(message = "Active can't be empty")
 	private Boolean isActive;
 	
-	@NotNull(message = " version can't be empty")
-	private Integer version;
 
 	public String getId() {
 		return id;
@@ -51,14 +49,4 @@ public class BalanceUpdateReq {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-	
-	
 }

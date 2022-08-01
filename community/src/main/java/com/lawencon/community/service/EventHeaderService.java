@@ -30,14 +30,17 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 	@Autowired
 	private EventHeaderDao eventHeaderDao;
+
 	@Autowired
 	private EventTypeDao eventTypeDao;
+
 	@Autowired
 	private FileDao fileDao;
 
 	public InsertRes insert(EventHeaderInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
+			begin();
 			EventHeader eventHeader = new EventHeader();
 			eventHeader.setTitle(data.getTitle());
 
@@ -55,7 +58,6 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 			eventHeader.setIsActive(true);
 
-			begin();
 			EventHeader eventHeaderInsert = save(eventHeader);
 			commit();
 
@@ -83,17 +85,28 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 			EventType eventDb = eventTypeDao.getByIdWithoutDetach(data.getId());
 			eventHeaderDb.setEventTypeId(eventDb);
+			eventHeaderDb.setIsActive(data.getIsActive());
 
-			if (data.getFileId() != null) {
+			if (data.getFileId() != null && data.getFileName() != null) {
 				File file = fileDao.getById(data.getFileId());
 				file.setFileName(data.getFileName());
 				file.setFileExtension(data.getFileExtension());
 				fileDao.save(file);
-				
-				eventHeaderDb.setFile(file);
-			}
 
-			eventHeaderDb.setIsActive(data.getIsActive());
+				eventHeaderDb.setFile(file);
+				
+			} else if(data.getFileId() == null && data.getFileName() != null) {
+				File file = new File();
+				file.setFileName(data.getFileName());
+				file.setFileExtension(data.getFileExtension());
+				File fileRes = fileDao.save(file);
+				eventHeaderDb.setFile(fileRes);
+			} else if (data.getFileId() == null) {
+				File formerFile = fileDao.getByIdWithoutDetach(eventHeaderDb.getFile().getId());
+				eventHeaderDb.setFile(null);
+				fileDao.delete(formerFile);
+				
+			}
 
 			EventHeader eventHeaderUpdate = eventHeaderDao.save(eventHeaderDb);
 			commit();
@@ -119,7 +132,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 		EventHeaderData data = new EventHeaderData();
 		data.setId(eventHeaderDb.getId());
 		data.setEventHeaderCode(eventHeaderDb.getEventHeaderCode());
-		if(eventHeaderDb.getFile() != null) {
+		if (eventHeaderDb.getFile() != null) {
 			data.setFileId(eventHeaderDb.getFile().getId());
 		}
 		data.setTitle(eventHeaderDb.getTitle());
@@ -142,7 +155,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			EventHeaderData data = new EventHeaderData();
 			data.setId(eventHeader.getId());
 			data.setEventHeaderCode(eventHeader.getEventHeaderCode());
-			if(eventHeader.getFile() != null) {
+			if (eventHeader.getFile() != null) {
 				data.setFileId(eventHeader.getFile().getId());
 			}
 			data.setTitle(eventHeader.getTitle());
@@ -166,6 +179,12 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 		try {
 			begin();
+			
+			EventHeader eventHeader = eventHeaderDao.getById(id);
+			if(eventHeader.getFile() != null) {
+				fileDao.deleteById(eventHeader.getFile().getId());
+			}
+			
 			boolean isDeleted = eventHeaderDao.deleteById(id);
 			commit();
 

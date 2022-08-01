@@ -76,7 +76,6 @@ public class BalanceService extends BaseCoreService<Balance> {
 			balanceDb.setUser(userDb);
 
 			balanceDb.setIsActive(data.getIsActive());
-			balanceDb.setVersion(data.getVersion());
 
 			Balance balanceUpdate = balanceDao.save(balanceDb);
 			commit();

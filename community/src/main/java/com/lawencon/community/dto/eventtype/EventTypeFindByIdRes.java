@@ -11,5 +11,4 @@ public class EventTypeFindByIdRes {
 		this.data = data;
 	}
 
-
 }

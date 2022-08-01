@@ -151,6 +151,11 @@ public class PaymentService extends BaseCoreService<Payment>{
 
 		try {
 			begin();
+			Payment payment = paymentDao.getById(id);
+			if(payment.getFile() != null) {
+				fileDao.deleteById(payment.getFile().getId());
+			}
+			
 			boolean isDeleted = paymentDao.deleteById(id);
 			commit();
 

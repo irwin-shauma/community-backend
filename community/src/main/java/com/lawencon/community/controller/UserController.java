@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.user.UpdatePhotoProfileReq;
+import com.lawencon.community.dto.user.UserChangePasswordReq;
 import com.lawencon.community.dto.user.UserData;
 import com.lawencon.community.dto.user.UserFindByIdRes;
 import com.lawencon.community.dto.user.UserInsertReq;
@@ -60,5 +61,13 @@ public class UserController {
 		UpdateRes data = userService.updateProfilePic(user);
 		return new ResponseEntity<UpdateRes>(data, HttpStatus.OK);
 	}
+	
+	@PutMapping("change-password")
+	public ResponseEntity<UpdateRes> changePassword(@RequestBody UserChangePasswordReq user) throws Exception {
+		UpdateRes data = userService.changePassword(user);
+		return new ResponseEntity<UpdateRes>(data, HttpStatus.OK);
+	}
+	
+	
 
 }

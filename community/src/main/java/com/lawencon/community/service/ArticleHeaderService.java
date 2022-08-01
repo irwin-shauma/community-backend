@@ -28,32 +28,31 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 
 	@Autowired
 	private ArticleHeaderDao articleHeaderDao;
-	
+
 	@Autowired
 	private FileDao fileDao;
-	
+
 	public InsertRes insert(ArticleHeaderInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		try {
 			begin();
-			
+
 			ArticleHeader articleHdr = new ArticleHeader();
 			articleHdr.setTitle(data.getTitle());
 			articleHdr.setContents(data.getContents());
-			
-			if(data.getFileName() != null) {
+
+			if (data.getFileName() != null) {
 				File file = new File();
 				file.setFileName(data.getFileName());
 				file.setFileExtension(data.getFileExtension());
 				File fileRes = fileDao.save(file);
 				articleHdr.setFile(fileRes);
 			}
-			
 			articleHdr.setIsActive(true);
-			
+
 			ArticleHeader inserted = articleHeaderDao.save(articleHdr);
 			commit();
-			
+
 			InsertDataRes insertRes = new InsertDataRes();
 			insertRes.setId(inserted.getId());
 
@@ -64,44 +63,40 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 			rollback();
 			throw new Exception(e);
 		}
-		
+
 		return result;
 	}
-	
-	
+
 	public UpdateRes update(ArticleHeaderUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
-		begin();
 		try {
+			begin();
 			ArticleHeader dataDb = articleHeaderDao.getById(data.getId());
 			dataDb.setTitle(data.getTitle());
 			dataDb.setContents(data.getContents());
 			dataDb.setIsActive(data.getIsActive());
-			
+
 			ArticleHeader updated = null;
-			if(data.getFileId() != null && data.getFileName() != null) {
+			if (data.getFileId() != null && data.getFileName() != null) {
 				File file = fileDao.getById(data.getFileId());
 				file.setFileName(data.getFileName());
 				file.setFileExtension(data.getFileExtension());
 				fileDao.save(file);
 				updated = save(dataDb);
-			} 
-			else if (data.getFileId() == null && data.getFileName() != null){
+			} else if (data.getFileId() == null && data.getFileName() != null) {
 				File file = new File();
 				file.setFileName(data.getFileName());
 				file.setFileExtension(data.getFileExtension());
 				File fileRes = fileDao.save(file);
 				dataDb.setFile(fileRes);
-				updated = save(dataDb);
-			}
-			else if(data.getFileId() == null){
+			} else if (data.getFileId() == null) {
 				File formerFile = fileDao.getByIdWithoutDetach(dataDb.getFile().getId());
 				dataDb.setFile(null);
 				fileDao.delete(formerFile);
-				updated = save(dataDb);
 			}
+			updated = save(dataDb);
 			commit();
-			
+
 			UpdateDataRes dataRes = new UpdateDataRes();
 			dataRes.setVersion(updated.getVersion());
 
@@ -118,41 +113,41 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 
 	public ArticleHeaderFindByIdRes getById(String id) throws Exception {
 		ArticleHeader articleHdr = articleHeaderDao.getById(id);
-		
+
 		ArticleHeaderData data = new ArticleHeaderData();
 		data.setId(articleHdr.getId());
-		if(articleHdr.getFile() != null) {
+		if (articleHdr.getFile() != null) {
 			data.setFileId(articleHdr.getFile().getId());
 		}
 		data.setTitle(articleHdr.getTitle());
 		data.setContents(articleHdr.getContents());
 		data.setIsActive(articleHdr.getIsActive());
 		data.setVersion(articleHdr.getVersion());
-		
+
 		ArticleHeaderFindByIdRes result = new ArticleHeaderFindByIdRes();
 		result.setData(data);
-		
+
 		return result;
 	}
 
 	public SearchQuery<ArticleHeaderData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
 		SearchQuery<ArticleHeader> dataDb = articleHeaderDao.findAll(query, startPage, maxPage);
-		
+
 		List<ArticleHeaderData> dataList = new ArrayList<>();
 		dataDb.getData().forEach(articleHdr -> {
 			ArticleHeaderData data = new ArticleHeaderData();
 			data.setId(articleHdr.getId());
-			if(articleHdr.getFile() != null) {
+			if (articleHdr.getFile() != null) {
 				data.setFileId(articleHdr.getFile().getId());
 			}
 			data.setTitle(articleHdr.getTitle());
 			data.setContents(articleHdr.getContents());
 			data.setIsActive(articleHdr.getIsActive());
 			data.setVersion(articleHdr.getVersion());
-			
+
 			dataList.add(data);
 		});
-		
+
 		SearchQuery<ArticleHeaderData> result = new SearchQuery<>();
 		result.setCount(dataDb.getCount());
 		result.setData(dataList);
@@ -164,10 +159,12 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 		result.setMessage(MessageResponse.FAILED.getMessageResponse());
 		try {
 			begin();
-			
+
 			ArticleHeader articleHeader = articleHeaderDao.getById(id);
-			fileDao.deleteById(articleHeader.getFile().getId());
-			
+			if (articleHeader.getFile() != null) {
+				fileDao.deleteById(articleHeader.getFile().getId());
+			}
+
 			boolean isDeleted = articleHeaderDao.deleteById(id);
 			commit();
 			if (isDeleted) {
@@ -180,5 +177,5 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 		}
 		return result;
 	}
-	
+
 }

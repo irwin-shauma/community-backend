@@ -15,7 +15,6 @@ public class PremiumTypeUpdateReq {
 	private Integer duration;
 
 	private Boolean isActive;
-	private Integer version;
 
 	public String getId() {
 		return id;
@@ -47,14 +46,6 @@ public class PremiumTypeUpdateReq {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
 	}
 
 }

@@ -25,6 +25,7 @@ import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateDataRes;
 import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.user.UpdatePhotoProfileReq;
+import com.lawencon.community.dto.user.UserChangePasswordReq;
 import com.lawencon.community.dto.user.UserData;
 import com.lawencon.community.dto.user.UserFindByIdRes;
 import com.lawencon.community.dto.user.UserInsertReq;
@@ -272,6 +273,38 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		String token = res.getToken().getToken();
 		commit();
 		return token;
+	}
+	
+	public UpdateRes changePassword(UserChangePasswordReq data) throws Exception {
+		UpdateRes response = new UpdateRes();
+
+		try {
+			User user = userDao.getById(getAuthPrincipal().toString());
+			
+			if(passwordEncoder.matches(data.getOldPassword(), user.getPassword())) {
+				user.setPassword(passwordEncoder.encode(data.getNewPassword()));
+				
+				begin();
+				User userResult = save(user);
+				commit();
+				
+				UpdateDataRes dataRes = new UpdateDataRes();
+				dataRes.setVersion(userResult.getVersion());
+				
+				response.setMessage("Password updated successfully!");
+				response.setData(dataRes);
+			} else {
+				response.setMessage("Old password didn't match!");
+				response.setData(null);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+
+		return response;
 	}
 
 }
