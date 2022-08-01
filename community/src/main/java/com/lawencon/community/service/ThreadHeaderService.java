@@ -154,6 +154,11 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		thread.setCreatedAt(threadHdr.getCreatedAt());
 		thread.setVersion(threadHdr.getVersion());
 		thread.setIsActive(threadHdr.getIsActive());
+		int countLike = threadLikeDao.countLikes(threadHdr.getId()).intValue();
+		thread.setCountLike(countLike);
+		
+		int countComment = threadDetailDao.countComment(threadHdr.getId()).intValue();
+		thread.setCountComment(countComment);
 		
 		List<ThreadDetailData> listDetail = new ArrayList<>();
 		try {

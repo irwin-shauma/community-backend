@@ -3,6 +3,7 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -66,10 +67,13 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 	public InsertRes insert(UserInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
+		String userCode = RandomStringUtils.randomAlphanumeric(5);
+		String profileCode = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			User userSystem = userDao.findByRoleCode("SYSTEM");
 
 			Profile profile = new Profile();
+			profile.setProfileCode(profileCode);
 			profile.setFullName(data.getFullName());
 			profile.setCompany(data.getCompany());
 			profile.setIndustry(data.getIndustry());
@@ -79,6 +83,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			
 
 			User user = new User();
+			user.setUserCode(userCode);
 			user.setEmail(data.getEmail());
 			user.setPassword(passwordEncoder.encode(data.getPassword()));
 			user.setIsActive(true);
