@@ -9,11 +9,11 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "thread_types", uniqueConstraints = {
-		@UniqueConstraint(name = "thread_types_bk", columnNames = { "thread_type_code" }) })
+		@UniqueConstraint(name = "thread_types_bk", columnNames = { "type_code" }) })
 public class ThreadType extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@Column(name = "thread_type_code")
+	@Column(name = "type_code")
 	private String threadTypeCode;
 
 	@Column(name = "thread_type")
