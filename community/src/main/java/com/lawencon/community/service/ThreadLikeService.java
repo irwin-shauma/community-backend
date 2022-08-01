@@ -3,6 +3,7 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +39,10 @@ public class ThreadLikeService extends BaseService<ThreadLike>{
 	
 	public InsertRes insert(ThreadLikeInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
+		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			ThreadLike threadLike = new ThreadLike();
-			
+			threadLike.setThreadLikeCode(code);
 			User user = userDao.getById(getUserId());
 			threadLike.setUserId(user);
 			

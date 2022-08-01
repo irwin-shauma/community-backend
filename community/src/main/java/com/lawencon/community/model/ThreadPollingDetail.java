@@ -4,33 +4,49 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.OneToOne;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "thread_polling_detail")
-public class ThreadPollingDetail extends BaseEntity{
+@Table(name = "thread_polling_detail", uniqueConstraints = {
+		@UniqueConstraint(name = "thread_polling_detail_bk", columnNames = "thread_polling_detail_code") })
+public class ThreadPollingDetail extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
+
+	@Column(name = "thread_polling_detail_code")
+	private String threadPollingDetailCode;
 
 	@OneToOne
 	@JoinColumn(name = "thread_header_polling_id")
 	private ThreadHeaderPolling threadHeaderPolling;
-	
+
 	@Column(name = "question")
 	private String question;
+
+	public String getThreadPollingDetailCode() {
+		return threadPollingDetailCode;
+	}
+
+	public void setThreadPollingDetailCode(String threadPollingDetailCode) {
+		this.threadPollingDetailCode = threadPollingDetailCode;
+	}
+
 	public ThreadHeaderPolling getThreadHeaderPolling() {
 		return threadHeaderPolling;
 	}
+
 	public void setThreadHeaderPolling(ThreadHeaderPolling threadHeaderPolling) {
 		this.threadHeaderPolling = threadHeaderPolling;
 	}
+
 	public String getQuestion() {
 		return question;
 	}
+
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-	
-	
+
 }

@@ -5,25 +5,38 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "event_payment_history")
-public class EventPaymentHistory extends BaseEntity{
-	
+@Table(name = "event_payment_history", uniqueConstraints = {
+		@UniqueConstraint(name = "event_payment_history_bk", columnNames = "event_payment_code") })
+public class EventPaymentHistory extends BaseEntity {
+
 	private static final long serialVersionUID = -5196455701225322056L;
-	
+
+	@Column(name = "event_payment_code")
+	private String evetnPaymentCode;
+
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	@OneToOne
 	@JoinColumn(name = "event_header_id")
 	private EventHeader eventHeader;
-	
+
 	@Column(name = "trx_no")
 	private String trxNo;
+
+	public String getEvetnPaymentCode() {
+		return evetnPaymentCode;
+	}
+
+	public void setEvetnPaymentCode(String evetnPaymentCode) {
+		this.evetnPaymentCode = evetnPaymentCode;
+	}
 
 	public User getUser() {
 		return user;
