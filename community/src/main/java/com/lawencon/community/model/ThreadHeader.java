@@ -27,6 +27,10 @@ public class ThreadHeader extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "thread_type_id")
 	private ThreadType threadType;
+	
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	@Column(name = "content_thread")
 	private String contentThread;
@@ -57,6 +61,14 @@ public class ThreadHeader extends BaseEntity {
 
 	public void setThreadType(ThreadType threadType) {
 		this.threadType = threadType;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getContentThread() {

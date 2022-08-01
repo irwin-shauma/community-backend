@@ -11,7 +11,9 @@ public class EventHeaderUpdateReq {
 	@NotBlank(message = "Event Type Id can't be empty")
 	private String eventTypeId;
 	
-	@NotNull(message = "File Id can't be empty")
+	@NotNull(message = "User Id can't be empty")
+	private String userId;
+	
 	private String fileId;
 	
 	@NotBlank(message = "Title can't be empty")
@@ -46,6 +48,14 @@ public class EventHeaderUpdateReq {
 
 	public void setEventTypeId(String eventTypeId) {
 		this.eventTypeId = eventTypeId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getFileId() {

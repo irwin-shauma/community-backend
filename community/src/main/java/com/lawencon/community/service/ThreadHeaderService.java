@@ -13,6 +13,7 @@ import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.ThreadDetailDao;
 import com.lawencon.community.dao.ThreadHeaderDao;
 import com.lawencon.community.dao.ThreadLikeDao;
+import com.lawencon.community.dao.ThreadTypeDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -42,6 +43,9 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 	private ThreadLikeDao threadLikeDao;
 	
 	@Autowired
+	private ThreadTypeDao threadTypeDao;
+	
+	@Autowired
 	private ThreadDetailDao threadDetailDao;
 
 	@Autowired
@@ -62,10 +66,11 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			threadHdr.setTitle(data.getTitle());
 			threadHdr.setContentThread(data.getContentThread());
 
-			ThreadType threadType = new ThreadType();
-			threadType.setId(data.getThreadTypeId());
+			ThreadType threadType = threadTypeDao.getByIdWithoutDetach(data.getThreadTypeId());
+			User user = userDao.getByIdWithoutDetach(data.getUserId());
 			
 			threadHdr.setThreadType(threadType);
+			threadHdr.setUser(user);
 			threadHdr.setIsActive(true);
 
 			begin();
@@ -103,10 +108,11 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			threadHdr.setContentThread(data.getContentThread());
 			threadHdr.setIsActive(data.getIsActive());
 
-			ThreadType threadType = new ThreadType();
-			threadType.setId(data.getThreadTypeId());
-
+			ThreadType threadType = threadTypeDao.getByIdWithoutDetach(data.getThreadTypeId());
+			User user = userDao.getByIdWithoutDetach(data.getUserId());
+			
 			threadHdr.setThreadType(threadType);
+			threadHdr.setUser(user);
 			threadHdr.setIsActive(true);
 
 			File file = new File();
@@ -142,6 +148,7 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		thread.setTitle(threadHdr.getTitle());
 
 		thread.setThreadTypeId(threadHdr.getThreadType().getId());
+		thread.setUserId(threadHdr.getUser().getId());
 		thread.setContentThread(threadHdr.getContentThread());
 		if(threadHdr.getFile() != null) {
 			thread.setFileId(threadHdr.getFile().getId());			
@@ -195,6 +202,7 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			thread.setTitle(threadHdr.getTitle());
 
 			thread.setThreadTypeId(threadHdr.getThreadType().getId());
+			thread.setUserId(threadHdr.getUser().getId());
 			thread.setContentThread(threadHdr.getContentThread());
 			if(threadHdr.getFile() != null) {
 				thread.setFileId(threadHdr.getFile().getId());				

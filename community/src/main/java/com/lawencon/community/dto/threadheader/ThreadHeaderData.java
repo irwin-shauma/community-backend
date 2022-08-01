@@ -10,6 +10,7 @@ public class ThreadHeaderData {
 
 	private String id;
 	private String threadTypeId;
+	private String userId;
 	private UUID threadHeaderCode;
 	private String title;
 	private String contentThread;
@@ -63,6 +64,14 @@ public class ThreadHeaderData {
 
 	public void setThreadTypeId(String threadTypeId) {
 		this.threadTypeId = threadTypeId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getFileId() {

@@ -29,7 +29,7 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 				EventType eventType = new EventType();
 				eventType.setId(objArr[3].toString());
 				
-				eventHeader.setEventTypeId(eventType);
+				eventHeader.setEventType(eventType);
 			}
 		}catch (Exception e) {
 			e.printStackTrace();

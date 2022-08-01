@@ -1,6 +1,7 @@
 package com.lawencon.community.dto.eventheader;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class EventHeaderInsertReq {
 
@@ -9,6 +10,9 @@ public class EventHeaderInsertReq {
 
 	@NotBlank(message = "Event type can't be empty")
 	private String eventTypeId;
+	
+	@NotNull(message = "User Id can't be empty")
+	private String userId;
 
 	private String fileName;
 	private String fileExtension;
@@ -27,6 +31,14 @@ public class EventHeaderInsertReq {
 
 	public void setEventTypeId(String eventTypeId) {
 		this.eventTypeId = eventTypeId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getFileName() {

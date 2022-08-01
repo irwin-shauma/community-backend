@@ -219,12 +219,16 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		Profile profile = null;
 
 		profile = profileDao.getById(user.getProfile().getId());
-		data.setProfileId(profile.getId());
-		data.setFullName(profile.getFullName());
-		data.setCompany(profile.getCompany());
-		data.setIndustry(profile.getIndustry());
-		data.setPosition(profile.getPosition());
-		data.setFileId(profile.getFile().getId());
+		if(profile != null) {
+			data.setProfileId(profile.getId());
+			data.setFullName(profile.getFullName());
+			data.setCompany(profile.getCompany());
+			data.setIndustry(profile.getIndustry());
+			data.setPosition(profile.getPosition());
+			if(profile.getFile() != null) {
+				data.setFileId(profile.getFile().getId());
+			}
+		}
 
 		UserFindByIdRes result = new UserFindByIdRes();
 		result.setData(data);
