@@ -1,10 +1,7 @@
 package com.lawencon.community.dto.threadheader;
 
 import java.time.LocalDateTime;
-<<<<<<< HEAD
 import java.util.List;
-=======
->>>>>>> d3fbf6e1a726c7e160c5e80c777a8d3b0947c607
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -25,11 +22,8 @@ public class ThreadHeaderData {
 	private Integer version;
 	private Boolean isActive;
 	private Integer countLike;
-<<<<<<< HEAD
 	private Integer countComment;
 	private List<ThreadDetailData> threadDetail;
-=======
->>>>>>> d3fbf6e1a726c7e160c5e80c777a8d3b0947c607
 
 	public String getId() {
 		return id;
@@ -127,7 +121,6 @@ public class ThreadHeaderData {
 		this.countLike = countLike;
 	}
 
-<<<<<<< HEAD
 	public Integer getCountComment() {
 		return countComment;
 	}
@@ -143,7 +136,4 @@ public class ThreadHeaderData {
 	public void setThreadDetail(List<ThreadDetailData> threadDetail) {
 		this.threadDetail = threadDetail;
 	}
-
-=======
->>>>>>> d3fbf6e1a726c7e160c5e80c777a8d3b0947c607
 }
