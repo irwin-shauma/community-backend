@@ -122,13 +122,15 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 
 	public PremiumPaymentHistoryFindByIdRes getByUser() throws Exception {
 		PremiumPaymentHistory premiumDb = premiumPaymentHistoryDao.getByUser(getUserId());
-
-		PremiumPaymentHistoryData data = new PremiumPaymentHistoryData();
-		data.setId(premiumDb.getId());
-		data.setUserId(premiumDb.getUser().getId());
-
+		
 		PremiumPaymentHistoryFindByIdRes result = new PremiumPaymentHistoryFindByIdRes();
-		result.setData(data);
+		if(premiumDb != null) {
+			PremiumPaymentHistoryData data = new PremiumPaymentHistoryData();
+			data.setId(premiumDb.getId());
+			data.setUserId(premiumDb.getUser().getId());
+			result.setData(data);
+			return result;
+		}
 
 		return result;
 	}
