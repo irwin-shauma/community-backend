@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,13 +45,13 @@ public class ThreadDetailController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody ThreadDetailInsertReq data) throws Exception {
+	public ResponseEntity<?> insert(@RequestBody @Valid ThreadDetailInsertReq data) throws Exception {
 		InsertRes result = threadDetailService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody ThreadDetailUpdateReq data) throws Exception {
+	public ResponseEntity<?> update(@RequestBody @Valid ThreadDetailUpdateReq data) throws Exception {
 		UpdateRes result = threadDetailService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

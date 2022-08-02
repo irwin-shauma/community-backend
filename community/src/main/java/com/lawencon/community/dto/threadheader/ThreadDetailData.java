@@ -8,6 +8,7 @@ public class ThreadDetailData {
 	private String threadHeaderId;
 	private String userId;
 	private String fullName;
+	private String userPhoto;
 	private String commentThread;
 	private LocalDateTime createdAt;
 
@@ -33,6 +34,14 @@ public class ThreadDetailData {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserPhoto() {
+		return userPhoto;
+	}
+
+	public void setUserPhoto(String userPhoto) {
+		this.userPhoto = userPhoto;
 	}
 
 	public String getCommentThread() {

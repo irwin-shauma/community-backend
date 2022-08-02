@@ -43,7 +43,6 @@ public class ThreadDetailDao extends AbstractJpaDao<ThreadDetail> {
 				threadDetail.setCommentThread(objArr[4].toString());
 				
 				threadDetail.setThreadHeader(threadHeader);
-				threadDetail.setFile(file);
 				threadDetail.setUser(user);
 			}
 		}

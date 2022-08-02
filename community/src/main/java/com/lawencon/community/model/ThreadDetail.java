@@ -23,10 +23,6 @@ public class ThreadDetail extends BaseEntity {
 	private ThreadHeader threadHeader;
 
 	@OneToOne
-	@JoinColumn(name = "file_id")
-	private File file;
-
-	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 
@@ -47,14 +43,6 @@ public class ThreadDetail extends BaseEntity {
 
 	public void setThreadHeader(ThreadHeader threadHeader) {
 		this.threadHeader = threadHeader;
-	}
-
-	public File getFile() {
-		return file;
-	}
-
-	public void setFile(File file) {
-		this.file = file;
 	}
 
 	public User getUser() {

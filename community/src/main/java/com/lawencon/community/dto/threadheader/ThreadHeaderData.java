@@ -16,6 +16,7 @@ public class ThreadHeaderData {
 	private String fileId;
 	private String fullName;
 	private String createdBy;
+	private String userPhoto;
 
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdAt;
@@ -127,6 +128,14 @@ public class ThreadHeaderData {
 
 	public void setCountComment(Integer countComment) {
 		this.countComment = countComment;
+	}
+
+	public String getUserPhoto() {
+		return userPhoto;
+	}
+
+	public void setUserPhoto(String userPhoto) {
+		this.userPhoto = userPhoto;
 	}
 
 	public List<ThreadDetailData> getThreadDetail() {
