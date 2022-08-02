@@ -9,8 +9,6 @@ public class ThreadDetailInsertReq {
 	@NotNull(message = "Thread header can't be empty")
 	private String threadHeaderId;
 	
-	private String fileId;
-	
 	@NotBlank(message = "Comments can't be empty")
 	@Size(min = 1, max = 10000, message = "Comment must be between 1 to 10000 characters")
 	private String commentThread;
@@ -21,14 +19,6 @@ public class ThreadDetailInsertReq {
 
 	public void setThreadHeaderId(String threadHeaderId) {
 		this.threadHeaderId = threadHeaderId;
-	}
-
-	public String getFileId() {
-		return fileId;
-	}
-
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
 	}
 
 	public String getCommentThread() {

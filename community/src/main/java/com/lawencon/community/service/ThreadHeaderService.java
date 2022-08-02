@@ -151,6 +151,8 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		
 		Profile profile = profileDao.getById(user.getProfile().getId());
 		thread.setFullName(profile.getFullName());
+		thread.setUserPhoto(profile.getFile().getId());
+		
 		thread.setCreatedAt(threadHdr.getCreatedAt());
 		thread.setVersion(threadHdr.getVersion());
 		thread.setIsActive(threadHdr.getIsActive());
@@ -174,6 +176,8 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 				Profile profiles = profileDao.getById(users.getProfile().getId());
 				
 				threadDtl.setFullName(profiles.getFullName());
+				threadDtl.setUserPhoto(profiles.getFile().getId());;
+				
 				threadDtl.setCommentThread(threadDtls.get(i).getCommentThread());
 				threadDtl.setCreatedAt(threadDtls.get(i).getCreatedAt());
 				
@@ -211,6 +215,7 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			
 			Profile profile = profileDao.getById(user.getProfile().getId());
 			thread.setFullName(profile.getFullName());
+			thread.setUserPhoto(profile.getFile().getId());
 			
 			thread.setCreatedAt(threadHdr.getCreatedAt());
 			thread.setVersion(threadHdr.getVersion());
@@ -233,8 +238,9 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 					
 					User users = userDao.getById(threadDtls.get(i).getUser().getId());
 					Profile profiles = profileDao.getById(users.getProfile().getId());
-					
 					threadDtl.setFullName(profiles.getFullName());
+					threadDtl.setUserPhoto(profile.getFile().getId());
+					
 					threadDtl.setCommentThread(threadDtls.get(i).getCommentThread());
 					threadDtl.setCreatedAt(threadDtls.get(i).getCreatedAt());
 					

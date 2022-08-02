@@ -25,7 +25,6 @@ import com.lawencon.community.dto.threaddetail.ThreadDetailUpdateReq;
 import com.lawencon.community.model.ThreadDetail;
 import com.lawencon.community.model.ThreadHeader;
 import com.lawencon.community.model.User;
-import com.lawencon.community.model.File;
 import com.lawencon.model.SearchQuery;
 
 @Service
@@ -87,9 +86,6 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 			ThreadHeader threadHeader = threadHeaderDao.getById(data.getThreadHeaderId());
 			threadDetailInsert.setThreadHeader(threadHeader);
 
-			File file = fileDao.getById(data.getFileId());
-			threadDetailInsert.setFile(file);
-
 			User user = userDao.getById(data.getUserId());
 			threadDetailInsert.setUser(user);
 
@@ -122,9 +118,6 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 		ThreadDetailData data = new ThreadDetailData();
 		data.setId(threadDetailDb.getId());
 		data.setThreadHeaderId(threadDetailDb.getThreadHeader().getId());
-		if(threadDetailDb.getFile() != null) {
-			data.setFileId(threadDetailDb.getFile().getId());				
-		}
 		data.setUserId(threadDetailDb.getUser().getId());
 		data.setCommentThread(threadDetailDb.getCommentThread());
 		data.setIsActive(threadDetailDb.getIsActive());
@@ -145,9 +138,6 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 			ThreadDetailData data = new ThreadDetailData();
 			data.setId(threadDetail.getId());
 			data.setThreadHeaderId(threadDetail.getThreadHeader().getId());
-			if(threadDetail.getFile() != null) {
-				data.setFileId(threadDetail.getFile().getId());				
-			}
 			data.setUserId(threadDetail.getUser().getId());
 			data.setVersion(threadDetail.getVersion());
 
