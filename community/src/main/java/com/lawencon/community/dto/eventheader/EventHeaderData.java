@@ -1,14 +1,22 @@
 package com.lawencon.community.dto.eventheader;
 
+import java.time.LocalDateTime;
+
 public class EventHeaderData {
 	private String id;
 	private String eventHeaderCode;
 	private String title;
 	private String eventTypeId;
-	private String userId;
-	private String fileId;
+	private String createdBy;
+	private String fulName;
 	private Boolean isActive;
 	private Integer version;
+	private String fileId;
+	private Float price;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
+	private String provider;
+	private String location;
 
 	public String getId() {
 		return id;
@@ -42,14 +50,6 @@ public class EventHeaderData {
 		this.eventTypeId = eventTypeId;
 	}
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
 	public String getFileId() {
 		return fileId;
 	}
@@ -73,4 +73,61 @@ public class EventHeaderData {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getFulName() {
+		return fulName;
+	}
+
+	public void setFulName(String fulName) {
+		this.fulName = fulName;
+	}
+
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getProvider() {
+		return provider;
+	}
+
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
 }

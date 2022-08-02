@@ -25,18 +25,22 @@ public class EventDetail extends BaseEntity {
 
 	@Column(name = "price")
 	private Float price;
-	
+
 	@Column(name = "start_date")
 	private LocalDateTime startDate;
-	
+
 	@Column(name = "end_date")
 	private LocalDateTime endDate;
-	
+
 	@Column(name = "provider")
 	private String provider;
-	
+
 	@Column(name = "locations")
 	private String locations;
+
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private File file;
 
 	public String getEventDetailCode() {
 		return eventDetailCode;
@@ -60,6 +64,14 @@ public class EventDetail extends BaseEntity {
 
 	public void setPrice(Float price) {
 		this.price = price;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
 	}
 
 	public LocalDateTime getStartDate() {
