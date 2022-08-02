@@ -176,7 +176,10 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 				Profile profiles = profileDao.getById(users.getProfile().getId());
 				
 				threadDtl.setFullName(profiles.getFullName());
-				threadDtl.setUserPhoto(profiles.getFile().getId());;
+				if(profiles.getFile() != null) {
+					threadDtl.setUserPhoto(profiles.getFile().getId());;
+				}
+				
 				
 				threadDtl.setCommentThread(threadDtls.get(i).getCommentThread());
 				threadDtl.setCreatedAt(threadDtls.get(i).getCreatedAt());
