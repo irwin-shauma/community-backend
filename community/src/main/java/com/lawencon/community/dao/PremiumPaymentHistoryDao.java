@@ -25,8 +25,8 @@ public class PremiumPaymentHistoryDao extends AbstractJpaDao<PremiumPaymentHisto
 				user.setId(objArr[2].toString());
 				premium.setUser(user);
 			} 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception NoResultException ) {
+			return premium;
 		}
 		
 		return premium;
