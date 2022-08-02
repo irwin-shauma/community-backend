@@ -43,6 +43,13 @@ public class PremiumPaymentHistoryController {
 		PremiumPaymentHistoryFindByIdRes result = premiumPaymentHistoryService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("users")
+	public ResponseEntity<?> getByUser() throws Exception {
+		PremiumPaymentHistoryFindByIdRes result = premiumPaymentHistoryService.getByUser();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 
 	@PostMapping
 	public ResponseEntity<?> insert(@RequestBody PremiumPaymentHistoryInsertReq data) throws Exception {

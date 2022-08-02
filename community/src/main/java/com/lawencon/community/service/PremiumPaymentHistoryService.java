@@ -7,7 +7,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.PremiumPaymentHistoryDao;
 import com.lawencon.community.dao.PremiumTypeDao;
@@ -27,17 +26,17 @@ import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPaymentHistory>{
-	
+public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHistory> {
+
 	@Autowired
 	private PremiumPaymentHistoryDao premiumPaymentHistoryDao;
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private PremiumTypeDao premiumTypeDao;
-	
+
 	public InsertRes insert(PremiumPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		String code = RandomStringUtils.randomAlphanumeric(5);
@@ -47,10 +46,10 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 			premiumPaymentHistory.setPremiumPaymentHistoryCode(code);
 			User user = userDao.getById(data.getUserId());
 			premiumPaymentHistory.setUser(user);
-			
+
 			PremiumType premiumType = premiumTypeDao.getById(data.getPremiumTypeId());
 			premiumPaymentHistory.setPremiumType(premiumType);
-			
+
 			premiumPaymentHistory.setTrxNo(data.getTrxNo());
 			premiumPaymentHistory.setIsActive(true);
 
@@ -61,7 +60,7 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 			insertDataRes.setId(premiumPaymentHistoryInsert.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.getMessageResponse());	
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -70,42 +69,42 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 
 		return result;
 	}
-	
-	public UpdateRes update(PremiumPaymentHistoryUpdateReq data) throws Exception{
+
+	public UpdateRes update(PremiumPaymentHistoryUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 		try {
 			begin();
 			PremiumPaymentHistory premiumPaymentHistoryDb = premiumPaymentHistoryDao.getById(data.getId());
-			
+
 			User userDb = userDao.getByIdWithoutDetach(data.getId());
 			premiumPaymentHistoryDb.setUser(userDb);
-			
+
 			PremiumType premiumType = premiumTypeDao.getByIdWithoutDetach(data.getPremiumTypeId());
 			premiumPaymentHistoryDb.setPremiumType(premiumType);
-			
+
 			premiumPaymentHistoryDb.setTrxNo(data.getTrxNo());
 			premiumPaymentHistoryDb.setIsActive(data.getIsActive());
-			
+
 			PremiumPaymentHistory premiumPaymentHistoryUpdate = premiumPaymentHistoryDao.save(premiumPaymentHistoryDb);
 			commit();
-			
+
 			UpdateDataRes updateDataRes = new UpdateDataRes();
-			
+
 			updateDataRes.setVersion(premiumPaymentHistoryUpdate.getVersion());
-			
+
 			result.setData(updateDataRes);
 			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
 		}
 		return result;
 	}
-	
-	public PremiumPaymentHistoryFindByIdRes getById(String id) throws Exception{
+
+	public PremiumPaymentHistoryFindByIdRes getById(String id) throws Exception {
 		PremiumPaymentHistory premiumPaymentHistoryDb = premiumPaymentHistoryDao.getById(id);
-		
+
 		PremiumPaymentHistoryData data = new PremiumPaymentHistoryData();
 		data.setId(premiumPaymentHistoryDb.getId());
 		data.setUserId(premiumPaymentHistoryDb.getUser().getId());
@@ -113,19 +112,33 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 		data.setTrxNo(premiumPaymentHistoryDb.getTrxNo());
 		data.setIsActive(premiumPaymentHistoryDb.getIsActive());
 		data.setVersion(premiumPaymentHistoryDb.getVersion());
-		
+
 		PremiumPaymentHistoryFindByIdRes result = new PremiumPaymentHistoryFindByIdRes();
 		result.setData(data);
-		
+
 		return result;
-		
+
 	}
-	
-	public SearchQuery<PremiumPaymentHistoryData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
+
+	public PremiumPaymentHistoryFindByIdRes getByUser() throws Exception {
+		PremiumPaymentHistory premiumDb = premiumPaymentHistoryDao.getByUser(getUserId());
+
+		PremiumPaymentHistoryData data = new PremiumPaymentHistoryData();
+		data.setId(premiumDb.getId());
+		data.setUserId(premiumDb.getUser().getId());
+
+		PremiumPaymentHistoryFindByIdRes result = new PremiumPaymentHistoryFindByIdRes();
+		result.setData(data);
+
+		return result;
+	}
+
+	public SearchQuery<PremiumPaymentHistoryData> findAll(String query, Integer startPage, Integer maxPage)
+			throws Exception {
 		SearchQuery<PremiumPaymentHistory> dataDb = premiumPaymentHistoryDao.findAll(query, startPage, maxPage);
-		
+
 		List<PremiumPaymentHistoryData> premiumPaymentHistoryDataList = new ArrayList<PremiumPaymentHistoryData>();
-		
+
 		dataDb.getData().forEach(premiumPaymentHistory -> {
 			PremiumPaymentHistoryData data = new PremiumPaymentHistoryData();
 			data.setId(premiumPaymentHistory.getId());
@@ -134,18 +147,17 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 			data.setTrxNo(premiumPaymentHistory.getTrxNo());
 			data.setIsActive(premiumPaymentHistory.getIsActive());
 			data.setVersion(premiumPaymentHistory.getVersion());
-			
+
 			premiumPaymentHistoryDataList.add(data);
 		});
-		
+
 		SearchQuery<PremiumPaymentHistoryData> result = new SearchQuery<>();
 		result.setCount(dataDb.getCount());
 		result.setData(premiumPaymentHistoryDataList);
-		
+
 		return result;
 	}
-	
-	
+
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 
