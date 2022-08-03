@@ -43,7 +43,7 @@ public class ThreadPollingDetailService extends BaseCoreService<ThreadPollingDet
 			ThreadHeaderPolling threadHeaderPolling = threadHeaderPollingDao.getById(data.getThreadHeaderPollingId());
 			
 			threadPollingDetailInsert.setThreadHeaderPolling(threadHeaderPolling);
-			threadPollingDetailInsert.setQuestion(data.getQuestion());
+			threadPollingDetailInsert.setPollingChoice(data.getPollingChoice());
 			threadPollingDetailInsert.setIsActive(true);
 
 			begin();
@@ -73,7 +73,7 @@ public class ThreadPollingDetailService extends BaseCoreService<ThreadPollingDet
 			ThreadHeaderPolling threadHeaderPolling = threadHeaderPollingDao.getById(data.getThreadHeaderPollingId());
 			
 			threadPollingDetailInsert.setThreadHeaderPolling(threadHeaderPolling);
-			threadPollingDetailInsert.setQuestion(data.getQuestion());
+			threadPollingDetailInsert.setPollingChoice(data.getPollingChoice());
 			threadPollingDetailInsert.setIsActive(true);
 
 			begin();
@@ -100,7 +100,7 @@ public class ThreadPollingDetailService extends BaseCoreService<ThreadPollingDet
 		ThreadPollingDetailData data = new ThreadPollingDetailData();
 		data.setId(threadDetailDb.getId());
 		data.setThreadHeaderPollingId(threadDetailDb.getThreadHeaderPolling().getId());
-		data.setQuestion(threadDetailDb.getQuestion());
+		data.setQuestion(threadDetailDb.getPollingChoice());
 		data.setIsActive(threadDetailDb.getIsActive());
 		data.setVersion(threadDetailDb.getVersion());
 
@@ -120,7 +120,7 @@ public class ThreadPollingDetailService extends BaseCoreService<ThreadPollingDet
 			ThreadPollingDetailData data = new ThreadPollingDetailData();
 			data.setId(threadHeader.getId());
 			data.setThreadHeaderPollingId(threadHeader.getThreadHeaderPolling().getId());
-			data.setQuestion(threadHeader.getQuestion());
+			data.setQuestion(threadHeader.getPollingChoice());
 			data.setIsActive(threadHeader.getIsActive());
 			data.setVersion(threadHeader.getVersion());
 

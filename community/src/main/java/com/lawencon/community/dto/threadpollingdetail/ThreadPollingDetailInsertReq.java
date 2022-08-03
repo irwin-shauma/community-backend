@@ -6,8 +6,8 @@ public class ThreadPollingDetailInsertReq {
 
 	private String threadHeaderPollingId;
 
-	@NotBlank(message = "Question can't be empty")
-	private String question;
+	@NotBlank(message = "Choice can't be empty")
+	private String pollingChoice;
 
 	public String getThreadHeaderPollingId() {
 		return threadHeaderPollingId;
@@ -17,12 +17,12 @@ public class ThreadPollingDetailInsertReq {
 		this.threadHeaderPollingId = threadHeaderPollingId;
 	}
 
-	public String getQuestion() {
-		return question;
+	public String getPollingChoice() {
+		return pollingChoice;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setPollingChoice(String pollingChoice) {
+		this.pollingChoice = pollingChoice;
 	}
 
 }

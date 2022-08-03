@@ -7,6 +7,7 @@ public class ThreadHeaderPollingData {
 	private String id;
 	private String titlePolling;
 	private String contentPolling;
+	private String pollingQuestion;
 	private Boolean isActive;
 	private Integer version;
 	private List<ThreadPollingDetailData> threadDtlPolling;
@@ -34,6 +35,14 @@ public class ThreadHeaderPollingData {
 
 	public void setContentPolling(String contentPolling) {
 		this.contentPolling = contentPolling;
+	}
+
+	public String getPollingQuestion() {
+		return pollingQuestion;
+	}
+
+	public void setPollingQuestion(String pollingQuestion) {
+		this.pollingQuestion = pollingQuestion;
 	}
 
 	public Boolean getIsActive() {

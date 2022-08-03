@@ -5,7 +5,7 @@ public class ThreadPollingDetailData {
 	private String id;
 	private String threadPollingDetailCode;
 	private String threadHeaderPollingId;
-	private String question;
+	private String pollingChoice;
 	private Boolean isActive;
 	private Integer version;
 	private Integer countAnswer;
@@ -34,12 +34,12 @@ public class ThreadPollingDetailData {
 		this.threadHeaderPollingId = threadHeaderPollingId;
 	}
 
-	public String getQuestion() {
-		return question;
+	public String getPollingChoice() {
+		return pollingChoice;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setPollingChoice(String pollingChoice) {
+		this.pollingChoice = pollingChoice;
 	}
 
 	public Boolean getIsActive() {

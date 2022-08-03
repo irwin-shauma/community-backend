@@ -1,8 +1,11 @@
 package com.lawencon.community.dto.threadheaderpolling;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ThreadHeaderPollingInsertReq {
 
@@ -11,6 +14,13 @@ public class ThreadHeaderPollingInsertReq {
 
 	@NotBlank(message = "Content can't be empty")
 	private String contentPolling;
+
+	@NotBlank(message = "Question can't be empty")
+	private String pollingQuestion;
+
+	@NotBlank(message = "Duration can't be empty")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate duration;
 
 	@NotBlank(message = "Question can't be empty")
 	private List<ThreadPollingDetailInsertReq> threadPollingDetail;
@@ -29,6 +39,22 @@ public class ThreadHeaderPollingInsertReq {
 
 	public void setContentPolling(String contentPolling) {
 		this.contentPolling = contentPolling;
+	}
+
+	public String getPollingQuestion() {
+		return pollingQuestion;
+	}
+
+	public void setPollingQuestion(String pollingQuestion) {
+		this.pollingQuestion = pollingQuestion;
+	}
+
+	public LocalDate getDuration() {
+		return duration;
+	}
+
+	public void setDuration(LocalDate duration) {
+		this.duration = duration;
 	}
 
 	public List<ThreadPollingDetailInsertReq> getThreadPollingDetail() {

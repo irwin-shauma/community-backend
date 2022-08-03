@@ -28,7 +28,7 @@ public class ThreadPollingDetailDao extends AbstractJpaDao<ThreadPollingDetail>{
 			threadHdr.setId(objArr[2].toString());
 			threadDtl.setThreadHeaderPolling(threadHdr);
 			
-			threadDtl.setQuestion(objArr[3].toString());		
+			threadDtl.setPollingChoice(objArr[3].toString());		
 			threadDtl.setIsActive(Boolean.valueOf(objArr[8].toString()));
 			threadDtl.setVersion(Integer.valueOf(objArr[9].toString()));
 			

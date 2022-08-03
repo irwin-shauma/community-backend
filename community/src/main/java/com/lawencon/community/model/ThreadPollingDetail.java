@@ -22,8 +22,8 @@ public class ThreadPollingDetail extends BaseEntity {
 	@JoinColumn(name = "thread_header_polling_id")
 	private ThreadHeaderPolling threadHeaderPolling;
 
-	@Column(name = "question")
-	private String question;
+	@Column(name = "polling_choice")
+	private String pollingChoice;
 
 	public String getThreadPollingDetailCode() {
 		return threadPollingDetailCode;
@@ -41,12 +41,12 @@ public class ThreadPollingDetail extends BaseEntity {
 		this.threadHeaderPolling = threadHeaderPolling;
 	}
 
-	public String getQuestion() {
-		return question;
+	public String getPollingChoice() {
+		return pollingChoice;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setPollingChoice(String pollingChoice) {
+		this.pollingChoice = pollingChoice;
 	}
 
 }

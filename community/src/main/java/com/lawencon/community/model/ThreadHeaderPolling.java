@@ -1,5 +1,7 @@
 package com.lawencon.community.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -21,6 +23,12 @@ public class ThreadHeaderPolling extends BaseEntity {
 
 	@Column(name = "content_polling")
 	private String contentPolling;
+
+	@Column(name = "polling_question")
+	private String pollingQuestion;
+
+	@Column(name = "duration")
+	private LocalDate duration;
 
 	public String getThreadHeaderPollingCode() {
 		return threadHeaderPollingCode;
@@ -44,6 +52,22 @@ public class ThreadHeaderPolling extends BaseEntity {
 
 	public void setContentPolling(String contentPolling) {
 		this.contentPolling = contentPolling;
+	}
+
+	public String getPollingQuestion() {
+		return pollingQuestion;
+	}
+
+	public void setPollingQuestion(String pollingQuestion) {
+		this.pollingQuestion = pollingQuestion;
+	}
+
+	public LocalDate getDuration() {
+		return duration;
+	}
+
+	public void setDuration(LocalDate duration) {
+		this.duration = duration;
 	}
 
 }
