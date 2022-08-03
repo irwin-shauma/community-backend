@@ -10,7 +10,7 @@ import com.lawencon.community.model.User;
 public class PremiumPaymentHistoryDao extends AbstractJpaDao<PremiumPaymentHistory> {
 	
 	public PremiumPaymentHistory getByUser(String userId) throws Exception {
-		String sql = "SELECT * FROM premium_payment_history WHERE user_id = :id";
+		String sql = "SELECT * FROM premium_payment_history WHERE user_id = :id AND is_active = true";
 		PremiumPaymentHistory premium = null;
 		try {
 			Object result = createNativeQuery(sql)

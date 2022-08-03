@@ -128,6 +128,9 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 			PremiumPaymentHistoryData data = new PremiumPaymentHistoryData();
 			data.setId(premiumDb.getId());
 			data.setUserId(premiumDb.getUser().getId());
+			data.setTrxNo(premiumDb.getTrxNo());
+			data.setIsActive(premiumDb.getIsActive());
+			data.setVersion(premiumDb.getVersion());
 			result.setData(data);
 			return result;
 		}
