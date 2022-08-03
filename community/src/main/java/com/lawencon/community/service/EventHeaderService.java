@@ -65,6 +65,15 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			EventType eventType = new EventType();
 			eventType.setId(data.getEventTypeId());
 			eventHeader.setEventType(eventType);
+			
+			if (data.getFileName() != null) {
+				File file = new File();
+				file.setFileName(data.getFileName());
+				file.setFileExtension(data.getFileExtension());
+				fileDao.save(file);
+
+				eventHeader.setFile(file);
+			}
 
 			eventHeader.setIsActive(true);
 
@@ -74,14 +83,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			EventDetail eventDetail = new EventDetail();
 			eventDetail.setEventDetailCode(detailCode);
 			eventDetail.setEventHeader(eventHeaderInsert);
-			if (data.getFileName() != null) {
-				File file = new File();
-				file.setFileName(data.getFileName());
-				file.setFileExtension(data.getFileExtension());
-				fileDao.save(file);
 
-				eventDetail.setFile(file);
-			}
 			eventDetail.setPrice(data.getPrice());
 			eventDetail.setStartDate(data.getStarts());
 			eventDetail.setEndDate(data.getEnds());
@@ -174,14 +176,16 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 		User user = userDao.getById(eventHeaderDb.getCreatedBy());
 		Profile profile = profileDao.getById(user.getProfile().getId());
 		data.setFulName(profile.getFullName());
+		
+		if (eventHeaderDb.getFile() != null) {
+			data.setFileId(eventHeaderDb.getFile().getId());
+		}
 
 		data.setIsActive(eventHeaderDb.getIsActive());
 		data.setVersion(eventHeaderDb.getVersion());
 
 		EventDetail eventDetail = eventDetailDao.findByHeader(eventHeaderDb.getId());
-		if (eventDetail.getFile() != null) {
-			data.setFileId(eventDetail.getFile().getId());
-		}
+
 		data.setPrice(eventDetail.getPrice());
 		data.setStartDate(eventDetail.getStartDate());
 		data.setEndDate(eventDetail.getEndDate());
@@ -210,15 +214,16 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			User user = userDao.getById(eventHeader.getCreatedBy());
 			Profile profile = profileDao.getById(user.getProfile().getId());
 			data.setFulName(profile.getFullName());
+			if (eventHeader.getFile() != null) {
+				data.setFileId(eventHeader.getFile().getId());
+			}
 
 			data.setIsActive(eventHeader.getIsActive());
 			data.setVersion(eventHeader.getVersion());
 
 			try {
 				EventDetail eventDetail = eventDetailDao.findByHeader(eventHeader.getId());
-				if (eventDetail.getFile() != null) {
-					data.setFileId(eventDetail.getFile().getId());
-				}
+	
 				data.setPrice(eventDetail.getPrice());
 				data.setStartDate(eventDetail.getStartDate());
 				data.setEndDate(eventDetail.getEndDate());

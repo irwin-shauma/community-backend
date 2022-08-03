@@ -45,6 +45,8 @@ public class VerificationService extends BaseCoreService<Verification> {
 			verif.setVerificationCode(verification);
 			verif.setExpired(LocalDateTime.now().plusHours(2));
 			verif.setIsActive(true);
+			
+			addVerificationCode(email.getEmail(), verification);
 
 			Map<String, Object> template = new HashMap<String, Object>();
 			template.put("code", verification);

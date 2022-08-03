@@ -129,5 +129,4 @@ public class EventHeaderData {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-
 }

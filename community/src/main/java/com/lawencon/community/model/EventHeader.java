@@ -26,6 +26,14 @@ public class EventHeader extends BaseEntity {
 	@JoinColumn(name = "event_type_id")
 	private EventType eventType;
 
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private File file;
+
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
 	public String getEventHeaderCode() {
 		return eventHeaderCode;
 	}
@@ -50,5 +58,20 @@ public class EventHeader extends BaseEntity {
 		this.eventType = eventType;
 	}
 
-	
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

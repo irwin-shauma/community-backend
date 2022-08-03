@@ -149,6 +149,14 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 			data.setId(premiumPaymentHistory.getId());
 			data.setUserId(premiumPaymentHistory.getUser().getId());
 			data.setPremiumTypeId(premiumPaymentHistory.getPremiumType().getId());
+			
+			User userDb = userDao.getById(premiumPaymentHistory.getUser().getId());
+			data.setFullname(userDb.getProfile().getFullName());
+			
+			PremiumType premiumType = premiumTypeDao.getById(premiumPaymentHistory.getPremiumType().getId());
+			data.setPrice(premiumType.getPrice());
+			data.setDuration(premiumType.getDuration());
+			
 			data.setTrxNo(premiumPaymentHistory.getTrxNo());
 			data.setIsActive(premiumPaymentHistory.getIsActive());
 			data.setVersion(premiumPaymentHistory.getVersion());
