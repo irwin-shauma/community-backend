@@ -9,7 +9,7 @@ import com.lawencon.community.model.ThreadType;
 public class ThreadTypeDao extends AbstractJpaDao<ThreadType> {
 	
 	public ThreadType getRegularType() throws Exception {
-		String sql = "SELECT id, thread_type FROM thread_types WHERE thread_type = 'REGULAR'";
+		String sql = "SELECT id, thread_type FROM thread_types WHERE thread_type = 'Regular'";
 		ThreadType threadType = null;
 		try {
 			Object result = createNativeQuery(sql).getSingleResult();

@@ -63,5 +63,11 @@ public class ThreadLikeController {
 		DeleteRes result = threadLikeService.deleteById(id);
 		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("unlike/{id}")
+	public ResponseEntity<DeleteRes> unlike(@PathVariable("id") String id) throws Exception {
+		DeleteRes result = threadLikeService.deleteByThreadAndUser(id);
+		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
+	}
 
 }

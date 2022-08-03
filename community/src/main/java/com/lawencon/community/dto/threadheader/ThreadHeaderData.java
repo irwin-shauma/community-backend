@@ -18,6 +18,7 @@ public class ThreadHeaderData {
 	private String createdBy;
 	private String userId;
 	private String userPhoto;
+	private Boolean isLike;
 
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdAt;
@@ -129,6 +130,14 @@ public class ThreadHeaderData {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public Boolean getIsLike() {
+		return isLike;
+	}
+
+	public void setIsLike(Boolean isLike) {
+		this.isLike = isLike;
 	}
 
 	public Integer getCountLike() {
