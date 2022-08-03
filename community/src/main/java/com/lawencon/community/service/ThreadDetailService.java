@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
-import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ThreadDetailDao;
 import com.lawencon.community.dao.ThreadHeaderDao;
 import com.lawencon.community.dao.UserDao;
@@ -36,8 +35,6 @@ public class ThreadDetailService extends BaseCoreService<ThreadDetail> {
 	@Autowired
 	private ThreadHeaderDao threadHeaderDao;
 
-	@Autowired
-	private FileDao fileDao;
 
 	@Autowired
 	private UserDao userDao;
