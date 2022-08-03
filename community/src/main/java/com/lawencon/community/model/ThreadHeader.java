@@ -30,6 +30,10 @@ public class ThreadHeader extends BaseEntity {
 	private String contentThread;
 
 	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	@OneToOne
 	@JoinColumn(name = "file_id")
 	private File file;
 
@@ -63,6 +67,14 @@ public class ThreadHeader extends BaseEntity {
 
 	public void setContentThread(String contentThread) {
 		this.contentThread = contentThread;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public File getFile() {

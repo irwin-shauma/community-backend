@@ -16,6 +16,7 @@ public class ThreadHeaderData {
 	private String fileId;
 	private String fullName;
 	private String createdBy;
+	private String userId;
 	private String userPhoto;
 
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -32,6 +33,14 @@ public class ThreadHeaderData {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public UUID getThreadHeaderCode() {
