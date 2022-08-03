@@ -11,9 +11,6 @@ public class ThreadHeaderInsertReq {
 	@NotNull(message = "Thread type can't be empty")
 	private String threadTypeId;
 
-	@NotNull(message = "User Id can't be empty")
-	private String userId;
-
 	@NotBlank(message = "Content can't be empty")
 	private String contentThread;
 
@@ -34,14 +31,6 @@ public class ThreadHeaderInsertReq {
 
 	public void setThreadTypeId(String threadTypeId) {
 		this.threadTypeId = threadTypeId;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 	public String getContentThread() {

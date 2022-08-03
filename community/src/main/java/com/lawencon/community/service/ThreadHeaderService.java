@@ -61,10 +61,12 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			threadHdr.setThreadHeaderCode(code);
 			threadHdr.setTitle(data.getTitle());
 			threadHdr.setContentThread(data.getContentThread());
-
 			ThreadType threadType = new ThreadType();
 			threadType.setId(data.getThreadTypeId());
 			
+			User user = userDao.getById(getUserId());
+			
+			threadHdr.setUser(user);
 			threadHdr.setThreadType(threadType);
 			threadHdr.setIsActive(true);
 
@@ -146,8 +148,9 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		if(threadHdr.getFile() != null) {
 			thread.setFileId(threadHdr.getFile().getId());			
 		}
+		thread.setUserId(threadHdr.getUser().getId());
 		thread.setCreatedBy(threadHdr.getCreatedBy());
-		User user = userDao.getById(threadHdr.getCreatedBy());
+		User user = userDao.getById(threadHdr.getUser().getId());
 		
 		Profile profile = profileDao.getById(user.getProfile().getId());
 		thread.setFullName(profile.getFullName());
@@ -209,9 +212,9 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			if(threadHdr.getFile() != null) {
 				thread.setFileId(threadHdr.getFile().getId());				
 			}
-			
+			thread.setUserId(threadHdr.getUser().getId());
 			thread.setCreatedBy(threadHdr.getCreatedBy());
-			User user = userDao.getById(threadHdr.getCreatedBy());
+			User user = userDao.getById(threadHdr.getUser().getId());
 			
 			Profile profile = profileDao.getById(user.getProfile().getId());
 			thread.setFullName(profile.getFullName());
