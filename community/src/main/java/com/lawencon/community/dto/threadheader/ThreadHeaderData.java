@@ -2,15 +2,15 @@ package com.lawencon.community.dto.threadheader;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ThreadHeaderData {
 
 	private String id;
+	private String threadHeaderCode;
 	private String threadTypeId;
-	private UUID threadHeaderCode;
+	private String threadType;
 	private String title;
 	private String contentThread;
 	private String fileId;
@@ -43,12 +43,20 @@ public class ThreadHeaderData {
 		this.userId = userId;
 	}
 
-	public UUID getThreadHeaderCode() {
+	public String getThreadHeaderCode() {
 		return threadHeaderCode;
 	}
 
-	public void setThreadHeaderCode(UUID threadHeaderCode) {
+	public void setThreadHeaderCode(String threadHeaderCode) {
 		this.threadHeaderCode = threadHeaderCode;
+	}
+
+	public String getThreadType() {
+		return threadType;
+	}
+
+	public void setThreadType(String threadType) {
+		this.threadType = threadType;
 	}
 
 	public String getTitle() {
