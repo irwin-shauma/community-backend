@@ -25,6 +25,7 @@ import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateDataRes;
 import com.lawencon.community.dto.UpdateRes;
+import com.lawencon.community.dto.user.LogoutReq;
 import com.lawencon.community.dto.user.UpdatePhotoProfileReq;
 import com.lawencon.community.dto.user.UserChangePasswordReq;
 import com.lawencon.community.dto.user.UserData;
@@ -46,6 +47,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 	@Autowired
 	private UserDao userDao;
+	
 
 	@Autowired
 	private ProfileDao profileDao;
@@ -314,6 +316,33 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		}
 
 		return response;
+	}
+	
+	public UpdateRes logout(LogoutReq data) throws Exception {
+		UpdateRes response = new UpdateRes();
+		
+		try {
+			begin();
+			User user = userDao.getById(data.getId());
+			user.setToken(null);
+			
+			User userResult = userDao.save(user);
+			commit();
+			
+			UpdateDataRes dataRes = new UpdateDataRes();
+			dataRes.setVersion(userResult.getVersion());
+			
+			response.setMessage("Logout Success!");
+			response.setData(dataRes);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+		
+		return response;
+		
 	}
 
 }
