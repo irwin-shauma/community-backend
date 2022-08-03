@@ -1,5 +1,6 @@
 package com.lawencon.community.dto.threadheaderpolling;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ThreadHeaderPollingData {
@@ -8,6 +9,7 @@ public class ThreadHeaderPollingData {
 	private String titlePolling;
 	private String contentPolling;
 	private String pollingQuestion;
+	private LocalDate duration;
 	private Boolean isActive;
 	private Integer version;
 	private List<ThreadPollingDetailData> threadDtlPolling;
@@ -43,6 +45,14 @@ public class ThreadHeaderPollingData {
 
 	public void setPollingQuestion(String pollingQuestion) {
 		this.pollingQuestion = pollingQuestion;
+	}
+
+	public LocalDate getDuration() {
+		return duration;
+	}
+
+	public void setDuration(LocalDate duration) {
+		this.duration = duration;
 	}
 
 	public Boolean getIsActive() {
