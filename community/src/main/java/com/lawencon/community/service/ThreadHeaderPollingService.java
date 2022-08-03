@@ -114,6 +114,7 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 		data.setTitlePolling(threadDetailDb.getTitlePolling());
 		data.setContentPolling(threadDetailDb.getContentPolling());
 		data.setPollingQuestion(threadDetailDb.getPollingQuestion());
+		data.setDuration(threadDetailDb.getDuration());
 		data.setIsActive(threadDetailDb.getIsActive());
 		data.setVersion(threadDetailDb.getVersion());
 
@@ -151,6 +152,7 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 			data.setTitlePolling(threadHeader.getTitlePolling());
 			data.setContentPolling(threadHeader.getContentPolling());
 			data.setPollingQuestion(threadHeader.getPollingQuestion());
+			data.setDuration(threadHeader.getDuration());
 			data.setIsActive(threadHeader.getIsActive());
 			data.setVersion(threadHeader.getVersion());
 
