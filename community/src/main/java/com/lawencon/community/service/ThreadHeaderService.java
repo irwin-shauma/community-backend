@@ -154,7 +154,10 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		
 		Profile profile = profileDao.getById(user.getProfile().getId());
 		thread.setFullName(profile.getFullName());
-		thread.setUserPhoto(profile.getFile().getId());
+		if(profile.getFile() != null) {
+			thread.setUserPhoto(profile.getFile().getId());
+		}
+	
 		
 		thread.setCreatedAt(threadHdr.getCreatedAt());
 		thread.setVersion(threadHdr.getVersion());
@@ -214,6 +217,8 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			thread.setContentThread(threadHdr.getContentThread());
 			if(threadHdr.getFile() != null) {
 				thread.setFileId(threadHdr.getFile().getId());				
+			}else {
+				thread.setFileId(null);
 			}
 			thread.setUserId(threadHdr.getUser().getId());
 			thread.setCreatedBy(threadHdr.getCreatedBy());
@@ -221,7 +226,10 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			
 			Profile profile = profileDao.getById(user.getProfile().getId());
 			thread.setFullName(profile.getFullName());
-			thread.setUserPhoto(profile.getFile().getId());
+			if(profile.getFile() != null) {
+				thread.setUserPhoto(profile.getFile().getId());
+			}
+			
 			
 			thread.setCreatedAt(threadHdr.getCreatedAt());
 			thread.setVersion(threadHdr.getVersion());
