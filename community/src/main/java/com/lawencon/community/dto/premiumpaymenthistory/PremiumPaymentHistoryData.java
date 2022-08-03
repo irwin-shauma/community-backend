@@ -5,9 +5,17 @@ public class PremiumPaymentHistoryData {
 	private String premiumPaymentHistoryCode;
 	private String userId;
 	private String premiumTypeId;
+	
+	private String fullname;
+	private float price;
+	private Integer duration;
+	
 	private String trxNo;
+	
+	
 	private Boolean isActive;
 	private Integer version;
+	
 	public String getId() {
 		return id;
 	}
@@ -32,6 +40,26 @@ public class PremiumPaymentHistoryData {
 	public void setPremiumTypeId(String premiumTypeId) {
 		this.premiumTypeId = premiumTypeId;
 	}
+	
+	
+	public String getFullname() {
+		return fullname;
+	}
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+	public float getPrice() {
+		return price;
+	}
+	public void setPrice(float price) {
+		this.price = price;
+	}
+	public Integer getDuration() {
+		return duration;
+	}
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
 	public String getTrxNo() {
 		return trxNo;
 	}
@@ -50,6 +78,4 @@ public class PremiumPaymentHistoryData {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-
-
 }
