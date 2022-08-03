@@ -121,6 +121,19 @@ public class ThreadTypeService extends BaseCoreService<ThreadType>{
 
 		return result;
 	}
+	
+	public ThreadTypeFindByIdRes getRegular() throws Exception{
+		ThreadType threadTypeDb = threadTypeDao.getRegularType();
+
+		ThreadTypeData data = new ThreadTypeData();
+		data.setId(threadTypeDb.getId());
+		data.setThreadType(threadTypeDb.getThreadType());
+
+		ThreadTypeFindByIdRes result = new ThreadTypeFindByIdRes();
+		result.setData(data);
+
+		return result;
+	}
 
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
