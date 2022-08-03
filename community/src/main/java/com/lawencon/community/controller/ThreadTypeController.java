@@ -41,6 +41,12 @@ public class ThreadTypeController {
 		ThreadTypeFindByIdRes result = threadTypeService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("regular")
+	public ResponseEntity<?> getRegularType() throws Exception {
+		ThreadTypeFindByIdRes result = threadTypeService.getRegular();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@PostMapping
 	public ResponseEntity<?> insert(@RequestBody ThreadTypeInsertReq data) throws Exception {
