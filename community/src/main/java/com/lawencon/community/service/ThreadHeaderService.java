@@ -13,6 +13,7 @@ import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.ThreadDetailDao;
 import com.lawencon.community.dao.ThreadHeaderDao;
 import com.lawencon.community.dao.ThreadLikeDao;
+import com.lawencon.community.dao.ThreadTypeDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -43,6 +44,9 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 	
 	@Autowired
 	private ThreadDetailDao threadDetailDao;
+	
+	@Autowired
+	private ThreadTypeDao threadTypeDao;
 
 	@Autowired
 	private FileDao fileDao;
@@ -144,6 +148,9 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		thread.setTitle(threadHdr.getTitle());
 
 		thread.setThreadTypeId(threadHdr.getThreadType().getId());
+		ThreadType threadType = threadTypeDao.getById(threadHdr.getThreadType().getId());
+		thread.setThreadType(threadType.getThreadType());
+		
 		thread.setContentThread(threadHdr.getContentThread());
 		if(threadHdr.getFile() != null) {
 			thread.setFileId(threadHdr.getFile().getId());			
@@ -214,6 +221,9 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			thread.setTitle(threadHdr.getTitle());
 
 			thread.setThreadTypeId(threadHdr.getThreadType().getId());
+			ThreadType threadType = threadTypeDao.getById(threadHdr.getThreadType().getId());
+			thread.setThreadType(threadType.getThreadType());
+			
 			thread.setContentThread(threadHdr.getContentThread());
 			if(threadHdr.getFile() != null) {
 				thread.setFileId(threadHdr.getFile().getId());				
