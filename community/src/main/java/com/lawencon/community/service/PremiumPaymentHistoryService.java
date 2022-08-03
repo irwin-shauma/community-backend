@@ -41,10 +41,10 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 		InsertRes result = new InsertRes();
 		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
-			begin();
+			
 			PremiumPaymentHistory premiumPaymentHistory = new PremiumPaymentHistory();
 			premiumPaymentHistory.setPremiumPaymentHistoryCode(code);
-			User user = userDao.getById(data.getUserId());
+			User user = userDao.getById(getUserId());
 			premiumPaymentHistory.setUser(user);
 
 			PremiumType premiumType = premiumTypeDao.getById(data.getPremiumTypeId());
@@ -52,7 +52,7 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 
 			premiumPaymentHistory.setTrxNo(data.getTrxNo());
 			premiumPaymentHistory.setIsActive(true);
-
+			begin();
 			PremiumPaymentHistory premiumPaymentHistoryInsert = save(premiumPaymentHistory);
 			commit();
 

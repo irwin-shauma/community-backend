@@ -167,6 +167,23 @@ public class ThreadLikeService extends BaseService<ThreadLike>{
 		return res;
 	}
 	
+	public ThreadLikeFindByIdRes getByThreadAndUser(String id) throws Exception {
+		ThreadLike threadLikeDb = threadLikeDao.findByThreadAndUser(id, getUserId());
+
+		ThreadLikeData data = new ThreadLikeData();
+		data.setId(threadLikeDb.getId());
+		data.setThreadLikeCode(threadLikeDb.getThreadLikeCode());
+		data.setUserId(threadLikeDb.getUserId().getId());
+		data.setThreadId(threadLikeDb.getThreadHeader().getId());
+		data.setIsActive(threadLikeDb.getIsActive());
+		data.setVersion(threadLikeDb.getVersion());
+
+		ThreadLikeFindByIdRes result = new ThreadLikeFindByIdRes();
+		result.setData(data);
+
+		return result;
+	}
+	
 	
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
@@ -176,6 +193,28 @@ public class ThreadLikeService extends BaseService<ThreadLike>{
 		try {
 			begin();
 			boolean isDeleted = threadLikeDao.deleteById(id);
+			commit();
+
+			if (isDeleted) {
+				result.setMessage(MessageResponse.DELETED.getMessageResponse());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+
+		return result;
+	}
+	
+	public DeleteRes deleteByThreadAndUser(String thread) throws Exception {
+		DeleteRes result = new DeleteRes();
+
+		result.setMessage(MessageResponse.FAILED.getMessageResponse());
+
+		try {
+			begin();
+			boolean isDeleted = threadLikeDao.deleteByThreadAndUser(thread, getUserId());
 			commit();
 
 			if (isDeleted) {
