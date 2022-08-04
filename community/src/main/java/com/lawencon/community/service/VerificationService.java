@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
@@ -27,6 +29,8 @@ import com.lawencon.community.dto.verificaton.VerificationUpdateReq;
 import com.lawencon.community.model.Verification;
 import com.lawencon.community.util.EmailComponent;
 import com.lawencon.model.SearchQuery;
+import com.lawencon.util.VerificationCodeUtil;
+import com.lawencon.util.VerificationCodeUtil.InvalidVerificationCodeException;
 
 @Service
 public class VerificationService extends BaseCoreService<Verification> {
@@ -36,6 +40,10 @@ public class VerificationService extends BaseCoreService<Verification> {
 
 	@Autowired
 	private EmailComponent emailComponent;
+	
+	@Autowired
+	private VerificationCodeUtil verificationCodeUtil;
+	
 
 	public InsertRes insert(VerficationInsertReq email) throws Exception {
 		InsertRes result = new InsertRes();
@@ -48,7 +56,8 @@ public class VerificationService extends BaseCoreService<Verification> {
 			verif.setExpired(LocalDateTime.now().plusHours(2));
 			verif.setIsActive(true);
 			
-			addVerificationCode(email.getEmail(), verification);
+			verificationCodeUtil.addVerificationCode(email.getEmail(), verification);
+			
 
 			Map<String, Object> template = new HashMap<String, Object>();
 			template.put("code", verification);
@@ -80,20 +89,24 @@ public class VerificationService extends BaseCoreService<Verification> {
 	}
 	
 	public RegistrationRes register(RegistrationReq data) throws Exception {
-		RegistrationRes result = new RegistrationRes();
-		
-		result.setData(true);
-		result.setMessage("Verification Code Matched!");
+		RegistrationRes response = new RegistrationRes();
+		response.setData(true);
+		response.setMessage("Validation Code Matched!");
 		
 		try {
-			validateVerificationCode(data.getEmail(), data.getVerificationCode());
-		} catch(Exception e){
-			result.setData(false);
-			result.setMessage(e.getMessage());
+			verificationCodeUtil.validateVerificationCode(data.getEmail(), data.getVerificationCode());
+			
+		} catch(InvalidVerificationCodeException e ){
+			e.printStackTrace();
+			response.setData(null);
+			response.setMessage(e.getMessage());
+			
 		}
 		
-		return result;
+		return response;
 	}
+	
+	
 
 	public UpdateRes update(VerificationUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();

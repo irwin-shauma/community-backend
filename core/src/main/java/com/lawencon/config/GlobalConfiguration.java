@@ -1,22 +1,23 @@
 package com.lawencon.config;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.lawencon.util.VerificationCodeUtil.VerificationCodes;
+
+/**
+ * @author lawencon05
+ */
+
 @Configuration
 public class GlobalConfiguration {
 
-	/**
-	 * Map Key consist of email and verification code 
-	 * @return list of verification codes
-	 */
 	@Bean(name = "verificationCodes")
-	public List<Map<String, String>> verificationCodes() {
-		return new ArrayList<>();
+	public Map<String, VerificationCodes> verificationCodes() {
+		return new HashMap<>();
 	}
 	
 }
