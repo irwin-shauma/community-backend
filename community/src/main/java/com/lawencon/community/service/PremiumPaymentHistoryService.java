@@ -40,6 +40,7 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 	public InsertRes insert(PremiumPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		String code = RandomStringUtils.randomAlphanumeric(5);
+		String trxNo = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			
 			PremiumPaymentHistory premiumPaymentHistory = new PremiumPaymentHistory();
@@ -50,7 +51,8 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 			PremiumType premiumType = premiumTypeDao.getById(data.getPremiumTypeId());
 			premiumPaymentHistory.setPremiumType(premiumType);
 
-			premiumPaymentHistory.setTrxNo(data.getTrxNo());
+//			premiumPaymentHistory.setTrxNo(data.getTrxNo());
+			premiumPaymentHistory.setTrxNo(trxNo);
 			premiumPaymentHistory.setIsActive(true);
 			begin();
 			PremiumPaymentHistory premiumPaymentHistoryInsert = save(premiumPaymentHistory);
