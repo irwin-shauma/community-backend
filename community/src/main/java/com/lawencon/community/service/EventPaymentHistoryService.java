@@ -42,6 +42,7 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 	public InsertRes insert(EventPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		String code = RandomStringUtils.randomAlphanumeric(5);
+		String trxNo = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			EventPaymentHistory eventPaymentHistory = new EventPaymentHistory();
 			eventPaymentHistory.setEvetnPaymentCode(code);
@@ -51,7 +52,7 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 			EventHeader eventHeader = eventHeaderDao.getById(data.getEventHeaderId());
 			eventPaymentHistory.setEventHeader(eventHeader);
 			
-			eventPaymentHistory.setTrxNo(data.getTrxNo());
+			eventPaymentHistory.setTrxNo(trxNo);
 			eventPaymentHistory.setIsActive(true);
 
 			begin();
