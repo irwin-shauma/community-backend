@@ -19,10 +19,10 @@ public class EventHeaderInsertReq {
 
 	private Float price;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.000'Z'")
 	private LocalDateTime starts;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.000'Z'")
 	private LocalDateTime ends;
 	
 	private String provider;
