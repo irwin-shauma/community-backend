@@ -58,6 +58,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 		String code = RandomStringUtils.randomAlphanumeric(5);
 		String detailCode = RandomStringUtils.randomAlphanumeric(5);
 		try {
+			begin();
 			EventHeader eventHeader = new EventHeader();
 			eventHeader.setEventHeaderCode(code);
 			eventHeader.setTitle(data.getTitle());
@@ -71,13 +72,11 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 				file.setFileName(data.getFileName());
 				file.setFileExtension(data.getFileExtension());
 				fileDao.save(file);
-
 				eventHeader.setFile(file);
 			}
 
 			eventHeader.setIsActive(true);
 
-			begin();
 			EventHeader eventHeaderInsert = save(eventHeader);
 
 			EventDetail eventDetail = new EventDetail();
@@ -249,6 +248,9 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 		try {
 			begin();
+			EventDetail eventDetail = eventDetailDao.findByHeader(id);
+			eventDetailDao.deleteById(eventDetail.getId());
+			
 			boolean isDeleted = eventHeaderDao.deleteById(id);
 			commit();
 
