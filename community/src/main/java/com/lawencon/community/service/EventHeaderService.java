@@ -66,7 +66,8 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			EventType eventType = new EventType();
 			eventType.setId(data.getEventTypeId());
 			eventHeader.setEventType(eventType);
-			
+
+			begin();
 			if (data.getFileName() != null) {
 				File file = new File();
 				file.setFileName(data.getFileName());
@@ -74,7 +75,9 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 				fileDao.save(file);
 				eventHeader.setFile(file);
 			}
-
+			User user = new User();
+			user.setId(getAuthPrincipal());
+			eventHeader.setUser(user);
 			eventHeader.setIsActive(true);
 
 			EventHeader eventHeaderInsert = save(eventHeader);
@@ -88,6 +91,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			eventDetail.setEndDate(data.getEnds());
 			eventDetail.setProvider(data.getProvider());
 			eventDetail.setLocations(data.getLocation());
+			eventDetail.setCreatedBy(getAuthPrincipal());
 			eventDetail.setIsActive(true);
 
 			eventDetailDao.save(eventDetail);
@@ -112,40 +116,45 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 		UpdateRes result = new UpdateRes();
 
 		try {
-			begin();
 			EventHeader eventHeaderDb = eventHeaderDao.getById(data.getId());
 			eventHeaderDb.setTitle(data.getTitle());
-
-			EventType eventDb = eventTypeDao.getByIdWithoutDetach(data.getId());
-			eventHeaderDb.setEventType(eventDb);
-
-//			User user = userDao.getByIdWithoutDetach(data.getUserId());
-//			eventHeaderDb.setUser(user);
-
+			
+			EventType eventType = eventTypeDao.getById(data.getEventTypeId());
+			
+			eventHeaderDb.setEventType(eventType);
+			
+			begin();
+			if (eventHeaderDb.getFile() == null) {
+				File newFile = new File();
+				newFile.setFileName(data.getFileName());
+				newFile.setFileExtension(data.getFileExtension());
+				File insertFile = fileDao.save(newFile);
+				eventHeaderDb.setFile(insertFile);
+			} else {
+				File file = fileDao.getById(eventHeaderDb.getFile().getId());
+				file.setFileName(data.getFileName());
+				file.setFileExtension(data.getFileExtension());
+				File updateFile = fileDao.save(file);
+				eventHeaderDb.setFile(updateFile);
+			}
+			
+			User user = new User();
+			user.setId(getAuthPrincipal());
+			eventHeaderDb.setUser(user);
 			eventHeaderDb.setIsActive(data.getIsActive());
 
-//			if (data.getFileId() != null && data.getFileName() != null) {
-//				File file = fileDao.getById(data.getFileId());
-//				file.setFileName(data.getFileName());
-//				file.setFileExtension(data.getFileExtension());
-//				fileDao.save(file);
+			EventHeader eventHeaderUpdate = save(eventHeaderDb);
+			
+			EventDetail eventDetail = eventDetailDao.findByHeader(data.getId());
+			eventDetail.setPrice(data.getPrice());
+			eventDetail.setStartDate(data.getStarts());
+			eventDetail.setEndDate(data.getEnds());
+			eventDetail.setProvider(data.getProvider());
+			eventDetail.setLocations(data.getLocation());
+			eventDetail.setCreatedBy(getAuthPrincipal());
+			eventDetail.setIsActive(data.getIsActive());
 
-//				eventHeaderDb.setFile(file);
-
-//			} else if (data.getFileId() == null && data.getFileName() != null) {
-//				File file = new File();
-//				file.setFileName(data.getFileName());
-//				file.setFileExtension(data.getFileExtension());
-//				File fileRes = fileDao.save(file);
-//				eventHeaderDb.setFile(fileRes);
-//			} else if (data.getFileId() == null) {
-//				File formerFile = fileDao.getByIdWithoutDetach(eventHeaderDb.getFile().getId());
-//				eventHeaderDb.setFile(null);
-//				fileDao.delete(formerFile);
-//
-//			}
-
-			EventHeader eventHeaderUpdate = eventHeaderDao.save(eventHeaderDb);
+			eventDetailDao.save(eventDetail);
 			commit();
 
 			UpdateDataRes updateDataRes = new UpdateDataRes();
@@ -175,21 +184,23 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 		User user = userDao.getById(eventHeaderDb.getCreatedBy());
 		Profile profile = profileDao.getById(user.getProfile().getId());
 		data.setFulName(profile.getFullName());
-		
+
 		if (eventHeaderDb.getFile() != null) {
 			data.setFileId(eventHeaderDb.getFile().getId());
 		}
 
 		data.setIsActive(eventHeaderDb.getIsActive());
 		data.setVersion(eventHeaderDb.getVersion());
+		
 
 		EventDetail eventDetail = eventDetailDao.findByHeader(eventHeaderDb.getId());
-
-		data.setPrice(eventDetail.getPrice());
-		data.setStartDate(eventDetail.getStartDate());
-		data.setEndDate(eventDetail.getEndDate());
-		data.setProvider(eventDetail.getProvider());
-		data.setLocation(eventDetail.getLocations());
+		if (eventDetail != null) {			
+			data.setPrice(eventDetail.getPrice());
+			data.setStartDate(eventDetail.getStartDate());
+			data.setEndDate(eventDetail.getEndDate());
+			data.setProvider(eventDetail.getProvider());
+			data.setLocation(eventDetail.getLocations());
+		}
 
 		EventHeaderFindByIdRes result = new EventHeaderFindByIdRes();
 		result.setData(data);
@@ -222,15 +233,20 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 			try {
 				EventDetail eventDetail = eventDetailDao.findByHeader(eventHeader.getId());
-	
-				data.setPrice(eventDetail.getPrice());
-				data.setStartDate(eventDetail.getStartDate());
-				data.setEndDate(eventDetail.getEndDate());
-				data.setProvider(eventDetail.getProvider());
-				data.setLocation(eventDetail.getLocations());
+				if (eventDetail != null) {
+					data.setPrice(eventDetail.getPrice());
+					data.setStartDate(eventDetail.getStartDate());
+					data.setEndDate(eventDetail.getEndDate());
+					data.setProvider(eventDetail.getProvider());
+					data.setLocation(eventDetail.getLocations());
+				}
+				
 			} catch (Exception e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
+			
 
 			eventHeaderDataList.add(data);
 		});
