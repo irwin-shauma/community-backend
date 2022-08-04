@@ -58,8 +58,7 @@ public class ThreadLikeService extends BaseService<ThreadLike>{
 			InsertDataRes insertDataRes = new InsertDataRes();
 			insertDataRes.setId(threadLikeInsert.getId());
 
-			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.getMessageResponse());	
+			result.setData(insertDataRes);	
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -210,16 +209,10 @@ public class ThreadLikeService extends BaseService<ThreadLike>{
 	public DeleteRes deleteByThreadAndUser(String thread) throws Exception {
 		DeleteRes result = new DeleteRes();
 
-		result.setMessage(MessageResponse.FAILED.getMessageResponse());
-
 		try {
 			begin();
-			boolean isDeleted = threadLikeDao.deleteByThreadAndUser(thread, getUserId());
+			threadLikeDao.deleteByThreadAndUser(thread, getUserId());
 			commit();
-
-			if (isDeleted) {
-				result.setMessage(MessageResponse.DELETED.getMessageResponse());
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
