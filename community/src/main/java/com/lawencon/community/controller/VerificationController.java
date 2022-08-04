@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.RegistrationReq;
+import com.lawencon.community.dto.RegistrationRes;
 import com.lawencon.community.dto.verificaton.VerficationInsertReq;
 import com.lawencon.community.dto.verificaton.VerificationData;
 import com.lawencon.community.dto.verificaton.VerificationFindByIdRes;
@@ -51,6 +53,12 @@ public class VerificationController {
 	public ResponseEntity<DeleteRes> delete(@PathVariable("id") String id) throws Exception {
 		DeleteRes result = verifService.deleteById(id);
 		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
+	}
+	
+	@PostMapping("register")
+	public ResponseEntity<RegistrationRes> insert(@RequestBody RegistrationReq data) throws Exception {
+		RegistrationRes result = verifService.register(data);
+		return new ResponseEntity<RegistrationRes>(result, HttpStatus.OK);
 	}
 
 }
