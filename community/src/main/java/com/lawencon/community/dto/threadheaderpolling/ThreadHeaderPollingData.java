@@ -11,6 +11,7 @@ public class ThreadHeaderPollingData {
 	private String pollingQuestion;
 	private LocalDate duration;
 	private Boolean isActive;
+	private Boolean isChoice;
 	private Integer version;
 	private List<ThreadPollingDetailData> threadDtlPolling;
 	private Integer countAllAnswer;
@@ -61,6 +62,14 @@ public class ThreadHeaderPollingData {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public Boolean getIsChoice() {
+		return isChoice;
+	}
+
+	public void setIsChoice(Boolean isChoice) {
+		this.isChoice = isChoice;
 	}
 
 	public Integer getVersion() {
