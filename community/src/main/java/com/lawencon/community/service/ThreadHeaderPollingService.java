@@ -7,7 +7,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.ThreadHeaderPollingDao;
 import com.lawencon.community.dao.ThreadPollingAnswerDao;
@@ -23,11 +22,12 @@ import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingInsertR
 import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingUpdateReq;
 import com.lawencon.community.dto.threadheaderpolling.ThreadPollingDetailData;
 import com.lawencon.community.model.ThreadHeaderPolling;
+import com.lawencon.community.model.ThreadPollingAnswer;
 import com.lawencon.community.model.ThreadPollingDetail;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPolling> {
+public class ThreadHeaderPollingService extends BaseService<ThreadHeaderPolling> {
 
 	@Autowired
 	private ThreadHeaderPollingDao threadHeaderPollingDao;
@@ -128,6 +128,13 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 			
 			int countAnswer = answerDao.countAnswer(threadDtl.get(i).getId()).intValue();
 			threadDtlPolling.setCountAnswer(countAnswer);
+			
+			ThreadPollingAnswer threadPollingAns = answerDao.findByThreadAndUser(threadDtl.get(i).getId(), getUserId()); 
+			if (threadPollingAns != null) {
+				threadDtlPolling.setIsChoice(true);
+			} else {
+				threadDtlPolling.setIsChoice(false);
+			}
 
 			threadDtlPollings.add(threadDtlPolling);
 		}
@@ -166,6 +173,14 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 					threadDtlPolling.setIsActive(threadDtl.get(i).getIsActive());
 					threadDtlPolling.setVersion(threadDtl.get(i).getVersion());
 					int countAnswer = answerDao.countAnswer(threadDtl.get(i).getId()).intValue();
+					
+					ThreadPollingAnswer threadPollingAns = answerDao.findByThreadAndUser(threadDtl.get(i).getId(), getUserId()); 
+					if (threadPollingAns != null) {
+						threadDtlPolling.setIsChoice(true);
+					} else {
+						threadDtlPolling.setIsChoice(false);
+					}
+					
 					threadDtlPolling.setCountAnswer(countAnswer);
 
 					threadDtlPollings.add(threadDtlPolling);

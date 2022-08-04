@@ -251,17 +251,6 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 				thread.setUserPhoto(profile.getFile().getId());
 			}
 
-			try {
-				ThreadLike threadLike = threadLikeDao.findByThreadAndUser(threadHdr.getId(), getUserId());
-				if (threadLike != null) {
-					thread.setIsLike(true);
-				} else {
-					thread.setIsLike(false);
-				}
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-
 			thread.setCreatedAt(threadHdr.getCreatedAt());
 			thread.setVersion(threadHdr.getVersion());
 			thread.setIsActive(threadHdr.getIsActive());
@@ -274,6 +263,12 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 
 			List<ThreadDetailData> listDetail = new ArrayList<>();
 			try {
+				ThreadLike threadLike = threadLikeDao.findByThreadAndUser(threadHdr.getId(), getUserId());
+				if (threadLike != null) {
+					thread.setIsLike(true);
+				} else {
+					thread.setIsLike(false);
+				}
 				List<ThreadDetail> threadDtls = threadDetailDao.findAllByHeader(threadHdr.getId());
 				for (int i = 0; i < threadDtls.size(); i++) {
 					ThreadDetailData threadDtl = new ThreadDetailData();
