@@ -240,6 +240,7 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		dataDb.getData().forEach(threadHdr -> {
 			ThreadHeaderData thread = new ThreadHeaderData();
 			thread.setId(threadHdr.getId());
+			thread.setThreadHeaderCode(threadHdr.getThreadHeaderCode());
 			thread.setTitle(threadHdr.getTitle());
 
 			thread.setThreadTypeId(threadHdr.getThreadType().getId());
