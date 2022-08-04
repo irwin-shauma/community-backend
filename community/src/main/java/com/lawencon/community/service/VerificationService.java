@@ -16,6 +16,8 @@ import com.lawencon.community.dao.VerificationDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.RegistrationReq;
+import com.lawencon.community.dto.RegistrationRes;
 import com.lawencon.community.dto.UpdateDataRes;
 import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.verificaton.VerficationInsertReq;
@@ -75,6 +77,22 @@ public class VerificationService extends BaseCoreService<Verification> {
 		}
 		return result;
 
+	}
+	
+	public RegistrationRes register(RegistrationReq data) throws Exception {
+		RegistrationRes result = new RegistrationRes();
+		
+		result.setData(true);
+		result.setMessage("Verification Code Matched!");
+		
+		try {
+			validateVerificationCode(data.getEmail(), data.getVerificationCode());
+		} catch(Exception e){
+			result.setData(false);
+			result.setMessage(e.getMessage());
+		}
+		
+		return result;
 	}
 
 	public UpdateRes update(VerificationUpdateReq data) throws Exception {
