@@ -58,7 +58,6 @@ public class BookmarkService extends BaseService<Bookmark> {
 			insertDataRes.setId(inserted.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -160,6 +159,20 @@ public class BookmarkService extends BaseService<Bookmark> {
 			if (isDeleted) {
 				result.setMessage(MessageResponse.DELETED.getMessageResponse());
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+		return result;
+	}
+	
+	public DeleteRes deleteByThreadAndUser(String id) throws Exception {
+		DeleteRes result = new DeleteRes();
+		try {
+			begin();
+			bookmarkDao.deleteByThreadAndUser(id, getUserId());
+			commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.community.constant.MessageResponse;
+import com.lawencon.community.dao.BookmarkDao;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.ThreadDetailDao;
@@ -25,6 +26,7 @@ import com.lawencon.community.dto.threadheader.ThreadHeaderData;
 import com.lawencon.community.dto.threadheader.ThreadHeaderFindByIdRes;
 import com.lawencon.community.dto.threadheader.ThreadHeaderInsertReq;
 import com.lawencon.community.dto.threadheader.ThreadHeaderUpdateReq;
+import com.lawencon.community.model.Bookmark;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.ThreadDetail;
@@ -57,6 +59,9 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private BookmarkDao bookmarkDao;
 
 	public InsertRes insert(ThreadHeaderInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -176,6 +181,12 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+		Bookmark bookmark = bookmarkDao.findByThreadAndUser(threadHdr.getId(), getUserId());
+		if (bookmark != null) {
+			thread.setIsBookmark(true);
+		} else {
+			thread.setIsBookmark(false);
+		}
 
 		thread.setCreatedAt(threadHdr.getCreatedAt());
 		thread.setVersion(threadHdr.getVersion());
@@ -268,6 +279,12 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 					thread.setIsLike(true);
 				} else {
 					thread.setIsLike(false);
+				}
+				Bookmark bookmark = bookmarkDao.findByThreadAndUser(threadHdr.getId(), getUserId());
+				if (bookmark != null) {
+					thread.setIsBookmark(true);
+				} else {
+					thread.setIsBookmark(false);
 				}
 				List<ThreadDetail> threadDtls = threadDetailDao.findAllByHeader(threadHdr.getId());
 				for (int i = 0; i < threadDtls.size(); i++) {
