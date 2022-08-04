@@ -19,7 +19,7 @@ public class ThreadHeaderPollingInsertReq {
 	private String pollingQuestion;
 
 	@NotBlank(message = "Duration can't be empty")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.000'Z'")
 	private LocalDate duration;
 
 	@NotBlank(message = "Question can't be empty")
