@@ -19,6 +19,7 @@ public class ThreadHeaderData {
 	private String userId;
 	private String userPhoto;
 	private Boolean isLike;
+	private Boolean isBookmark;
 
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdAt;
@@ -138,6 +139,14 @@ public class ThreadHeaderData {
 
 	public void setIsLike(Boolean isLike) {
 		this.isLike = isLike;
+	}
+
+	public Boolean getIsBookmark() {
+		return isBookmark;
+	}
+
+	public void setIsBookmark(Boolean isBookmark) {
+		this.isBookmark = isBookmark;
 	}
 
 	public Integer getCountLike() {

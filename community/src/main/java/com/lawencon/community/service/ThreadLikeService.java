@@ -93,7 +93,6 @@ public class ThreadLikeService extends BaseService<ThreadLike>{
 			updateDataRes.setVersion(threadLikeUpdate.getVersion());
 
 			result.setData(updateDataRes);
-			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 
 		} catch (Exception e) {
 			e.printStackTrace();

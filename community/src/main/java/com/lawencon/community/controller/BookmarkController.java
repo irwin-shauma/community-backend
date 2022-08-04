@@ -58,5 +58,10 @@ public class BookmarkController {
 		DeleteRes result = bookmarkService.deleteById(id);
 		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
 	}
+	@DeleteMapping("unbookmark/{id}")
+	public ResponseEntity<DeleteRes> deleteByThread(@PathVariable("id") String id) throws Exception {
+		DeleteRes result = bookmarkService.deleteByThreadAndUser(id);
+		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
+	}
 
 }
