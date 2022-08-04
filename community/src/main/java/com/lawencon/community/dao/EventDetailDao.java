@@ -12,7 +12,7 @@ import com.lawencon.community.model.EventHeader;
 public class EventDetailDao extends AbstractJpaDao<EventDetail> {
 	
 	public EventDetail findByHeader(String id) throws Exception {
-		String sql = "SELECT * FROM event_detail WHERE event_header_id = :id";
+		String sql = " SELECT * FROM event_detail WHERE event_header_id = :id ";
 		EventDetail eventDetail = null;
 		
 		try {
@@ -37,8 +37,12 @@ public class EventDetailDao extends AbstractJpaDao<EventDetail> {
 				if (objArr[8] != null) {
 					eventDetail.setCreatedAt(((Timestamp) objArr[8]).toLocalDateTime());
 				}
-				eventDetail.setCreatedBy(objArr[9].toString());
-				eventDetail.setUpdatedBy(objArr[10].toString());
+				if( objArr[9] != null) {
+					eventDetail.setCreatedBy(objArr[9].toString());
+				}
+				if( objArr[10] != null) {
+					eventDetail.setUpdatedBy(objArr[10].toString());
+				}
 				if (objArr[11] != null) {
 					eventDetail.setUpdatedAt(((Timestamp) objArr[11]).toLocalDateTime());
 				}
@@ -49,7 +53,7 @@ public class EventDetailDao extends AbstractJpaDao<EventDetail> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return eventDetail;
 	}
 
 }

@@ -8,8 +8,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
@@ -30,7 +28,6 @@ import com.lawencon.community.model.Verification;
 import com.lawencon.community.util.EmailComponent;
 import com.lawencon.model.SearchQuery;
 import com.lawencon.util.VerificationCodeUtil;
-import com.lawencon.util.VerificationCodeUtil.InvalidVerificationCodeException;
 
 @Service
 public class VerificationService extends BaseCoreService<Verification> {
@@ -91,18 +88,7 @@ public class VerificationService extends BaseCoreService<Verification> {
 	public RegistrationRes register(RegistrationReq data) throws Exception {
 		RegistrationRes response = new RegistrationRes();
 		response.setData(true);
-		response.setMessage("Validation Code Matched!");
-		
-		try {
 			verificationCodeUtil.validateVerificationCode(data.getEmail(), data.getVerificationCode());
-			
-		} catch(InvalidVerificationCodeException e ){
-			e.printStackTrace();
-			response.setData(null);
-			response.setMessage(e.getMessage());
-			
-		}
-		
 		return response;
 	}
 	
