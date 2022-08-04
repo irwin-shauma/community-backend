@@ -7,7 +7,6 @@ public class EventHeaderData {
 	private String eventHeaderCode;
 	private String title;
 	private String eventTypeId;
-	private String createdBy;
 	private String fulName;
 	private Boolean isActive;
 	private Integer version;
@@ -72,14 +71,6 @@ public class EventHeaderData {
 
 	public void setVersion(Integer version) {
 		this.version = version;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
 	}
 
 	public String getFulName() {

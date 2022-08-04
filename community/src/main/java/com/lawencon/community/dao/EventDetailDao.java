@@ -38,10 +38,6 @@ public class EventDetailDao extends AbstractJpaDao<EventDetail> {
 					eventDetail.setCreatedAt(((Timestamp) objArr[8]).toLocalDateTime());
 				}
 				eventDetail.setCreatedBy(objArr[9].toString());
-				eventDetail.setUpdatedBy(objArr[10].toString());
-				if (objArr[11] != null) {
-					eventDetail.setUpdatedAt(((Timestamp) objArr[11]).toLocalDateTime());
-				}
 				eventDetail.setIsActive(Boolean.valueOf(objArr[12].toString()));
 				eventDetail.setVersion(Integer.valueOf(objArr[13].toString()));
 				
@@ -49,7 +45,7 @@ public class EventDetailDao extends AbstractJpaDao<EventDetail> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return eventDetail;
 	}
 
 }

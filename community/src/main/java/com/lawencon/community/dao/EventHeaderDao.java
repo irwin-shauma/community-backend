@@ -8,6 +8,7 @@ import com.lawencon.community.model.EventType;
 
 @Repository
 public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
+	
 	public EventHeader findByTitle(String title) throws Exception{
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append("SELECT eh.id, eh.eventHeaderCode, eh.title, eh.eventType FROM event_header eh ")
