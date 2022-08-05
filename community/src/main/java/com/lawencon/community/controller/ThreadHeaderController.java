@@ -53,6 +53,14 @@ public class ThreadHeaderController {
 		SearchQuery<ThreadHeaderData> result = threadHeaderService.findAllByUserLike(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("bookmarks")
+	public ResponseEntity<?> getAllByUserBookmark(@RequestParam(required = false) String query, 
+			@RequestParam(required = false)Integer startPage,
+			@RequestParam(required = false)Integer maxPage) throws Exception {
+		SearchQuery<ThreadHeaderData> result = threadHeaderService.findAllByUserBookmark(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@PostMapping
 	public ResponseEntity<?> insert(@RequestBody @Valid ThreadHeaderInsertReq data) throws Exception {
