@@ -64,10 +64,9 @@ public class ThreadTypeService extends BaseCoreService<ThreadType>{
 			threadTypeDb.setThreadType(data.getThreadType());
 
 			threadTypeDb.setIsActive(data.getIsActive());
-			threadTypeDb.setVersion(data.getVersion());
 
 			begin();
-			ThreadType threadTypeUpdate = threadTypeDao.save(threadTypeDb);
+			ThreadType threadTypeUpdate = save(threadTypeDb);
 			commit();
 
 			UpdateDataRes updateDataRes = new UpdateDataRes();
