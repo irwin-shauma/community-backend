@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +47,7 @@ public class PaymentController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody PaymentInsertReq data) throws Exception {
+	public ResponseEntity<?> insert(@RequestBody @Valid PaymentInsertReq data) throws Exception {
 		InsertRes result = paymentService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
