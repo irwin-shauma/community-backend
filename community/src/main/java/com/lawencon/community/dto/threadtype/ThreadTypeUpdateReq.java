@@ -7,7 +7,6 @@ public class ThreadTypeUpdateReq {
 	private String id;
 	@NotBlank(message = "Thread type can't be empty")
 	private String threadType;
-	private Integer version;
 	private Boolean isActive;
 
 	public String getId() {
@@ -24,14 +23,6 @@ public class ThreadTypeUpdateReq {
 
 	public void setThreadType(String threadType) {
 		this.threadType = threadType;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
 	}
 
 	public Boolean getIsActive() {
