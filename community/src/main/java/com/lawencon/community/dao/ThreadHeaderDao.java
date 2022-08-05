@@ -27,7 +27,9 @@ public class ThreadHeaderDao extends AbstractJpaDao<ThreadHeader> {
 			Object[] objArr = (Object[]) data;
 			ThreadHeader threadHdr = new ThreadHeader();
 			threadHdr.setId(objArr[0].toString());
-			threadHdr.setThreadHeaderCode(objArr[1].toString());
+			if(objArr[1] != null) {
+				threadHdr.setThreadHeaderCode(objArr[1].toString());				
+			}
 			threadHdr.setTitle(objArr[2].toString());
 			ThreadType threadType = new ThreadType();
 			threadType.setId(objArr[3].toString());
@@ -75,7 +77,9 @@ public class ThreadHeaderDao extends AbstractJpaDao<ThreadHeader> {
 			Object[] objArr = (Object[]) data;
 			ThreadHeader threadHdr = new ThreadHeader();
 			threadHdr.setId(objArr[0].toString());
-			threadHdr.setThreadHeaderCode(objArr[1].toString());
+			if(objArr[1] != null) {
+				threadHdr.setThreadHeaderCode(objArr[1].toString());				
+			}
 			threadHdr.setTitle(objArr[2].toString());
 			ThreadType threadType = new ThreadType();
 			threadType.setId(objArr[3].toString());
