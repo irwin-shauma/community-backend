@@ -20,6 +20,7 @@ import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.RoleDao;
+import com.lawencon.community.dao.TokenDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
@@ -57,6 +58,9 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 	@Autowired
 	private RoleDao roleDao;
+	
+	@Autowired
+	private TokenDao tokenDao;
 
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -324,7 +328,11 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		try {
 			begin();
 			User user = userDao.getById(data.getId());
+			String currentTokenId = user.getToken().getId();
 			user.setToken(null);
+			
+			tokenDao.deleteById(currentTokenId);
+			
 			
 			User userResult = userDao.save(user);
 			commit();
