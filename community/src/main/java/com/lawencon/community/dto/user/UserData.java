@@ -4,6 +4,7 @@ public class UserData {
 
 	private String id;
 	private String roleId;
+	private String roleName;
 	private String verificationId;
 	private String userCode;
 	private String email;
@@ -31,6 +32,14 @@ public class UserData {
 
 	public void setRoleId(String roleId) {
 		this.roleId = roleId;
+	}
+	
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
 	public String getVerificationId() {
