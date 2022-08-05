@@ -43,13 +43,17 @@ public class PaymentService extends BaseCoreService<Payment>{
 			begin();
 			Payment payment = new Payment();
 			payment.setPaymentCode(code);
-			User user = userDao.getById(data.getUserId());
+			User user = userDao.getById(getAuthPrincipal());
 			payment.setUser(user);
 
-			File file = new File();
-				
-			fileDao.save(file);
-			payment.setFile(file);
+			if(data.getFileName()!= null) {
+				File file = new File();
+				file.setFileName(data.getFileName());
+				file.setFileExtension(data.getFileExtension());
+				fileDao.save(file);
+				payment.setFile(file);
+			}
+		
 			payment.setIsActive(true);
 			
 			Payment paymentInsert = save(payment);
