@@ -81,7 +81,10 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			profile.setIndustry(data.getIndustry());
 			profile.setPosition(data.getPosition());
 			profile.setIsActive(true);
-			profile.setCreatedBy(userSystem.getId());
+			
+			if(userSystem != null) {
+				profile.setCreatedBy(userSystem.getId());
+			}
 			
 
 			User user = new User();
@@ -196,10 +199,19 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			data.setEmail(user.getEmail());
 			data.setIsActive(user.getIsActive());
 			data.setVersion(user.getVersion());
+			
+			Role roleDb = roleDao.getById(user.getRole().getId());
+			data.setRoleName(roleDb.getRoleName());
+			
+			
 
 			if (user.getProfile() != null) {
 				Profile profile = profileDao.getById(user.getProfile().getId());
-
+				
+				if(profile.getFile() != null) {
+					data.setFileId(profile.getFile().getId());
+				}
+				
 				data.setProfileId(profile.getId());
 				data.setFullName(profile.getFullName());
 				data.setCompany(profile.getCompany());
