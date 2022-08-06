@@ -30,10 +30,6 @@ public class User extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
-
-	@OneToOne
-	@JoinColumn(name = "verification_id")
-	private Verification verification;
 	
 	@OneToOne
 	@JoinColumn(name = "profile_id")
@@ -64,14 +60,6 @@ public class User extends BaseEntity {
 
 	public void setRole(Role role) {
 		this.role = role;
-	}
-
-	public Verification getVerification() {
-		return verification;
-	}
-
-	public void setVerification(Verification verification) {
-		this.verification = verification;
 	}
 
 	public Profile getProfile() {

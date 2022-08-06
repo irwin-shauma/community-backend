@@ -89,7 +89,6 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			if(userSystem != null) {
 				profile.setCreatedBy(userSystem.getId());
 			}
-			
 
 			User user = new User();
 			user.setUserCode(userCode);
@@ -131,6 +130,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			profile.setCompany(data.getCompany());
 			profile.setIndustry(data.getIndustry());
 			profile.setPosition(data.getPosition());
+			profile.setUpdatedBy(getAuthPrincipal());
 			
 			
 			File newFile = new File();
@@ -199,6 +199,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 			UserData data = new UserData();
 			data.setId(user.getId());
+			data.setUserCode(user.getUserCode());
 			data.setRoleId(user.getRole().getId());
 			data.setEmail(user.getEmail());
 			data.setIsActive(user.getIsActive());
@@ -206,8 +207,6 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			
 			Role roleDb = roleDao.getById(user.getRole().getId());
 			data.setRoleName(roleDb.getRoleName());
-			
-			
 
 			if (user.getProfile() != null) {
 				Profile profile = profileDao.getById(user.getProfile().getId());
@@ -217,10 +216,12 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 				}
 				
 				data.setProfileId(profile.getId());
+				data.setProfileCode(profile.getProfileCode());
 				data.setFullName(profile.getFullName());
 				data.setCompany(profile.getCompany());
 				data.setIndustry(profile.getIndustry());
 				data.setPosition(profile.getPosition());
+				
 			}
 
 			users.add(data);
@@ -238,12 +239,20 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		User user = userDao.getById(id);
 		UserData data = new UserData();
 		data.setId(user.getId());
+		data.setUserCode(user.getUserCode());
+		data.setRoleId(user.getRole().getId());
 		data.setEmail(user.getEmail());
+		data.setIsActive(user.getIsActive());
+		data.setVersion(user.getVersion());
+		
+		Role roleDb = roleDao.getById(user.getRole().getId());
+		data.setRoleName(roleDb.getRoleName());
+		
 		Profile profile = null;
-
 		profile = profileDao.getById(user.getProfile().getId());
 		if(profile != null) {
 			data.setProfileId(profile.getId());
+			data.setProfileCode(profile.getProfileCode());
 			data.setFullName(profile.getFullName());
 			data.setCompany(profile.getCompany());
 			data.setIndustry(profile.getIndustry());

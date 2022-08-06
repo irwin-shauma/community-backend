@@ -84,6 +84,7 @@ public class EventTypeService extends BaseCoreService<EventType> {
 
 		EventTypeData event = new EventTypeData();
 		event.setId(eventType.getId());
+		event.setThreadTypeCode(eventType.getEventTypeCode());
 		event.setType(eventType.getType());
 		event.setIsActive(eventType.getIsActive());
 		event.setVersion(eventType.getVersion());
@@ -101,6 +102,7 @@ public class EventTypeService extends BaseCoreService<EventType> {
 		dataDb.getData().forEach(eventType -> {
 			EventTypeData event = new EventTypeData();
 			event.setId(eventType.getId());
+			event.setThreadTypeCode(eventType.getEventTypeCode());
 			event.setType(eventType.getType());
 			event.setIsActive(eventType.getIsActive());
 			event.setVersion(eventType.getVersion());

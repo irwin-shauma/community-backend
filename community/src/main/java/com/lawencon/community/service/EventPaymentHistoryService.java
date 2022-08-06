@@ -11,6 +11,7 @@ import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.EventHeaderDao;
 import com.lawencon.community.dao.EventPaymentHistoryDao;
+import com.lawencon.community.dao.PaymentDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -23,6 +24,7 @@ import com.lawencon.community.dto.eventpaymenthistory.EventPaymentHistoryInsertR
 import com.lawencon.community.dto.eventpaymenthistory.EventPaymentHistoryUpdateReq;
 import com.lawencon.community.model.EventHeader;
 import com.lawencon.community.model.EventPaymentHistory;
+import com.lawencon.community.model.Payment;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
@@ -38,6 +40,9 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 	@Autowired
 	private EventHeaderDao eventHeaderDao;
 	
+	@Autowired
+	private PaymentDao paymentDao;
+	
 
 	public InsertRes insert(EventPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -48,6 +53,9 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 			eventPaymentHistory.setEvetnPaymentCode(code);
 			User user = userDao.getById(data.getUserId());
 			eventPaymentHistory.setUser(user);
+			
+			Payment payment = paymentDao.getById(data.getPaymentId());
+			eventPaymentHistory.setPayment(payment);
 			
 			EventHeader eventHeader = eventHeaderDao.getById(data.getEventHeaderId());
 			eventPaymentHistory.setEventHeader(eventHeader);
@@ -83,6 +91,9 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 			User userDb = userDao.getByIdWithoutDetach(data.getId());
 			eventPaymentHistoryDb.setUser(userDb);
 			
+			Payment payment = paymentDao.getById(data.getPaymentId());
+			eventPaymentHistoryDb.setPayment(payment);
+			
 			EventHeader eventHeader = eventHeaderDao.getByIdWithoutDetach(data.getEventHeaderId());
 			eventPaymentHistoryDb.setEventHeader(eventHeader);
 			
@@ -113,6 +124,7 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 		data.setId(eventPaymentHistoryDb.getId());
 		data.setUserId(eventPaymentHistoryDb.getUser().getId());
 		data.setEventHeaderId(eventPaymentHistoryDb.getEventHeader().getId());
+		data.setPaymentId(eventPaymentHistoryDb.getPayment().getId());
 		data.setTrxNo(eventPaymentHistoryDb.getTrxNo());
 		data.setIsActive(eventPaymentHistoryDb.getIsActive());
 		data.setVersion(eventPaymentHistoryDb.getVersion());
@@ -134,6 +146,7 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 			data.setId(eventPaymentHistory.getId());
 			data.setUserId(eventPaymentHistory.getUser().getId());
 			data.setEventHeaderId(eventPaymentHistory.getEventHeader().getId());
+			data.setPaymentId(eventPaymentHistory.getPayment().getId());
 			
 			User userDb = userDao.getById(eventPaymentHistory.getUser().getId());
 			data.setEmail(userDb.getEmail());

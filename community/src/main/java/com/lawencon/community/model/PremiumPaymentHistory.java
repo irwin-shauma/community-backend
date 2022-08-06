@@ -24,6 +24,10 @@ public class PremiumPaymentHistory extends BaseEntity {
 	private User user;
 
 	@OneToOne
+	@JoinColumn(name = "payment_id")
+	private Payment payment;
+
+	@OneToOne
 	@JoinColumn(name = "premium_type_id")
 	private PremiumType premiumType;
 
@@ -44,6 +48,14 @@ public class PremiumPaymentHistory extends BaseEntity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	public PremiumType getPremiumType() {
