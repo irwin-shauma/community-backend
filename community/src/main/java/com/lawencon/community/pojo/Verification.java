@@ -1,14 +1,12 @@
-package com.lawencon.community.model;
+package com.lawencon.community.pojo;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "verification")
 public class Verification extends BaseEntity{
 	private static final long serialVersionUID = -5196455701225322056L;
 	

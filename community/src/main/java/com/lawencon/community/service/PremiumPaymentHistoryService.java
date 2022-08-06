@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.community.constant.MessageResponse;
+import com.lawencon.community.dao.PaymentDao;
 import com.lawencon.community.dao.PremiumPaymentHistoryDao;
 import com.lawencon.community.dao.PremiumTypeDao;
 import com.lawencon.community.dao.UserDao;
@@ -20,6 +21,7 @@ import com.lawencon.community.dto.premiumpaymenthistory.PremiumPaymentHistoryDat
 import com.lawencon.community.dto.premiumpaymenthistory.PremiumPaymentHistoryFindByIdRes;
 import com.lawencon.community.dto.premiumpaymenthistory.PremiumPaymentHistoryInsertReq;
 import com.lawencon.community.dto.premiumpaymenthistory.PremiumPaymentHistoryUpdateReq;
+import com.lawencon.community.model.Payment;
 import com.lawencon.community.model.PremiumPaymentHistory;
 import com.lawencon.community.model.PremiumType;
 import com.lawencon.community.model.User;
@@ -36,6 +38,9 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 
 	@Autowired
 	private PremiumTypeDao premiumTypeDao;
+	
+	@Autowired
+	private PaymentDao paymentDao;
 
 	public InsertRes insert(PremiumPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -47,11 +52,13 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 			premiumPaymentHistory.setPremiumPaymentHistoryCode(code);
 			User user = userDao.getById(getUserId());
 			premiumPaymentHistory.setUser(user);
+			
+			Payment payment = paymentDao.getById(data.getPaymentId());
+			premiumPaymentHistory.setPayment(payment);
 
 			PremiumType premiumType = premiumTypeDao.getById(data.getPremiumTypeId());
 			premiumPaymentHistory.setPremiumType(premiumType);
 
-//			premiumPaymentHistory.setTrxNo(data.getTrxNo());
 			premiumPaymentHistory.setTrxNo(trxNo);
 			premiumPaymentHistory.setIsActive(true);
 			begin();
@@ -80,6 +87,9 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 
 			User userDb = userDao.getByIdWithoutDetach(data.getId());
 			premiumPaymentHistoryDb.setUser(userDb);
+			
+			Payment payment = paymentDao.getById(data.getPaymentId());
+			premiumPaymentHistoryDb.setPayment(payment);
 
 			PremiumType premiumType = premiumTypeDao.getByIdWithoutDetach(data.getPremiumTypeId());
 			premiumPaymentHistoryDb.setPremiumType(premiumType);
@@ -111,6 +121,7 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 		data.setId(premiumPaymentHistoryDb.getId());
 		data.setUserId(premiumPaymentHistoryDb.getUser().getId());
 		data.setPremiumTypeId(premiumPaymentHistoryDb.getPremiumType().getId());
+		data.setPaymentId(premiumPaymentHistoryDb.getPayment().getId());
 		data.setTrxNo(premiumPaymentHistoryDb.getTrxNo());
 		data.setIsActive(premiumPaymentHistoryDb.getIsActive());
 		data.setVersion(premiumPaymentHistoryDb.getVersion());
@@ -130,6 +141,8 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 			PremiumPaymentHistoryData data = new PremiumPaymentHistoryData();
 			data.setId(premiumDb.getId());
 			data.setUserId(premiumDb.getUser().getId());
+			data.setPremiumTypeId(premiumDb.getPremiumType().getId());
+			data.setPaymentId(premiumDb.getPayment().getId());
 			data.setTrxNo(premiumDb.getTrxNo());
 			data.setIsActive(premiumDb.getIsActive());
 			data.setVersion(premiumDb.getVersion());
@@ -151,6 +164,7 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 			data.setId(premiumPaymentHistory.getId());
 			data.setUserId(premiumPaymentHistory.getUser().getId());
 			data.setPremiumTypeId(premiumPaymentHistory.getPremiumType().getId());
+			data.setPaymentId(premiumPaymentHistory.getPayment().getId());
 			
 			User userDb = userDao.getById(premiumPaymentHistory.getUser().getId());
 			data.setFullname(userDb.getProfile().getFullName());

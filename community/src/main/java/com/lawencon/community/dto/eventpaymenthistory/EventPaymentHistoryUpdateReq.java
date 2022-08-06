@@ -13,6 +13,9 @@ public class EventPaymentHistoryUpdateReq {
 
 	@NotBlank(message = "Event Id can't be empty")
 	private String eventHeaderId;
+	
+	@NotBlank(message = "Payment Id can't be empty")
+	private String paymentId;
 
 	@NotBlank(message = "Trx no can't be empty")
 	private String trxNo;
@@ -42,6 +45,14 @@ public class EventPaymentHistoryUpdateReq {
 
 	public void setEventHeaderId(String eventHeaderId) {
 		this.eventHeaderId = eventHeaderId;
+	}
+
+	public String getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(String paymentId) {
+		this.paymentId = paymentId;
 	}
 
 	public String getTrxNo() {

@@ -90,6 +90,7 @@ public class ThreadTypeService extends BaseCoreService<ThreadType>{
 		ThreadTypeData data = new ThreadTypeData();
 		data.setId(threadTypeDb.getId());
 		data.setThreadType(threadTypeDb.getThreadType());
+		data.setThreadTypeCode(threadTypeDb.getThreadTypeCode());
 	
 		data.setIsActive(threadTypeDb.getIsActive());
 		data.setVersion(threadTypeDb.getVersion());
@@ -126,7 +127,10 @@ public class ThreadTypeService extends BaseCoreService<ThreadType>{
 
 		ThreadTypeData data = new ThreadTypeData();
 		data.setId(threadTypeDb.getId());
+		data.setThreadTypeCode(threadTypeDb.getThreadTypeCode());
 		data.setThreadType(threadTypeDb.getThreadType());
+		data.setIsActive(threadTypeDb.getIsActive());
+		data.setVersion(threadTypeDb.getVersion());
 
 		ThreadTypeFindByIdRes result = new ThreadTypeFindByIdRes();
 		result.setData(data);

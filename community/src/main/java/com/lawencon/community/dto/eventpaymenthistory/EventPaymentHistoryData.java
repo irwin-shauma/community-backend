@@ -6,6 +6,7 @@ public class EventPaymentHistoryData {
 	private String eventPaymentHistoryCode;
 	private String userId;
 	private String eventHeaderId;
+	private String paymentId;
 	private String email;
 	private String fullname;
 	private String title;
@@ -79,6 +80,14 @@ public class EventPaymentHistoryData {
 
 	public void setEventHeaderId(String eventHeaderId) {
 		this.eventHeaderId = eventHeaderId;
+	}
+
+	public String getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(String paymentId) {
+		this.paymentId = paymentId;
 	}
 
 	public String getTrxNo() {
