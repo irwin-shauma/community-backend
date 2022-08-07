@@ -7,6 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.ThreadHeaderDao;
 import com.lawencon.community.dao.ThreadLikeDao;
@@ -26,7 +27,7 @@ import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class ThreadLikeService extends BaseService<ThreadLike>{
+public class ThreadLikeService extends BaseCoreService<ThreadLike>{
 	
 	@Autowired
 	private ThreadLikeDao threadLikeDao;
@@ -43,7 +44,7 @@ public class ThreadLikeService extends BaseService<ThreadLike>{
 		try {
 			ThreadLike threadLike = new ThreadLike();
 			threadLike.setThreadLikeCode(code);
-			User user = userDao.getById(getUserId());
+			User user = userDao.getById(getAuthPrincipal());
 			threadLike.setUserId(user);
 			
 			ThreadHeader threadHeader = threadHeaderDao.getById(data.getThreadId());
@@ -75,7 +76,7 @@ public class ThreadLikeService extends BaseService<ThreadLike>{
 		try {
 			ThreadLike threadLikeDb = threadLikeDao.getById(data.getId());
 
-			User userDb = userDao.getById(getUserId());
+			User userDb = userDao.getById(getAuthPrincipal());
 			threadLikeDb.setUserId(userDb);
 			
 			ThreadHeader threadHeader = threadHeaderDao.getById(data.getId());
@@ -166,7 +167,7 @@ public class ThreadLikeService extends BaseService<ThreadLike>{
 	}
 	
 	public ThreadLikeFindByIdRes getByThreadAndUser(String id) throws Exception {
-		ThreadLike threadLikeDb = threadLikeDao.findByThreadAndUser(id, getUserId());
+		ThreadLike threadLikeDb = threadLikeDao.findByThreadAndUser(id, getAuthPrincipal());
 
 		ThreadLikeData data = new ThreadLikeData();
 		data.setId(threadLikeDb.getId());
@@ -210,7 +211,7 @@ public class ThreadLikeService extends BaseService<ThreadLike>{
 
 		try {
 			begin();
-			threadLikeDao.deleteByThreadAndUser(thread, getUserId());
+			threadLikeDao.deleteByThreadAndUser(thread, getAuthPrincipal());
 			commit();
 		} catch (Exception e) {
 			e.printStackTrace();
