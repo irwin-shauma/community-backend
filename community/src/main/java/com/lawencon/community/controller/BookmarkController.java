@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,13 +44,13 @@ public class BookmarkController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<InsertRes> insert(@RequestBody BookmarkInsertReq data) throws Exception {
+	public ResponseEntity<InsertRes> insert(@RequestBody @Valid BookmarkInsertReq data) throws Exception {
 		InsertRes result = bookmarkService.insert(data);
 		return new ResponseEntity<InsertRes>(result, HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<UpdateRes> update(@RequestBody BookmarkUpdateReq data) throws Exception {
+	public ResponseEntity<UpdateRes> update(@RequestBody @Valid BookmarkUpdateReq data) throws Exception {
 		UpdateRes result = bookmarkService.update(data);
 		return new ResponseEntity<UpdateRes>(result, HttpStatus.OK);
 	}

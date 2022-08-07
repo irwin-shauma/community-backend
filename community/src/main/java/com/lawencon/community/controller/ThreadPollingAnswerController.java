@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,13 +45,13 @@ public class ThreadPollingAnswerController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody ThreadPollingAnswerInsertReq data) throws Exception {
+	public ResponseEntity<?> insert(@RequestBody @Valid ThreadPollingAnswerInsertReq data) throws Exception {
 		InsertRes result = threadPollingAnswerService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody ThreadPollingAnswerUpdateReq data) throws Exception {
+	public ResponseEntity<?> update(@RequestBody @Valid ThreadPollingAnswerUpdateReq data) throws Exception {
 		UpdateRes result = threadPollingAnswerService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

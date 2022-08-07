@@ -53,7 +53,7 @@ public class PaymentController {
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody PaymentUpdateReq data) throws Exception {
+	public ResponseEntity<?> update(@RequestBody @Valid PaymentUpdateReq data) throws Exception {
 		UpdateRes result = paymentService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

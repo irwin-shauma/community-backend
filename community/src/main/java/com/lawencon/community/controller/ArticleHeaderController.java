@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +47,13 @@ public class ArticleHeaderController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody ArticleHeaderInsertReq data) throws Exception {
+	public ResponseEntity<?> insert(@RequestBody @Valid ArticleHeaderInsertReq data) throws Exception {
 		InsertRes result = articleHeaderService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody ArticleHeaderUpdateReq data) throws Exception {
+	public ResponseEntity<?> update(@RequestBody @Valid ArticleHeaderUpdateReq data) throws Exception {
 		UpdateRes result = articleHeaderService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

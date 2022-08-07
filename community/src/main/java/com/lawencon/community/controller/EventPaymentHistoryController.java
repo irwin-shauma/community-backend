@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +47,13 @@ public class EventPaymentHistoryController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody EventPaymentHistoryInsertReq data) throws Exception {
+	public ResponseEntity<?> insert(@RequestBody @Valid EventPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = eventPaymentHistoryService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody EventPaymentHistoryUpdateReq data) throws Exception {
+	public ResponseEntity<?> update(@RequestBody @Valid EventPaymentHistoryUpdateReq data) throws Exception {
 		UpdateRes result = eventPaymentHistoryService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

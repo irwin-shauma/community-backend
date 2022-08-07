@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,13 +46,13 @@ public class PremiumTypeController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody PremiumTypeInsertReq data) throws Exception {
+	public ResponseEntity<?> insert(@RequestBody @Valid PremiumTypeInsertReq data) throws Exception {
 		InsertRes result = premiumTypeService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody PremiumTypeUpdateReq data) throws Exception {
+	public ResponseEntity<?> update(@RequestBody @Valid PremiumTypeUpdateReq data) throws Exception {
 		UpdateRes result = premiumTypeService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
