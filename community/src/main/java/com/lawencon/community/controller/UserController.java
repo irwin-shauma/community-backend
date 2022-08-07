@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,13 +48,13 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<InsertRes> insert(@RequestBody UserInsertReq user) throws Exception {
+	public ResponseEntity<InsertRes> insert(@RequestBody @Valid UserInsertReq user) throws Exception {
 		InsertRes data = userService.insert(user);
 		return new ResponseEntity<InsertRes>(data, HttpStatus.CREATED);
 	}
 	
 	@PutMapping 
-	public ResponseEntity<UpdateRes> update(@RequestBody UserUpdateReq user) throws Exception {
+	public ResponseEntity<UpdateRes> update(@RequestBody @Valid UserUpdateReq user) throws Exception {
 		UpdateRes data = userService.update(user);
 		return new ResponseEntity<UpdateRes>(data, HttpStatus.OK);
 	}
