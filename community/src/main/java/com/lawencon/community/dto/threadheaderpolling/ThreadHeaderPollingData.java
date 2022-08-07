@@ -1,6 +1,7 @@
 package com.lawencon.community.dto.threadheaderpolling;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ThreadHeaderPollingData {
@@ -11,10 +12,68 @@ public class ThreadHeaderPollingData {
 	private String pollingQuestion;
 	private LocalDate duration;
 	private Boolean isActive;
+	private String fullName;
+	private String userId;
+	private String fileId;
+	private String userPhoto;
+	private LocalDateTime createdAt;
+	private String createdBy;
 	private Boolean isChoice;
 	private Integer version;
 	private List<ThreadPollingDetailData> threadDtlPolling;
 	private Integer countAllAnswer;
+	
+
+	
+	
+	
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserPhoto() {
+		return userPhoto;
+	}
+
+	public void setUserPhoto(String userPhoto) {
+		this.userPhoto = userPhoto;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 
 	public String getId() {
 		return id;

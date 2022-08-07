@@ -24,6 +24,28 @@ public class ThreadHeaderPollingInsertReq {
 
 	@NotBlank(message = "Question can't be empty")
 	private List<ThreadPollingDetailInsertReq> threadPollingDetail;
+	
+	private String fileName;
+	private String fileExtension;
+	
+	
+	
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
 
 	public String getTitlePolling() {
 		return titlePolling;

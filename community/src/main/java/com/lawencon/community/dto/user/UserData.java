@@ -12,11 +12,22 @@ public class UserData {
 	private String profileCode;
 	private String fullName;
 	private String company;
+	private String premiumHistory;
 	private String industry;
 	private String position;
 	private String fileId;
 	private Boolean isActive;
 	private Integer version;
+	
+	
+
+	public String getPremiumHistory() {
+		return premiumHistory;
+	}
+
+	public void setPremiumHistory(String premiumHistory) {
+		this.premiumHistory = premiumHistory;
+	}
 
 	public String getId() {
 		return id;
