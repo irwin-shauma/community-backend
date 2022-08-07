@@ -22,6 +22,10 @@ public class EventPaymentHistory extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+	
+	@OneToOne
+	@JoinColumn(name = "payment_id")
+	private Payment payment;
 
 	@OneToOne
 	@JoinColumn(name = "event_header_id")
@@ -44,6 +48,14 @@ public class EventPaymentHistory extends BaseEntity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	public EventHeader getEventHeader() {

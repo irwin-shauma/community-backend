@@ -43,6 +43,7 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 			articleHdr.setArticleHeaderCode(code);
 			articleHdr.setTitle(data.getTitle());
 			articleHdr.setContents(data.getContents());
+			articleHdr.setCreatedBy(getAuthPrincipal());
 
 			if (data.getFileName() != null) {
 				File file = new File();
@@ -122,6 +123,7 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 		if (articleHdr.getFile() != null) {
 			data.setFileId(articleHdr.getFile().getId());
 		}
+		data.setArticleHeaderCode(articleHdr.getArticleHeaderCode());
 		data.setTitle(articleHdr.getTitle());
 		data.setContents(articleHdr.getContents());
 		data.setIsActive(articleHdr.getIsActive());
@@ -143,6 +145,7 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 			if (articleHdr.getFile() != null) {
 				data.setFileId(articleHdr.getFile().getId());
 			}
+			data.setArticleHeaderCode(articleHdr.getArticleHeaderCode());
 			data.setTitle(articleHdr.getTitle());
 			data.setContents(articleHdr.getContents());
 			data.setIsActive(articleHdr.getIsActive());

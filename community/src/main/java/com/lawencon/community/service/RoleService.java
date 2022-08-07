@@ -33,6 +33,7 @@ public class RoleService extends BaseCoreService<Role> {
 			Role role = new Role();
 			role.setRoleCode(data.getRoleCode());
 			role.setRoleName(data.getRoleName());
+			role.setCreatedBy(getAuthPrincipal());
 			role.setIsActive(true);
 			
 			begin();
@@ -56,12 +57,12 @@ public class RoleService extends BaseCoreService<Role> {
 	public UpdateRes update(RoleUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 		try {
+			begin();
 			Role role = roleDao.getById(data.getId());
 			role.setRoleCode(data.getRoleCode());
 			role.setRoleName(data.getRoleName());
 			role.setIsActive(data.getIsActive());
 			
-			begin();
 			Role updated = roleDao.save(role);
 			commit();
 

@@ -67,7 +67,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			eventType.setId(data.getEventTypeId());
 			eventHeader.setEventType(eventType);
 
-			begin();
+			
 			if (data.getFileName() != null) {
 				File file = new File();
 				file.setFileName(data.getFileName());

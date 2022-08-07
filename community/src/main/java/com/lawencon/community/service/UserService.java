@@ -20,6 +20,7 @@ import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.RoleDao;
+import com.lawencon.community.dao.TokenDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
@@ -56,6 +57,9 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 	@Autowired
 	private RoleDao roleDao;
+	
+	@Autowired
+	private TokenDao tokenDao;
 
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -80,6 +84,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			profile.setIndustry(data.getIndustry());
 			profile.setPosition(data.getPosition());
 			profile.setIsActive(true);
+
 			profile.setCreatedBy(userSystem.getId());
 
 			User user = new User();
@@ -122,6 +127,8 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			profile.setCompany(data.getCompany());
 			profile.setIndustry(data.getIndustry());
 			profile.setPosition(data.getPosition());
+
+			profile.setUpdatedBy(getAuthPrincipal());
 
 			begin();
 			if (data.getFileName() != null) {
@@ -195,19 +202,29 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 			UserData data = new UserData();
 			data.setId(user.getId());
+			data.setUserCode(user.getUserCode());
 			data.setRoleId(user.getRole().getId());
 			data.setEmail(user.getEmail());
 			data.setIsActive(user.getIsActive());
 			data.setVersion(user.getVersion());
+			
+			Role roleDb = roleDao.getById(user.getRole().getId());
+			data.setRoleName(roleDb.getRoleName());
 
 			if (user.getProfile() != null) {
 				Profile profile = profileDao.getById(user.getProfile().getId());
-
+				
+				if(profile.getFile() != null) {
+					data.setFileId(profile.getFile().getId());
+				}
+				
 				data.setProfileId(profile.getId());
+				data.setProfileCode(profile.getProfileCode());
 				data.setFullName(profile.getFullName());
 				data.setCompany(profile.getCompany());
 				data.setIndustry(profile.getIndustry());
 				data.setPosition(profile.getPosition());
+				
 			}
 
 			users.add(data);
@@ -225,12 +242,20 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		User user = userDao.getById(id);
 		UserData data = new UserData();
 		data.setId(user.getId());
+		data.setUserCode(user.getUserCode());
+		data.setRoleId(user.getRole().getId());
 		data.setEmail(user.getEmail());
+		data.setIsActive(user.getIsActive());
+		data.setVersion(user.getVersion());
+		
+		Role roleDb = roleDao.getById(user.getRole().getId());
+		data.setRoleName(roleDb.getRoleName());
+		
 		Profile profile = null;
-
 		profile = profileDao.getById(user.getProfile().getId());
 		if (profile != null) {
 			data.setProfileId(profile.getId());
+			data.setProfileCode(profile.getProfileCode());
 			data.setFullName(profile.getFullName());
 			data.setCompany(profile.getCompany());
 			data.setIndustry(profile.getIndustry());
@@ -323,29 +348,33 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 	public UpdateRes logout(LogoutReq data) throws Exception {
 		UpdateRes response = new UpdateRes();
-
+		
 		try {
 			begin();
 			User user = userDao.getById(data.getId());
+			String currentTokenId = user.getToken().getId();
 			user.setToken(null);
-
+			
+			tokenDao.deleteById(currentTokenId);
+			
+			
 			User userResult = userDao.save(user);
 			commit();
-
+			
 			UpdateDataRes dataRes = new UpdateDataRes();
 			dataRes.setVersion(userResult.getVersion());
-
+			
 			response.setMessage("Logout Success!");
 			response.setData(dataRes);
-
-		} catch (Exception e) {
+			
+		}catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
 		}
-
+		
 		return response;
-
+		
 	}
 
 }

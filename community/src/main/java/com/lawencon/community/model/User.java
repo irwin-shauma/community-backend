@@ -18,22 +18,18 @@ import com.lawencon.security.RefreshTokenEntity;
 		),
 		@UniqueConstraint(
 				name = "user_code_bk",
-				columnNames =  "user_code" 
+				columnNames =  "users_code" 
 		)
 })
 public class User extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 	
-	@Column(name = "user_code")
+	@Column(name = "users_code")
 	private String userCode;
 	
 	@OneToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
-
-	@OneToOne
-	@JoinColumn(name = "verification_id")
-	private Verification verification;
 	
 	@OneToOne
 	@JoinColumn(name = "profile_id")
@@ -64,14 +60,6 @@ public class User extends BaseEntity {
 
 	public void setRole(Role role) {
 		this.role = role;
-	}
-
-	public Verification getVerification() {
-		return verification;
-	}
-
-	public void setVerification(Verification verification) {
-		this.verification = verification;
 	}
 
 	public Profile getProfile() {

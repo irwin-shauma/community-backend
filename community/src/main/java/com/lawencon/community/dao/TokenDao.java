@@ -3,11 +3,9 @@ package com.lawencon.community.dao;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
-import com.lawencon.community.pojo.Verification;
+import com.lawencon.security.RefreshTokenEntity;
 
 @Repository
-public class VerificationDao extends AbstractJpaDao<Verification> {
-	
-	
+public class TokenDao extends AbstractJpaDao<RefreshTokenEntity> {
 
 }

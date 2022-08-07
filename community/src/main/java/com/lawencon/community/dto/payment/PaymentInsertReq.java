@@ -1,18 +1,29 @@
 package com.lawencon.community.dto.payment;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class PaymentInsertReq {
+	
+	@NotNull(message = "File Can't be Empty")
+	private String fileName;
+	private String fileExtension;
 
-	@NotBlank(message = "User Id can't be empty")
-	private String userId;
-
-	public String getUserId() {
-		return userId;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
+	
+	
 
 }

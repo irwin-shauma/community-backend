@@ -14,12 +14,14 @@ public class PremiumPaymentHistoryUpdateReq {
 	@NotBlank(message = "Premium Id can't be empty")
 	private String premiumTypeId;
 
+	@NotBlank(message = "Payment Id can't be empty")
+	private String paymentId;
+
 	@NotBlank(message = "Trx no can't be empty")
 	private String trxNo;
 
 	@NotBlank(message = "Active can't be empty")
 	private Boolean isActive;
-
 
 	public String getId() {
 		return id;
@@ -43,6 +45,14 @@ public class PremiumPaymentHistoryUpdateReq {
 
 	public void setPremiumTypeId(String premiumTypeId) {
 		this.premiumTypeId = premiumTypeId;
+	}
+
+	public String getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(String paymentId) {
+		this.paymentId = paymentId;
 	}
 
 	public String getTrxNo() {
