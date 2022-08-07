@@ -109,6 +109,7 @@ public class ThreadTypeService extends BaseCoreService<ThreadType>{
 		dataDb.getData().forEach(threadType -> {
 			ThreadTypeData data = new ThreadTypeData();
 			data.setId(threadType.getId());
+			data.setThreadTypeCode(threadType.getThreadTypeCode());
 			data.setThreadType(threadType.getThreadType());
 			data.setIsActive(threadType.getIsActive());
 			data.setVersion(threadType.getVersion());
