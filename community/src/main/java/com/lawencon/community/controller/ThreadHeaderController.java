@@ -46,6 +46,13 @@ public class ThreadHeaderController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
+	@GetMapping("users")
+	public ResponseEntity<?> getAllByUserId(@RequestParam(required = false) String query, 
+			@RequestParam(required = false)Integer startPage,
+			@RequestParam(required = false)Integer maxPage) throws Exception {
+		SearchQuery<ThreadHeaderData> result = threadHeaderService.findAllByUserId(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 	@GetMapping("likes")
 	public ResponseEntity<?> getAllByUserLike(@RequestParam(required = false) String query, 
 			@RequestParam(required = false)Integer startPage,

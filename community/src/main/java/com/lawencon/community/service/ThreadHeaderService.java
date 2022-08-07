@@ -7,6 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.BookmarkDao;
 import com.lawencon.community.dao.FileDao;
@@ -37,7 +38,7 @@ import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class ThreadHeaderService extends BaseService<ThreadHeader> {
+public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 
 	@Autowired
 	private ThreadHeaderDao threadHdrDao;
@@ -74,7 +75,7 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			ThreadType threadType = new ThreadType();
 			threadType.setId(data.getThreadTypeId());
 
-			User user = userDao.getById(getUserId());
+			User user = userDao.getById(getAuthPrincipal());
 
 			threadHdr.setUser(user);
 			threadHdr.setThreadType(threadType);
@@ -172,7 +173,7 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		}
 
 		try {
-			ThreadLike threadLike = threadLikeDao.findByThreadAndUser(threadHdr.getId(), getUserId());
+			ThreadLike threadLike = threadLikeDao.findByThreadAndUser(threadHdr.getId(), getAuthPrincipal());
 			if (threadLike != null) {
 				thread.setIsLike(true);
 			} else {
@@ -181,7 +182,7 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		Bookmark bookmark = bookmarkDao.findByThreadAndUser(threadHdr.getId(), getUserId());
+		Bookmark bookmark = bookmarkDao.findByThreadAndUser(threadHdr.getId(), getAuthPrincipal());
 		if (bookmark != null) {
 			thread.setIsBookmark(true);
 		} else {
@@ -275,13 +276,13 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 
 			List<ThreadDetailData> listDetail = new ArrayList<>();
 			try {
-				ThreadLike threadLike = threadLikeDao.findByThreadAndUser(threadHdr.getId(), getUserId());
+				ThreadLike threadLike = threadLikeDao.findByThreadAndUser(threadHdr.getId(), getAuthPrincipal());
 				if (threadLike != null) {
 					thread.setIsLike(true);
 				} else {
 					thread.setIsLike(false);
 				}
-				Bookmark bookmark = bookmarkDao.findByThreadAndUser(threadHdr.getId(), getUserId());
+				Bookmark bookmark = bookmarkDao.findByThreadAndUser(threadHdr.getId(), getAuthPrincipal());
 				if (bookmark != null) {
 					thread.setIsBookmark(true);
 				} else {
@@ -317,8 +318,94 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 		return result;
 	}
 	
+	public SearchQuery<ThreadHeaderData> findAllByUserId(String query, Integer startPage, Integer maxPage) throws Exception {
+		List<ThreadHeader> dataDb = threadHdrDao.findAllByUserId(getAuthPrincipal(),query, startPage, maxPage);
+		
+		List<ThreadHeaderData> data = new ArrayList<>();
+		
+		dataDb.forEach(threadHdr -> {
+			ThreadHeaderData thread = new ThreadHeaderData();
+			thread.setId(threadHdr.getId());
+			thread.setThreadHeaderCode(threadHdr.getThreadHeaderCode());
+			thread.setTitle(threadHdr.getTitle());
+			
+			thread.setThreadTypeId(threadHdr.getThreadType().getId());
+			ThreadType threadType = threadTypeDao.getById(threadHdr.getThreadType().getId());
+			thread.setThreadType(threadType.getThreadType());
+			
+			thread.setContentThread(threadHdr.getContentThread());
+			if (threadHdr.getFile() != null) {
+				thread.setFileId(threadHdr.getFile().getId());
+			} else {
+				thread.setFileId(null);
+			}
+			thread.setUserId(threadHdr.getUser().getId());
+			thread.setCreatedBy(threadHdr.getCreatedBy());
+			User user = userDao.getById(threadHdr.getUser().getId());
+			
+			Profile profile = profileDao.getById(user.getProfile().getId());
+			thread.setFullName(profile.getFullName());
+			if (profile.getFile() != null) {
+				thread.setUserPhoto(profile.getFile().getId());
+			}
+			
+			thread.setCreatedAt(threadHdr.getCreatedAt());
+			thread.setVersion(threadHdr.getVersion());
+			thread.setIsActive(threadHdr.getIsActive());
+			
+			int countLike = threadLikeDao.countLikes(threadHdr.getId()).intValue();
+			thread.setCountLike(countLike);
+			
+			int countComment = threadDetailDao.countComment(threadHdr.getId()).intValue();
+			thread.setCountComment(countComment);
+			
+			List<ThreadDetailData> listDetail = new ArrayList<>();
+			try {
+				ThreadLike threadLike = threadLikeDao.findByThreadAndUser(threadHdr.getId(), getAuthPrincipal());
+				if (threadLike != null) {
+					thread.setIsLike(true);
+				} else {
+					thread.setIsLike(false);
+				}
+				Bookmark bookmark = bookmarkDao.findByThreadAndUser(threadHdr.getId(), getAuthPrincipal());
+				if (bookmark != null) {
+					thread.setIsBookmark(true);
+				} else {
+					thread.setIsBookmark(false);
+				}
+				List<ThreadDetail> threadDtls = threadDetailDao.findAllByHeader(threadHdr.getId());
+				for (int i = 0; i < threadDtls.size(); i++) {
+					ThreadDetailData threadDtl = new ThreadDetailData();
+					threadDtl.setId(threadDtls.get(i).getId());
+					threadDtl.setThreadHeaderId(threadDtls.get(i).getThreadHeader().getId());
+					threadDtl.setUserId(threadDtls.get(i).getUser().getId());
+					
+					User users = userDao.getById(threadDtls.get(i).getUser().getId());
+					Profile profiles = profileDao.getById(users.getProfile().getId());
+					threadDtl.setFullName(profiles.getFullName());
+					threadDtl.setUserPhoto(profile.getFile().getId());
+					
+					threadDtl.setCommentThread(threadDtls.get(i).getCommentThread());
+					threadDtl.setCreatedAt(threadDtls.get(i).getCreatedAt());
+					
+					listDetail.add(threadDtl);
+				}
+				thread.setThreadDetail(listDetail);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			data.add(thread);
+		});
+		SearchQuery<ThreadHeaderData> result = new SearchQuery<>();
+		int count = threadHdrDao.countAll().intValue();
+		result.setCount(count);
+		result.setData(data);
+		return result;
+	}
+	
 	public SearchQuery<ThreadHeaderData> findAllByUserLike(String query, Integer startPage, Integer maxPage) throws Exception {
-		List<ThreadHeader> dataDb = threadHdrDao.findAllByUserLike(getUserId(),query, startPage, maxPage);
+		List<ThreadHeader> dataDb = threadHdrDao.findAllByUserLike(getAuthPrincipal(),query, startPage, maxPage);
 
 		List<ThreadHeaderData> data = new ArrayList<>();
 
@@ -359,13 +446,13 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 
 			List<ThreadDetailData> listDetail = new ArrayList<>();
 			try {
-				ThreadLike threadLike = threadLikeDao.findByThreadAndUser(threadHdr.getId(), getUserId());
+				ThreadLike threadLike = threadLikeDao.findByThreadAndUser(threadHdr.getId(), getAuthPrincipal());
 				if (threadLike != null) {
 					thread.setIsLike(true);
 				} else {
 					thread.setIsLike(false);
 				}
-				Bookmark bookmark = bookmarkDao.findByThreadAndUser(threadHdr.getId(), getUserId());
+				Bookmark bookmark = bookmarkDao.findByThreadAndUser(threadHdr.getId(), getAuthPrincipal());
 				if (bookmark != null) {
 					thread.setIsBookmark(true);
 				} else {
@@ -396,12 +483,14 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			data.add(thread);
 		});
 		SearchQuery<ThreadHeaderData> result = new SearchQuery<>();
+		int count = threadHdrDao.countAll().intValue();
+		result.setCount(count);
 		result.setData(data);
 		return result;
 	}
 	
 	public SearchQuery<ThreadHeaderData> findAllByUserBookmark(String query, Integer startPage, Integer maxPage) throws Exception {
-		List<ThreadHeader> dataDb = threadHdrDao.findAllByUserBookmark(getUserId(),query, startPage, maxPage);
+		List<ThreadHeader> dataDb = threadHdrDao.findAllByUserBookmark(getAuthPrincipal(),query, startPage, maxPage);
 
 		List<ThreadHeaderData> data = new ArrayList<>();
 
@@ -442,13 +531,13 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 
 			List<ThreadDetailData> listDetail = new ArrayList<>();
 			try {
-				ThreadLike threadLike = threadLikeDao.findByThreadAndUser(threadHdr.getId(), getUserId());
+				ThreadLike threadLike = threadLikeDao.findByThreadAndUser(threadHdr.getId(), getAuthPrincipal());
 				if (threadLike != null) {
 					thread.setIsLike(true);
 				} else {
 					thread.setIsLike(false);
 				}
-				Bookmark bookmark = bookmarkDao.findByThreadAndUser(threadHdr.getId(), getUserId());
+				Bookmark bookmark = bookmarkDao.findByThreadAndUser(threadHdr.getId(), getAuthPrincipal());
 				if (bookmark != null) {
 					thread.setIsBookmark(true);
 				} else {
@@ -479,6 +568,8 @@ public class ThreadHeaderService extends BaseService<ThreadHeader> {
 			data.add(thread);
 		});
 		SearchQuery<ThreadHeaderData> result = new SearchQuery<>();
+		int count = threadHdrDao.countAll().intValue();
+		result.setCount(count);
 		result.setData(data);
 		return result;
 	}

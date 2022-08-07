@@ -7,6 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.ThreadHeaderPollingDao;
 import com.lawencon.community.dao.ThreadPollingAnswerDao;
@@ -27,7 +28,7 @@ import com.lawencon.community.model.ThreadPollingDetail;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class ThreadHeaderPollingService extends BaseService<ThreadHeaderPolling> {
+public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPolling> {
 
 	@Autowired
 	private ThreadHeaderPollingDao threadHeaderPollingDao;
@@ -132,7 +133,7 @@ public class ThreadHeaderPollingService extends BaseService<ThreadHeaderPolling>
 			int countAnswer = answerDao.countAnswer(threadDtl.get(i).getId()).intValue();
 			threadDtlPolling.setCountAnswer(countAnswer);
 			
-			ThreadPollingAnswer threadPollingAns = answerDao.findByThreadAndUser(threadDtl.get(i).getId(), getUserId()); 
+			ThreadPollingAnswer threadPollingAns = answerDao.findByThreadAndUser(threadDtl.get(i).getId(), getAuthPrincipal()); 
 			if (threadPollingAns != null) {
 				isChoice = true;
 			}
@@ -178,7 +179,7 @@ public class ThreadHeaderPollingService extends BaseService<ThreadHeaderPolling>
 					threadDtlPolling.setVersion(threadDtl.get(i).getVersion());
 					int countAnswer = answerDao.countAnswer(threadDtl.get(i).getId()).intValue();
 					
-					ThreadPollingAnswer threadPollingAns = answerDao.findByThreadAndUser(threadDtl.get(i).getId(), getUserId());
+					ThreadPollingAnswer threadPollingAns = answerDao.findByThreadAndUser(threadDtl.get(i).getId(), getAuthPrincipal());
 					if (threadPollingAns != null) {
 						isChoice = true;
 					}
