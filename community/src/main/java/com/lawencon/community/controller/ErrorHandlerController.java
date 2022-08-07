@@ -1,5 +1,6 @@
 package com.lawencon.community.controller;
 
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,14 @@ public class ErrorHandlerController {
 		ErrorRes<String> response = new ErrorRes<>();
 		response.setMessage(NestedExceptionUtils.getMostSpecificCause(e).getMessage());
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<?> handlerAccessDeniedException(AccessDeniedException e) {
+		ErrorRes<String> response = new ErrorRes<>();
+		response.setMessage(NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+		
+		return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
 	}
 
 }

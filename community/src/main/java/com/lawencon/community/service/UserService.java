@@ -348,7 +348,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		
 		try {
 			begin();
-			User user = userDao.getById(data.getId());
+			User user = userDao.getByIdWithoutDetach(data.getId());
 			String currentTokenId = user.getToken().getId();
 			user.setToken(null);
 			
