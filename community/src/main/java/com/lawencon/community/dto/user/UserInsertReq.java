@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 
 public class UserInsertReq {
 
-	@NotBlank(message = "Role Id can't be empty")
 	private String roleId;
 
 	@NotBlank(message = "Verification Id can't be empty")

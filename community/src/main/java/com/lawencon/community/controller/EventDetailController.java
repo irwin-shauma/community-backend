@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +28,14 @@ import com.lawencon.model.SearchQuery;
 @RestController
 @RequestMapping("event-details")
 public class EventDetailController {
-	
+
 	@Autowired
 	private EventDetailService eventDetailService;
 
 	@GetMapping
 	public ResponseEntity<?> getAll(@RequestParam(required = false) String query,
-			@RequestParam(required = false) Integer startPage,
-			@RequestParam(required = false) Integer maxPage) throws Exception {
+			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
+			throws Exception {
 		SearchQuery<EventDetailData> result = eventDetailService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
@@ -45,22 +47,21 @@ public class EventDetailController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody EventDetailInsertReq data) throws Exception {
+	public ResponseEntity<?> insert(@RequestBody @Valid EventDetailInsertReq data) throws Exception {
 		InsertRes result = eventDetailService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody EventDetailUpdateReq data) throws Exception {
+	public ResponseEntity<?> update(@RequestBody @Valid EventDetailUpdateReq data) throws Exception {
 		UpdateRes result = eventDetailService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("{id}")
 	public ResponseEntity<DeleteRes> delete(@PathVariable("id") String id) throws Exception {
 		DeleteRes result = eventDetailService.deleteById(id);
 		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
 	}
-
 
 }

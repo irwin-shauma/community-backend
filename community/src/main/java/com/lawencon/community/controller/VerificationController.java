@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +24,14 @@ public class VerificationController {
 	private VerificationService verifService;
 	
 	@PostMapping
-	public ResponseEntity<InsertCodeRes> insert(@RequestBody VerficationInsertReq email) throws Exception {
+	public ResponseEntity<InsertCodeRes> insert(@RequestBody @Valid VerficationInsertReq email) throws Exception {
 		InsertCodeRes result = verifService.insert(email);
 		return new ResponseEntity<InsertCodeRes>(result, HttpStatus.OK);
 	}
 	
 	
 	@PostMapping("register")
-	public ResponseEntity<RegistrationRes> insert(@RequestBody RegistrationReq data) throws Exception {
+	public ResponseEntity<RegistrationRes> insert(@RequestBody @Valid RegistrationReq data) throws Exception {
 		RegistrationRes result = verifService.register(data);
 		return new ResponseEntity<RegistrationRes>(result, HttpStatus.BAD_REQUEST);
 	}

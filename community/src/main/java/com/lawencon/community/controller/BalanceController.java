@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +47,13 @@ public class BalanceController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody BalanceInsertReq data) throws Exception {
+	public ResponseEntity<?> insert(@RequestBody @Valid BalanceInsertReq data) throws Exception {
 		InsertRes result = balanceService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody BalanceUpdateReq data) throws Exception {
+	public ResponseEntity<?> update(@RequestBody @Valid BalanceUpdateReq data) throws Exception {
 		UpdateRes result = balanceService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

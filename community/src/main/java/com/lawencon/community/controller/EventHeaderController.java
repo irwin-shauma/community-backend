@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,32 +30,33 @@ import com.lawencon.model.SearchQuery;
 public class EventHeaderController {
 	@Autowired
 	private EventHeaderService eventHeaderService;
-	
+
 	@GetMapping
 	public ResponseEntity<?> getAll(@RequestParam(required = false) String query,
-			@RequestParam(required = false) Integer startPage,
-			@RequestParam(required = false) Integer maxPage) throws Exception{
+			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
+			throws Exception {
 		SearchQuery<EventHeaderData> result = eventHeaderService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("{id}")
-	public ResponseEntity<?> getById(@PathVariable("id") String id) throws Exception{
+	public ResponseEntity<?> getById(@PathVariable("id") String id) throws Exception {
 		EventHeaderFindByIdRes result = eventHeaderService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody EventHeaderInsertReq data) throws Exception{
+	public ResponseEntity<?> insert(@RequestBody @Valid EventHeaderInsertReq data) throws Exception {
 		InsertRes result = eventHeaderService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody EventHeaderUpdateReq data) throws Exception{
+	public ResponseEntity<?> update(@RequestBody @Valid EventHeaderUpdateReq data) throws Exception {
 		UpdateRes result = eventHeaderService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+
 	@DeleteMapping("{id}")
 	public ResponseEntity<DeleteRes> delete(@PathVariable("id") String id) throws Exception {
 		DeleteRes result = eventHeaderService.deleteById(id);
