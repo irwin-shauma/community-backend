@@ -195,7 +195,6 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 	public SearchQuery<UserData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
 		SearchQuery<User> dataDb = userDao.findAll(query, startPage, maxPage);
-//		Long count = userDao.countAll();
 
 		List<UserData> users = new ArrayList<>();
 		dataDb.getData().forEach(user -> {

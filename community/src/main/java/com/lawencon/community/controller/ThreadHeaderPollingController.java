@@ -38,6 +38,12 @@ public class ThreadHeaderPollingController {
 		ThreadHeaderPollingFindByIdRes result = threadHeaderPollingService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("users")
+	public ResponseEntity<?> getByUserId(String query, Integer startPage, Integer maxPage) throws Exception {
+		SearchQuery<ThreadHeaderPollingData> result = threadHeaderPollingService.findByUserId(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@PostMapping
 	public ResponseEntity<?> insert(@RequestBody ThreadHeaderPollingInsertReq data) throws Exception {
