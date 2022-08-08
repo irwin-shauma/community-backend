@@ -33,7 +33,7 @@ public class VerificationController {
 	@PostMapping("register")
 	public ResponseEntity<RegistrationRes> register(@RequestBody @Valid RegistrationReq data) throws Exception {
 		RegistrationRes result = verifService.register(data);
-		return new ResponseEntity<RegistrationRes>(result, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<RegistrationRes>(result, HttpStatus.OK);
 	}
 
 }

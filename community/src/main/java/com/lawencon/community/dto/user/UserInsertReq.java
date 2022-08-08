@@ -7,8 +7,8 @@ public class UserInsertReq {
 
 	private String roleId;
 
-	@NotBlank(message = "Verification Id can't be empty")
-	private String verificationId;
+//	@NotBlank(message = "Verification Id can't be empty")
+//	private String verificationId;
 
 	@NotNull(message = "Email can't be empty")
 	private String email;
@@ -36,13 +36,13 @@ public class UserInsertReq {
 		this.roleId = roleId;
 	}
 
-	public String getVerificationId() {
-		return verificationId;
-	}
-
-	public void setVerificationId(String verificationId) {
-		this.verificationId = verificationId;
-	}
+//	public String getVerificationId() {
+//		return verificationId;
+//	}
+//
+//	public void setVerificationId(String verificationId) {
+//		this.verificationId = verificationId;
+//	}
 
 	public String getEmail() {
 		return email;

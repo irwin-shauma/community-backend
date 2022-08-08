@@ -382,7 +382,11 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		}
 		
 		return response;
-		
 	}
-
+	
+	public Long countAllUser() throws Exception {
+		Long result = userDao.countAllUser();
+		return result;
+	}
+	
 }
