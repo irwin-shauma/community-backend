@@ -7,6 +7,7 @@ public class PaymentData {
 	private String fileId;
 	private String userId;
 	private String fullName;
+	private Boolean isApprove;
 	private Boolean isActive;
 	private Integer version;
 
@@ -64,6 +65,14 @@ public class PaymentData {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+
+	public Boolean getIsApprove() {
+		return isApprove;
+	}
+
+	public void setIsApprove(Boolean isApprove) {
+		this.isApprove = isApprove;
 	}
 
 }

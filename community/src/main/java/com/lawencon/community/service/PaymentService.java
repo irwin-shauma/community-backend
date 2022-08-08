@@ -121,6 +121,7 @@ public class PaymentService extends BaseCoreService<Payment>{
 		data.setFullName(profile.getFullName());
 		
 		data.setFileId(paymentDb.getFile().getId());
+		data.setIsApprove(paymentDb.getIsApprove());
 		data.setIsActive(paymentDb.getIsActive());
 		data.setVersion(paymentDb.getVersion());
 
@@ -146,6 +147,7 @@ public class PaymentService extends BaseCoreService<Payment>{
 			Profile profile = profileDao.getById(user.getProfile().getId());
 			data.setFullName(profile.getFullName());
 			data.setFileId(payment.getFile().getId());
+			data.setIsApprove(payment.getIsApprove());
 			data.setIsActive(payment.getIsActive());
 			data.setVersion(payment.getVersion());
 			paymentDataList.add(data);
