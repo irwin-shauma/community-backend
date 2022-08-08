@@ -37,4 +37,20 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 		}
 		return eventHeader;
 	}
+	
+	public Long countAllUser() throws Exception {
+		String sql = "SELECT COUNT(id) FROM event_header ";
+		Long total = 0L;
+		try {
+			Object result = createNativeQuery(sql).getSingleResult();
+			if( result != null) {
+				 total = Long.valueOf(result.toString());
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return total;
+	}
+
 }

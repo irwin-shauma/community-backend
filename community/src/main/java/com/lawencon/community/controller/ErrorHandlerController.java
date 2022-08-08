@@ -1,12 +1,12 @@
 package com.lawencon.community.controller;
 
-import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -52,7 +52,7 @@ public class ErrorHandlerController {
 		ErrorRes<String> response = new ErrorRes<>();
 		response.setMessage(NestedExceptionUtils.getMostSpecificCause(e).getMessage());
 		
-		return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 	}
 
 }

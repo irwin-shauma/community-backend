@@ -27,6 +27,8 @@ public class WebIgnoringConfig {
 		matchers.add(new AntPathRequestMatcher("/files/**", HttpMethod.GET.name()));
 		matchers.add(new AntPathRequestMatcher("/reports/**", HttpMethod.GET.name()));
 		
+		matchers.add(new AntPathRequestMatcher("/counts/**", HttpMethod.GET.name()));
+		
 		return matchers;
 	}
 }
