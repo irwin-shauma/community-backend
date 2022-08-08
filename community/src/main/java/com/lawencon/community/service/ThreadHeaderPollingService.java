@@ -7,6 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ProfileDao;
@@ -33,7 +34,7 @@ import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class ThreadHeaderPollingService extends BaseService<ThreadHeaderPolling> {
+public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPolling> {
 
 	@Autowired
 	private ThreadHeaderPollingDao threadHeaderPollingDao;
@@ -66,7 +67,7 @@ public class ThreadHeaderPollingService extends BaseService<ThreadHeaderPolling>
 			threadHeaderPollingInsert.setPollingQuestion(data.getPollingQuestion());
 			threadHeaderPollingInsert.setDuration(data.getDuration());
 			threadHeaderPollingInsert.setIsActive(true);
-			User user = userDao.getById(getUserId());
+			User user = userDao.getById(getAuthPrincipal());
 
 			threadHeaderPollingInsert.setUser(user);
 
@@ -162,7 +163,7 @@ public class ThreadHeaderPollingService extends BaseService<ThreadHeaderPolling>
 			int countAnswer = answerDao.countAnswer(threadDtl.get(i).getId()).intValue();
 			threadDtlPolling.setCountAnswer(countAnswer);
 			
-			ThreadPollingAnswer threadPollingAns = answerDao.findByThreadAndUser(threadDtl.get(i).getId(), getUserId()); 
+			ThreadPollingAnswer threadPollingAns = answerDao.findByThreadAndUser(threadDtl.get(i).getId(), getAuthPrincipal()); 
 			if (threadPollingAns != null) {
 				isChoice = true;
 			}
@@ -224,7 +225,7 @@ public class ThreadHeaderPollingService extends BaseService<ThreadHeaderPolling>
 					threadDtlPolling.setVersion(threadDtl.get(i).getVersion());
 					int countAnswer = answerDao.countAnswer(threadDtl.get(i).getId()).intValue();
 					
-					ThreadPollingAnswer threadPollingAns = answerDao.findByThreadAndUser(threadDtl.get(i).getId(), getUserId());
+					ThreadPollingAnswer threadPollingAns = answerDao.findByThreadAndUser(threadDtl.get(i).getId(), getAuthPrincipal());
 					if (threadPollingAns != null) {
 						isChoice = true;
 					}
@@ -246,6 +247,62 @@ public class ThreadHeaderPollingService extends BaseService<ThreadHeaderPolling>
 
 		SearchQuery<ThreadHeaderPollingData> result = new SearchQuery<>();
 		result.setCount(dataDb.getCount());
+		result.setData(threadHeaderPollings);
+
+		return result;
+	}
+	
+	public SearchQuery<ThreadHeaderPollingData> findByUserId(String query, Integer startPage, Integer maxPage)
+			throws Exception {
+		List<ThreadHeaderPolling> dataDb = threadHeaderPollingDao.findByUserId(getAuthPrincipal(),query, startPage, maxPage);
+
+		List<ThreadHeaderPollingData> threadHeaderPollings = new ArrayList<ThreadHeaderPollingData>();
+		dataDb.forEach(threadHeader -> {
+			ThreadHeaderPollingData data = new ThreadHeaderPollingData();
+			data.setId(threadHeader.getId());
+			data.setTitlePolling(threadHeader.getTitlePolling());
+			data.setContentPolling(threadHeader.getContentPolling());
+			data.setPollingQuestion(threadHeader.getPollingQuestion());
+			data.setDuration(threadHeader.getDuration());
+			data.setIsActive(threadHeader.getIsActive());
+			data.setVersion(threadHeader.getVersion());
+			Boolean isChoice = false;
+			
+
+			List<ThreadPollingDetailData> threadDtlPollings = new ArrayList<ThreadPollingDetailData>();
+			try {
+				List<ThreadPollingDetail> threadDtl = pollingDetailDao.findByHeader(threadHeader.getId());
+				for (int i = 0; i < threadDtl.size(); i++) {
+					ThreadPollingDetailData threadDtlPolling = new ThreadPollingDetailData();
+					threadDtlPolling.setId(threadDtl.get(i).getId());
+					threadDtlPolling.setPollingChoice(threadDtl.get(i).getPollingChoice());
+					threadDtlPolling.setIsActive(threadDtl.get(i).getIsActive());
+					threadDtlPolling.setVersion(threadDtl.get(i).getVersion());
+					int countAnswer = answerDao.countAnswer(threadDtl.get(i).getId()).intValue();
+					
+					ThreadPollingAnswer threadPollingAns = answerDao.findByThreadAndUser(threadDtl.get(i).getId(), getAuthPrincipal());
+					if (threadPollingAns != null) {
+						isChoice = true;
+					}
+					threadDtlPolling.setCountAnswer(countAnswer);
+
+					threadDtlPollings.add(threadDtlPolling);
+					
+				}
+				data.setIsChoice(isChoice);
+				data.setThreadDtlPolling(threadDtlPollings);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			int count = answerDao.countAllAnswer(threadHeader.getId()).intValue();
+			data.setCountAllAnswer(count);
+			threadHeaderPollings.add(data);
+		});
+
+		SearchQuery<ThreadHeaderPollingData> result = new SearchQuery<>();
+		int count = threadHeaderPollingDao.countAll().intValue();
+		result.setCount(count);
 		result.setData(threadHeaderPollings);
 
 		return result;

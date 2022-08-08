@@ -7,6 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.PaymentDao;
 import com.lawencon.community.dao.PremiumPaymentHistoryDao;
@@ -28,7 +29,7 @@ import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHistory> {
+public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPaymentHistory> {
 
 	@Autowired
 	private PremiumPaymentHistoryDao premiumPaymentHistoryDao;
@@ -50,7 +51,7 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 			
 			PremiumPaymentHistory premiumPaymentHistory = new PremiumPaymentHistory();
 			premiumPaymentHistory.setPremiumPaymentHistoryCode(code);
-			User user = userDao.getById(getUserId());
+			User user = userDao.getById(getAuthPrincipal());
 			premiumPaymentHistory.setUser(user);
 			
 			Payment payment = paymentDao.getById(data.getPaymentId());
@@ -134,7 +135,7 @@ public class PremiumPaymentHistoryService extends BaseService<PremiumPaymentHist
 	}
 
 	public PremiumPaymentHistoryFindByIdRes getByUser() throws Exception {
-		PremiumPaymentHistory premiumDb = premiumPaymentHistoryDao.getByUser(getUserId());
+		PremiumPaymentHistory premiumDb = premiumPaymentHistoryDao.getByUser(getAuthPrincipal());
 		
 		PremiumPaymentHistoryFindByIdRes result = new PremiumPaymentHistoryFindByIdRes();
 		if(premiumDb != null) {

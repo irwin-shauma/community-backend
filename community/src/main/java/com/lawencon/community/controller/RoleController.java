@@ -1,8 +1,11 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +33,7 @@ public class RoleController {
 	@Autowired
 	private RoleService roleService;
 	
+	@PreAuthorize("hasAuthority('SYSTEM')")
 	@GetMapping
 	public ResponseEntity<?> getAll(@RequestParam(required = false) String query, 
 			@RequestParam(required = false) Integer startPage,
@@ -45,13 +49,13 @@ public class RoleController {
 	}
 
 	@PostMapping
-	public ResponseEntity<InsertRes> insert(@RequestBody RoleInsertReq data) throws Exception {
+	public ResponseEntity<InsertRes> insert(@RequestBody @Valid RoleInsertReq data) throws Exception {
 		InsertRes result = roleService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 
 	@PutMapping
-	public ResponseEntity<UpdateRes> update(@RequestBody RoleUpdateReq data) throws Exception {
+	public ResponseEntity<UpdateRes> update(@RequestBody @Valid RoleUpdateReq data) throws Exception {
 		UpdateRes result = roleService.update(data);
 		return new ResponseEntity<UpdateRes>(result, HttpStatus.OK);
 	}

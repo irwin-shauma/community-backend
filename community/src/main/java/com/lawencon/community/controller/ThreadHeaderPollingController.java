@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,15 +40,21 @@ public class ThreadHeaderPollingController {
 		ThreadHeaderPollingFindByIdRes result = threadHeaderPollingService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("users")
+	public ResponseEntity<?> getByUserId(String query, Integer startPage, Integer maxPage) throws Exception {
+		SearchQuery<ThreadHeaderPollingData> result = threadHeaderPollingService.findByUserId(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody ThreadHeaderPollingInsertReq data) throws Exception {
+	public ResponseEntity<?> insert(@RequestBody @Valid ThreadHeaderPollingInsertReq data) throws Exception {
 		InsertRes result = threadHeaderPollingService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody ThreadHeaderPollingUpdateReq data) throws Exception {
+	public ResponseEntity<?> update(@RequestBody @Valid ThreadHeaderPollingUpdateReq data) throws Exception {
 		UpdateRes result = threadHeaderPollingService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

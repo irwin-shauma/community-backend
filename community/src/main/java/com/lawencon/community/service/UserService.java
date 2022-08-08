@@ -50,7 +50,6 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 	@Autowired
 	private UserDao userDao;
-	
 
 	@Autowired
 	private ProfileDao profileDao;
@@ -90,10 +89,8 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			profile.setIndustry(data.getIndustry());
 			profile.setPosition(data.getPosition());
 			profile.setIsActive(true);
-			
-			if(userSystem != null) {
-				profile.setCreatedBy(userSystem.getId());
-			}
+
+			profile.setCreatedBy(userSystem.getId());
 
 			User user = new User();
 			user.setUserCode(userCode);
@@ -135,18 +132,23 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 			profile.setCompany(data.getCompany());
 			profile.setIndustry(data.getIndustry());
 			profile.setPosition(data.getPosition());
+
 			profile.setUpdatedBy(getAuthPrincipal());
-			
-			
-			File newFile = new File();
-			newFile.setFileName(data.getFileName());
-			newFile.setFileExtension(data.getFileExtension());
-			newFile.setCreatedBy(getAuthPrincipal());
-			newFile.setIsActive(true);
 
 			begin();
-			File inserted = fileDao.save(newFile);
-			profile.setFile(inserted);
+			if (data.getFileName() != null) {
+				File newFile = new File();
+				newFile.setFileName(data.getFileName());
+				newFile.setFileExtension(data.getFileExtension());
+				newFile.setCreatedBy(getAuthPrincipal());
+				newFile.setIsActive(true);
+				File inserted = fileDao.save(newFile);
+				profile.setFile(inserted);
+			} else {
+				File oldFile = fileDao.getById(profile.getFile().getId());
+				profile.setFile(oldFile);
+			}
+
 			Profile updated = profileDao.save(profile);
 			commit();
 
@@ -259,14 +261,14 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		
 		Profile profile = null;
 		profile = profileDao.getById(user.getProfile().getId());
-		if(profile != null) {
+		if (profile != null) {
 			data.setProfileId(profile.getId());
 			data.setProfileCode(profile.getProfileCode());
 			data.setFullName(profile.getFullName());
 			data.setCompany(profile.getCompany());
 			data.setIndustry(profile.getIndustry());
 			data.setPosition(profile.getPosition());
-			if(profile.getFile() != null) {
+			if (profile.getFile() != null) {
 				data.setFileId(profile.getFile().getId());
 			}
 		}
@@ -319,23 +321,23 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		commit();
 		return token;
 	}
-	
+
 	public UpdateRes changePassword(UserChangePasswordReq data) throws Exception {
 		UpdateRes response = new UpdateRes();
 
 		try {
 			User user = userDao.getById(getAuthPrincipal().toString());
-			
-			if(passwordEncoder.matches(data.getOldPassword(), user.getPassword())) {
+
+			if (passwordEncoder.matches(data.getOldPassword(), user.getPassword())) {
 				user.setPassword(passwordEncoder.encode(data.getNewPassword()));
-				
+
 				begin();
 				User userResult = save(user);
 				commit();
-				
+
 				UpdateDataRes dataRes = new UpdateDataRes();
 				dataRes.setVersion(userResult.getVersion());
-				
+
 				response.setMessage("Password updated successfully!");
 				response.setData(dataRes);
 			} else {
@@ -351,13 +353,13 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 		return response;
 	}
-	
+
 	public UpdateRes logout(LogoutReq data) throws Exception {
 		UpdateRes response = new UpdateRes();
 		
 		try {
 			begin();
-			User user = userDao.getById(data.getId());
+			User user = userDao.getByIdWithoutDetach(data.getId());
 			String currentTokenId = user.getToken().getId();
 			user.setToken(null);
 			

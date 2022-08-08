@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,13 +51,13 @@ public class ThreadTypeController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody ThreadTypeInsertReq data) throws Exception {
+	public ResponseEntity<?> insert(@RequestBody @Valid ThreadTypeInsertReq data) throws Exception {
 		InsertRes result = threadTypeService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody ThreadTypeUpdateReq data) throws Exception {
+	public ResponseEntity<?> update(@RequestBody @Valid ThreadTypeUpdateReq data) throws Exception {
 		UpdateRes result = threadTypeService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

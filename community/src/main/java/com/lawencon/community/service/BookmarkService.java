@@ -7,6 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.BookmarkDao;
 import com.lawencon.community.dao.ThreadHeaderDao;
@@ -26,7 +27,7 @@ import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class BookmarkService extends BaseService<Bookmark> {
+public class BookmarkService extends BaseCoreService<Bookmark> {
 
 	@Autowired
 	private BookmarkDao bookmarkDao;
@@ -44,7 +45,7 @@ public class BookmarkService extends BaseService<Bookmark> {
 			Bookmark bookmark = new Bookmark();
 			bookmark.setBookmarkCode(code);
 			ThreadHeader thread = threadDao.getById(data.getThreadId());
-			User user = userDao.getById(getUserId());
+			User user = userDao.getById(getAuthPrincipal());
 
 			bookmark.setThread(thread);
 			bookmark.setUser(user);
@@ -71,7 +72,7 @@ public class BookmarkService extends BaseService<Bookmark> {
 		try {
 			Bookmark bookmark = bookmarkDao.getById(data.getId());
 			ThreadHeader thread = threadDao.getById(data.getThreadId());
-			User user = userDao.getById(getUserId());
+			User user = userDao.getById(getAuthPrincipal());
 
 			bookmark.setThread(thread);
 			bookmark.setUser(user);
@@ -171,7 +172,7 @@ public class BookmarkService extends BaseService<Bookmark> {
 		DeleteRes result = new DeleteRes();
 		try {
 			begin();
-			bookmarkDao.deleteByThreadAndUser(id, getUserId());
+			bookmarkDao.deleteByThreadAndUser(id, getAuthPrincipal());
 			commit();
 		} catch (Exception e) {
 			e.printStackTrace();
