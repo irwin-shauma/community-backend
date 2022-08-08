@@ -124,24 +124,16 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			eventHeaderDb.setEventType(eventType);
 			
 			begin();
-			if (eventHeaderDb.getFile() == null) {
+			if (data.getFileName() != null) {
 				File newFile = new File();
 				newFile.setFileName(data.getFileName());
 				newFile.setFileExtension(data.getFileExtension());
 				File insertFile = fileDao.save(newFile);
 				eventHeaderDb.setFile(insertFile);
 			} else {
-				File file = fileDao.getById(eventHeaderDb.getFile().getId());
-				file.setFileName(data.getFileName());
-				file.setFileExtension(data.getFileExtension());
-				File updateFile = fileDao.save(file);
-				eventHeaderDb.setFile(updateFile);
+				File oldFile = fileDao.getById(eventHeaderDb.getFile().getId());
+				eventHeaderDb.setFile(oldFile);
 			}
-			
-			User user = new User();
-			user.setId(getAuthPrincipal());
-			eventHeaderDb.setUser(user);
-			eventHeaderDb.setIsActive(data.getIsActive());
 
 			EventHeader eventHeaderUpdate = save(eventHeaderDb);
 			

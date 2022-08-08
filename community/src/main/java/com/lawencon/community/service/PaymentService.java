@@ -11,6 +11,7 @@ import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.PaymentDao;
+import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -23,6 +24,7 @@ import com.lawencon.community.dto.payment.PaymentInsertReq;
 import com.lawencon.community.dto.payment.PaymentUpdateReq;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Payment;
+import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
@@ -33,6 +35,10 @@ public class PaymentService extends BaseCoreService<Payment>{
 	private PaymentDao paymentDao;
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private ProfileDao profileDao;
+	
 	@Autowired
 	private FileDao fileDao;
 	
@@ -53,7 +59,8 @@ public class PaymentService extends BaseCoreService<Payment>{
 				fileDao.save(file);
 				payment.setFile(file);
 			}
-		
+			
+			payment.setIsApprove(false);
 			payment.setIsActive(true);
 			
 			Payment paymentInsert = save(payment);
@@ -78,19 +85,11 @@ public class PaymentService extends BaseCoreService<Payment>{
 		UpdateRes result = new UpdateRes();
 
 		try {
-			begin();
 			Payment paymentDb = paymentDao.getById(data.getId());
 
-			User userDb = userDao.getByIdWithoutDetach(data.getUserId());
-			paymentDb.setUser(userDb);
-			
-			File fileDb = fileDao.getByIdWithoutDetach(data.getFileId());
-			fileDb.setFileName(data.getFileName());
-			fileDb.setFileExtension(data.getFileExtension());
-			
-			paymentDb.setFile(fileDb);
-			paymentDb.setIsActive(data.getIsActive());
+			paymentDb.setIsApprove(data.getIsApprove());
 
+			begin();
 			Payment paymentUpdate = paymentDao.save(paymentDb);
 			commit();
 
@@ -116,7 +115,13 @@ public class PaymentService extends BaseCoreService<Payment>{
 		data.setId(paymentDb.getId());
 		data.setPaymentCode(paymentDb.getPaymentCode());
 		data.setUserId(paymentDb.getUser().getId());
+		
+		User user = userDao.getById(paymentDb.getUser().getId());
+		Profile profile = profileDao.getById(user.getProfile().getId());
+		data.setFullName(profile.getFullName());
+		
 		data.setFileId(paymentDb.getFile().getId());
+		data.setIsApprove(paymentDb.getIsApprove());
 		data.setIsActive(paymentDb.getIsActive());
 		data.setVersion(paymentDb.getVersion());
 
@@ -137,7 +142,12 @@ public class PaymentService extends BaseCoreService<Payment>{
 			data.setId(payment.getId());
 			data.setPaymentCode(payment.getPaymentCode());
 			data.setUserId(payment.getUser().getId());
+			
+			User user = userDao.getById(payment.getUser().getId());
+			Profile profile = profileDao.getById(user.getProfile().getId());
+			data.setFullName(profile.getFullName());
 			data.setFileId(payment.getFile().getId());
+			data.setIsApprove(payment.getIsApprove());
 			data.setIsActive(payment.getIsActive());
 			data.setVersion(payment.getVersion());
 			paymentDataList.add(data);
