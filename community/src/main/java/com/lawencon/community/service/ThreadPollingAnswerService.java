@@ -35,6 +35,8 @@ public class ThreadPollingAnswerService extends BaseCoreService<ThreadPollingAns
 	@Autowired
 	private UserDao userDao;
 	
+	
+	@Autowired
 	private ThreadPollingDetailDao threadPollingDetailDao;
 	
 	public InsertRes insert(ThreadPollingAnswerInsertReq data) throws Exception {

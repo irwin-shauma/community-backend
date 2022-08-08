@@ -18,6 +18,7 @@ import com.lawencon.base.BaseCoreService;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.FileDao;
+import com.lawencon.community.dao.PremiumPaymentHistoryDao;
 import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.RoleDao;
 import com.lawencon.community.dao.TokenDao;
@@ -35,6 +36,7 @@ import com.lawencon.community.dto.user.UserInsertReq;
 import com.lawencon.community.dto.user.UserUpdateReq;
 import com.lawencon.community.exception.InvalidLoginException;
 import com.lawencon.community.model.File;
+import com.lawencon.community.model.PremiumPaymentHistory;
 import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.Role;
 import com.lawencon.community.model.User;
@@ -63,6 +65,9 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 	@Autowired
 	private JwtUtil jwtUtil;
+	
+	@Autowired
+	private PremiumPaymentHistoryDao premiumPaymentHistoryDao;
 
 	@Autowired
 	private RefreshTokenService tokenService;
@@ -223,8 +228,12 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 				data.setCompany(profile.getCompany());
 				data.setIndustry(profile.getIndustry());
 				data.setPosition(profile.getPosition());
-				
+				if(user.getProfile().getPremiumPaymentHistory() != null) {
+					PremiumPaymentHistory premium = premiumPaymentHistoryDao.getById(user.getProfile().getPremiumPaymentHistory().getId());
+					data.setPremiumHistory(premium.getId());	
+				}	
 			}
+			
 
 			users.add(data);
 

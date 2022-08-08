@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -23,12 +25,40 @@ public class ThreadHeaderPolling extends BaseEntity {
 
 	@Column(name = "content_polling")
 	private String contentPolling;
+	
+	
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	
+	
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private File file;
 
 	@Column(name = "polling_question")
 	private String pollingQuestion;
 
 	@Column(name = "duration")
 	private LocalDate duration;
+	
+	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
 
 	public String getThreadHeaderPollingCode() {
 		return threadHeaderPollingCode;

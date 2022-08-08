@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
+import com.lawencon.community.dao.FileDao;
+import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.ThreadHeaderPollingDao;
 import com.lawencon.community.dao.ThreadPollingAnswerDao;
 import com.lawencon.community.dao.ThreadPollingDetailDao;
+import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
@@ -22,9 +25,12 @@ import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingFindByI
 import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingInsertReq;
 import com.lawencon.community.dto.threadheaderpolling.ThreadHeaderPollingUpdateReq;
 import com.lawencon.community.dto.threadheaderpolling.ThreadPollingDetailData;
+import com.lawencon.community.model.File;
+import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.ThreadHeaderPolling;
 import com.lawencon.community.model.ThreadPollingAnswer;
 import com.lawencon.community.model.ThreadPollingDetail;
+import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
@@ -38,6 +44,16 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 	
 	@Autowired
 	private ThreadPollingAnswerDao answerDao;
+	
+	@Autowired
+	private FileDao fileDao;
+	
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private ProfileDao profileDao;
 
 	public InsertRes insert(ThreadHeaderPollingInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -51,8 +67,22 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 			threadHeaderPollingInsert.setPollingQuestion(data.getPollingQuestion());
 			threadHeaderPollingInsert.setDuration(data.getDuration());
 			threadHeaderPollingInsert.setIsActive(true);
+			User user = userDao.getById(getAuthPrincipal());
+
+			threadHeaderPollingInsert.setUser(user);
 
 			begin();
+			
+			if (data.getFileName() != null) {
+				File file = new File();
+				file.setFileName(data.getFileName());
+				file.setFileExtension(data.getFileExtension());
+				File insertedFile = fileDao.save(file);
+				threadHeaderPollingInsert.setFile(insertedFile);
+			} else {
+				threadHeaderPollingInsert.setFile(null);
+			}
+
 			ThreadHeaderPolling threadHeaderPollingResult = save(threadHeaderPollingInsert);
 			for (int i = 0; i < data.getThreadPollingDetail().size(); i++) {
 				ThreadPollingDetail threadDtl = new ThreadPollingDetail();
@@ -163,6 +193,22 @@ public class ThreadHeaderPollingService extends BaseCoreService<ThreadHeaderPoll
 			data.setContentPolling(threadHeader.getContentPolling());
 			data.setPollingQuestion(threadHeader.getPollingQuestion());
 			data.setDuration(threadHeader.getDuration());
+			if (threadHeader.getFile() != null) {
+				data.setFileId(threadHeader.getFile().getId());
+			} else {
+				data.setFileId(null);
+			}
+			data.setUserId(threadHeader.getUser().getId());
+			data.setCreatedBy(threadHeader.getCreatedBy());
+			User user = userDao.getById(threadHeader.getUser().getId());
+
+			Profile profile = profileDao.getById(user.getProfile().getId());
+			data.setFullName(profile.getFullName());
+			if (profile.getFile() != null) {
+				data.setUserPhoto(profile.getFile().getId());
+			}
+
+			data.setCreatedAt(threadHeader.getCreatedAt());
 			data.setIsActive(threadHeader.getIsActive());
 			data.setVersion(threadHeader.getVersion());
 			Boolean isChoice = false;
