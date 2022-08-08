@@ -10,10 +10,7 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "payment" , uniqueConstraints = { @UniqueConstraint(
-		name = "payment_bk",
-		columnNames = "payment_code") 
-})
+@Table(name = "payment", uniqueConstraints = { @UniqueConstraint(name = "payment_bk", columnNames = "payment_code") })
 public class Payment extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;
@@ -28,6 +25,9 @@ public class Payment extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+
+	@Column(name = "is_approve")
+	private Boolean isApprove;
 
 	public String getPaymentCode() {
 		return paymentCode;
@@ -51,6 +51,14 @@ public class Payment extends BaseEntity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Boolean getIsApprove() {
+		return isApprove;
+	}
+
+	public void setIsApprove(Boolean isApprove) {
+		this.isApprove = isApprove;
 	}
 
 }

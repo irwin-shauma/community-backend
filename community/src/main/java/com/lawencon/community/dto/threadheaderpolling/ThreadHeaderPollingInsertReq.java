@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -18,11 +19,11 @@ public class ThreadHeaderPollingInsertReq {
 	@NotBlank(message = "Question can't be empty")
 	private String pollingQuestion;
 
-	@NotBlank(message = "Duration can't be empty")
+	@NotNull(message = "Duration can't be empty")
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.000'Z'")
 	private LocalDate duration;
 
-	@NotBlank(message = "Question can't be empty")
+	@NotNull(message = "Question can't be empty")
 	private List<ThreadPollingDetailInsertReq> threadPollingDetail;
 	
 	private String fileName;

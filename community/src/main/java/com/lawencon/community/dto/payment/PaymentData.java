@@ -6,6 +6,7 @@ public class PaymentData {
 	private String paymentCode;
 	private String fileId;
 	private String userId;
+	private String fullName;
 	private Boolean isActive;
 	private Integer version;
 
@@ -55,6 +56,14 @@ public class PaymentData {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 }
