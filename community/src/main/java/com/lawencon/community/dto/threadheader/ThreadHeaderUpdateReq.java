@@ -1,5 +1,7 @@
 package com.lawencon.community.dto.threadheader;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +20,7 @@ public class ThreadHeaderUpdateReq {
 
 	@NotNull(message = "Thread type can't be empty")
 	private String threadTypeId;
+	private String fileId;
 	private String fileName;
 	private String fileExtension;
 	private Boolean isActive;
@@ -28,6 +31,16 @@ public class ThreadHeaderUpdateReq {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 	public String getUserId() {

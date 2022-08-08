@@ -121,8 +121,8 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 
 			threadHdr.setThreadType(threadType);
 			threadHdr.setIsActive(true);
-
 			File file = new File();
+			file.setId(data.getFileId());
 			file.setFileName(data.getFileName());
 			file.setFileExtension(data.getFileExtension());
 
