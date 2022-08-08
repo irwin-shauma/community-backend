@@ -52,4 +52,19 @@ public class ArticleHeaderDao extends AbstractJpaDao<ArticleHeader> {
 		return articleHeaders;
 	}
 	
+	public Long countAllArticle() throws Exception {
+		String sql = "SELECT COUNT(id) FROM article_header ";
+		Long total = 0L;
+		try {
+			Object result = createNativeQuery(sql).getSingleResult();
+			if( result != null) {
+				 total = Long.valueOf(result.toString());
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return total;
+	}
+	
 }
