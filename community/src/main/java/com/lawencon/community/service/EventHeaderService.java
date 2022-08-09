@@ -234,7 +234,6 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 				}
 				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
