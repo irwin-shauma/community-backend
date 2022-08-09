@@ -1,37 +1,29 @@
 package com.lawencon.community.dto.balance;
 
+import java.math.BigDecimal;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class BalanceInsertReq {
 	
-//	@NotBlank(message = "Balance Code can't be empty")
-//	@Size(min =3, max = 50, message = "Balance Code size must be between 3 to 50")
-//	private String balanceCode;
-	
-	@NotBlank(message = "Current balance can't be empty")
-	private Float currentBalance;
+	@NotNull(message = "Current balance can't be empty")
+	private BigDecimal currentBalance;
 	
 	@NotBlank(message = "User Id can't be empty")
 	private String userId;
 
-//	public String getBalanceCode() {
-//		return balanceCode;
-//	}
-//
-//	public void setBalanceCode(String balanceCode) {
-//		this.balanceCode = balanceCode;
-//	}
-
-	public Float getCurrentBalance() {
-		return currentBalance;
-	}
-
-	public void setCurrentBalance(Float currentBalance) {
-		this.currentBalance = currentBalance;
-	}
 
 	public String getUserId() {
 		return userId;
+	}
+
+	public BigDecimal getCurrentBalance() {
+		return currentBalance;
+	}
+
+	public void setCurrentBalance(BigDecimal currentBalance) {
+		this.currentBalance = currentBalance;
 	}
 
 	public void setUserId(String userId) {

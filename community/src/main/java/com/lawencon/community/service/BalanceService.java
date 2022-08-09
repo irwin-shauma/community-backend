@@ -1,5 +1,6 @@
 package com.lawencon.community.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import com.lawencon.community.dto.balance.BalanceData;
 import com.lawencon.community.dto.balance.BalanceFindByIdRes;
 import com.lawencon.community.dto.balance.BalanceInsertReq;
 import com.lawencon.community.dto.balance.BalanceUpdateReq;
+import com.lawencon.community.dto.balance.UpdateCurrentBalanceReq;
+import com.lawencon.community.dto.balance.UpdateCurrentBalanceRes;
 import com.lawencon.community.model.Balance;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
@@ -29,7 +32,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 
 	@Autowired
 	private BalanceDao balanceDao;
-	
+
 	@Autowired
 	private UserDao userDao;
 
@@ -52,7 +55,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 
 			InsertDataRes insertDataRes = new InsertDataRes();
 			insertDataRes.setId(balanceInsert.getId());
-			
+
 			result.setData(insertDataRes);
 			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 		} catch (Exception e) {
@@ -158,7 +161,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 
 		return result;
 	}
-	
+
 	public BalanceFindByIdRes getByUserId(String id) throws Exception {
 		Balance balanceDb = balanceDao.findByUserId(getAuthPrincipal());
 
@@ -173,6 +176,33 @@ public class BalanceService extends BaseCoreService<Balance> {
 		result.setData(data);
 
 		return result;
+	}
+
+	public UpdateCurrentBalanceRes updateBalance(UpdateCurrentBalanceReq data) throws Exception {
+		UpdateCurrentBalanceRes response = new UpdateCurrentBalanceRes();
+
+		try {
+			begin();
+			Balance balance = balanceDao.findByUserId(data.getUserId());
+			BigDecimal balanceUpdated = balance.getCurrentBalance().add(data.getBalance().multiply(new BigDecimal(0.9d)));
+			balance.setCurrentBalance(balanceUpdated);
+			Balance updated = balanceDao.save(balance);
+			
+			Balance systemBalance = balanceDao.findSystem();
+			BigDecimal systemBalanceIncrement = systemBalance.getCurrentBalance().add(data.getBalance().multiply(new BigDecimal(0.1d)));
+			systemBalance.setCurrentBalance(systemBalanceIncrement);
+			balanceDao.save(systemBalance);
+			commit();
+
+			response.setMessage("Update balance success! Current balance : " + updated.getCurrentBalance());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+
+		return response;
 	}
 
 }

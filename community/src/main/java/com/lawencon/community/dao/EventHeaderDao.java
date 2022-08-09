@@ -38,11 +38,14 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 		return eventHeader;
 	}
 	
-	public Long countAllUser() throws Exception {
-		String sql = "SELECT COUNT(id) FROM event_header ";
+	public Long countAllEvent(String type) throws Exception {
+		StringBuilder sqlBuilder = new StringBuilder();
+		sqlBuilder.append("SELECT COUNT(eh.id) FROM event_header eh ")
+		.append(" INNER JOIN event_type et ON et.id = eh.event_type_id ")
+		.append(" WHERE et.type = :type ");
 		Long total = 0L;
 		try {
-			Object result = createNativeQuery(sql).getSingleResult();
+			Object result = createNativeQuery(sqlBuilder.toString()).setParameter("type", type).getSingleResult();
 			if( result != null) {
 				 total = Long.valueOf(result.toString());
 			}
@@ -52,5 +55,6 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 		
 		return total;
 	}
+	
 
 }
