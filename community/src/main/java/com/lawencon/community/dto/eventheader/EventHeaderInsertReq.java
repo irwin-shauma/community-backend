@@ -18,13 +18,13 @@ public class EventHeaderInsertReq {
 	private String fileExtension;
 
 	private Float price;
-	
-	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.000'Z'")
+
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
 	private LocalDateTime starts;
-	
-	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.000'Z'")
+
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
 	private LocalDateTime ends;
-	
+
 	private String provider;
 	private String location;
 

@@ -1,7 +1,5 @@
 package com.lawencon.community.dto.threadheader;
 
-import java.time.LocalDateTime;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
