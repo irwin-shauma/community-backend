@@ -89,6 +89,7 @@ public class PremiumTypeService extends BaseCoreService<PremiumType> {
 
 		PremiumTypeData data = new PremiumTypeData();
 		data.setId(premiumTypeDb.getId());
+		data.setPremiumTypeCode(premiumTypeDb.getPremiumTypeCode());
 		data.setPrice(premiumTypeDb.getPrice());
 		data.setDuration(premiumTypeDb.getDuration());
 		data.setIsActive(premiumTypeDb.getIsActive());
@@ -109,6 +110,7 @@ public class PremiumTypeService extends BaseCoreService<PremiumType> {
 		dataDb.getData().forEach(premiumType -> {
 			PremiumTypeData data = new PremiumTypeData();
 			data.setId(premiumType.getId());
+			data.setPremiumTypeCode(premiumType.getPremiumTypeCode());
 			data.setPrice(premiumType.getPrice());
 			data.setDuration(premiumType.getDuration());
 			data.setIsActive(premiumType.getIsActive());
