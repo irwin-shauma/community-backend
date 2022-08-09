@@ -165,19 +165,4 @@ public class ThreadHeaderDao extends AbstractJpaDao<ThreadHeader> {
 		return threadHdrs;
 	}
 	
-	public Long countAllThread() throws Exception {
-		String sql = "SELECT COUNT(id) FROM thread_headers ";
-		Long total = 0L;
-		try {
-			Object result = createNativeQuery(sql).getSingleResult();
-			if( result != null) {
-				 total = Long.valueOf(result.toString());
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return total;
-	}
-
 }
