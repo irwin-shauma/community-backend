@@ -12,6 +12,7 @@ import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.PaymentDao;
 import com.lawencon.community.dao.PremiumPaymentHistoryDao;
 import com.lawencon.community.dao.PremiumTypeDao;
+import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -25,6 +26,7 @@ import com.lawencon.community.dto.premiumpaymenthistory.PremiumPaymentHistoryUpd
 import com.lawencon.community.model.Payment;
 import com.lawencon.community.model.PremiumPaymentHistory;
 import com.lawencon.community.model.PremiumType;
+import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
@@ -42,6 +44,9 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 	
 	@Autowired
 	private PaymentDao paymentDao;
+	
+	@Autowired
+	private ProfileDao profileDao;
 
 	public InsertRes insert(PremiumPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -154,9 +159,14 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 			}
 			PremiumType premiumType = premiumTypeDao.getById(premiumDb.getPremiumType().getId());
 			data.setPrice(premiumType.getPrice());
+			data.setDuration(premiumType.getDuration());
 			
+			User user = userDao.getById(premiumDb.getUser().getId());
+			Profile profile = profileDao.getById(user.getProfile().getId());
+			data.setFullname(profile.getFullName());
 			data.setTrxNo(premiumDb.getTrxNo());
 			data.setIsActive(premiumDb.getIsActive());
+			data.setCreatedAt(premiumDb.getCreatedAt());
 			data.setVersion(premiumDb.getVersion());
 			result.setData(data);
 			return result;
