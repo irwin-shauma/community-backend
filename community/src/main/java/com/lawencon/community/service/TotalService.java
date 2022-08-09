@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.community.dao.ArticleHeaderDao;
 import com.lawencon.community.dao.EventHeaderDao;
+import com.lawencon.community.dao.PremiumPaymentHistoryDao;
 import com.lawencon.community.dao.ThreadHeaderDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.TotalCountData;
@@ -25,6 +26,9 @@ public class TotalService {
 	@Autowired
 	private EventHeaderDao eventHeaderDao;
 	
+	@Autowired
+	private PremiumPaymentHistoryDao premiumPaymentHistoryDao;
+	
 	public TotalCountRes getAllCount() throws Exception {
 		TotalCountRes totalCountRes = new TotalCountRes();
 		TotalCountData totalCountData = new TotalCountData();
@@ -32,17 +36,22 @@ public class TotalService {
 		Long totalUser = userDao.countAll();
 		totalCountData.setTotalUser(totalUser);
 		
+		Long totalPremiumUser = premiumPaymentHistoryDao.countAllPremiumUser();
+		totalCountData.setTotalPremiumUser(totalPremiumUser);
+		
 		Long totalArticle = articleHeaderDao.countAll();
 		totalCountData.setTotalArticle(totalArticle);
 		
 		Long totalThread = threadHeaderDao.countAll();
 		totalCountData.setTotalThread(totalThread);
 		
-		Long totalEvent = eventHeaderDao.countAll();
+		Long totalEvent = eventHeaderDao.countAllEvent("Event");
 		totalCountData.setTotalEvent(totalEvent);
 		
-		totalCountRes.setData(totalCountData);
+		Long totalCourse = eventHeaderDao.countAllEvent("Course");
+		totalCountData.setTotalCourse(totalCourse);
 		
+		totalCountRes.setData(totalCountData);
 		
 		return totalCountRes;
 	}
