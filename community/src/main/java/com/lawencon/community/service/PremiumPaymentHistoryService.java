@@ -123,6 +123,10 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 		data.setUserId(premiumPaymentHistoryDb.getUser().getId());
 		data.setPremiumTypeId(premiumPaymentHistoryDb.getPremiumType().getId());
 		data.setPaymentId(premiumPaymentHistoryDb.getPayment().getId());
+		
+		PremiumType premiumType = premiumTypeDao.getById(premiumPaymentHistoryDb.getPremiumType().getId());
+		data.setPrice(premiumType.getPrice());
+		
 		data.setTrxNo(premiumPaymentHistoryDb.getTrxNo());
 		data.setIsActive(premiumPaymentHistoryDb.getIsActive());
 		data.setVersion(premiumPaymentHistoryDb.getVersion());
@@ -148,7 +152,9 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 			if(premiumDb.getPayment() != null) {
 				data.setPaymentId(premiumDb.getPayment().getId());	
 			}
-		
+			PremiumType premiumType = premiumTypeDao.getById(premiumDb.getPremiumType().getId());
+			data.setPrice(premiumType.getPrice());
+			
 			data.setTrxNo(premiumDb.getTrxNo());
 			data.setIsActive(premiumDb.getIsActive());
 			data.setVersion(premiumDb.getVersion());
