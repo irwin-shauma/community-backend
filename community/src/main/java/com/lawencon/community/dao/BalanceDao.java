@@ -74,4 +74,25 @@ public class BalanceDao extends AbstractJpaDao<Balance> {
 		}
 		return balance;
 	}
+	
+	public BigDecimal findSystemBalance() throws Exception {
+		StringBuilder sqlBuilder = new StringBuilder();
+		sqlBuilder.append(" SELECT b.current_balance ")
+				.append(" FROM balance b ")
+				.append(" INNER JOIN users u ON u.id = b.user_id ")
+				.append(" INNER JOIN roles r ON r.id = u.role_id ")
+				.append(" WHERE r.role_code = 'SYSTEM' ");
+
+		BigDecimal total = null;
+		try {
+			Object result = createNativeQuery(sqlBuilder.toString()).getSingleResult();
+
+			if (result != null) {
+				total = new BigDecimal(result.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
 }
