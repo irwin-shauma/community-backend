@@ -163,6 +163,7 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 			data.setDuration(premiumType.getDuration());
 			
 			data.setTrxNo(premiumPaymentHistory.getTrxNo());
+			data.setCreatedAt(premiumPaymentHistory.getCreatedAt());
 			data.setIsActive(premiumPaymentHistory.getIsActive());
 			data.setVersion(premiumPaymentHistory.getVersion());
 
