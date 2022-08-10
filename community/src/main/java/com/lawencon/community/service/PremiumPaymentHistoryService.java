@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
+import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.PaymentDao;
 import com.lawencon.community.dao.PremiumPaymentHistoryDao;
 import com.lawencon.community.dao.PremiumTypeDao;
@@ -22,6 +23,7 @@ import com.lawencon.community.dto.premiumpaymenthistory.PremiumPaymentHistoryDat
 import com.lawencon.community.dto.premiumpaymenthistory.PremiumPaymentHistoryFindByIdRes;
 import com.lawencon.community.dto.premiumpaymenthistory.PremiumPaymentHistoryInsertReq;
 import com.lawencon.community.dto.premiumpaymenthistory.PremiumPaymentHistoryUpdateReq;
+import com.lawencon.community.model.File;
 import com.lawencon.community.model.Payment;
 import com.lawencon.community.model.PremiumPaymentHistory;
 import com.lawencon.community.model.PremiumType;
@@ -43,28 +45,48 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 	@Autowired
 	private PaymentDao paymentDao;
 	
-	
+	@Autowired
+	private FileDao fileDao;
 
 	public InsertRes insert(PremiumPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		String code = RandomStringUtils.randomAlphanumeric(5);
+		String payCode = RandomStringUtils.randomAlphanumeric(5);
 		String trxNo = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			
-			PremiumPaymentHistory premiumPaymentHistory = new PremiumPaymentHistory();
-			premiumPaymentHistory.setPremiumPaymentHistoryCode(code);
-			User user = userDao.getById(getAuthPrincipal());
-			premiumPaymentHistory.setUser(user);
+			begin();
+			Payment payment = new Payment();
 			
-			Payment payment = paymentDao.getById(data.getPaymentId());
-			premiumPaymentHistory.setPayment(payment);
+			File file = new File();
+			file.setFileName(data.getFileName());
+			file.setFileExtension(data.getFileExtension());
+			File insertedFile = fileDao.save(file);
+			
+			payment.setPaymentCode(payCode);
+			
+			User users = new User();
+			users.setId(getAuthPrincipal());
+			payment.setUser(users);
+			payment.setFile(insertedFile);
+			payment.setIsActive(true);
+			payment.setIsApprove(false);
+			payment.setCreatedBy(getAuthPrincipal());
+			
+			Payment insertedPayment = paymentDao.save(payment);
+			
+			PremiumPaymentHistory premiumPaymentHistory = new PremiumPaymentHistory();
+			premiumPaymentHistory.setPayment(insertedPayment);
+			premiumPaymentHistory.setPremiumPaymentHistoryCode(code);
+			premiumPaymentHistory.setUser(users);
+			
 
 			PremiumType premiumType = premiumTypeDao.getById(data.getPremiumTypeId());
 			premiumPaymentHistory.setPremiumType(premiumType);
 
 			premiumPaymentHistory.setTrxNo(trxNo);
-			premiumPaymentHistory.setIsActive(true);
-			begin();
+			premiumPaymentHistory.setIsActive(false);
+			
 			PremiumPaymentHistory premiumPaymentHistoryInsert = save(premiumPaymentHistory);
 			commit();
 
@@ -138,6 +160,31 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 
 		return result;
 
+	}
+	
+	public PremiumPaymentHistoryFindByIdRes getPremium() throws Exception {
+		PremiumPaymentHistory premiumPaymentHistoryDb = premiumPaymentHistoryDao.getPremium(getAuthPrincipal());
+		PremiumPaymentHistoryData data = null;
+		if(premiumPaymentHistoryDb != null) {
+			data = new PremiumPaymentHistoryData();
+			data.setId(premiumPaymentHistoryDb.getId());
+			data.setUserId(premiumPaymentHistoryDb.getUser().getId());
+			data.setPremiumTypeId(premiumPaymentHistoryDb.getPremiumType().getId());
+			data.setPaymentId(premiumPaymentHistoryDb.getPayment().getId());
+			
+			PremiumType premiumType = premiumTypeDao.getById(premiumPaymentHistoryDb.getPremiumType().getId());
+			data.setPrice(premiumType.getPrice());
+			
+			data.setTrxNo(premiumPaymentHistoryDb.getTrxNo());
+			data.setIsActive(premiumPaymentHistoryDb.getIsActive());
+			data.setVersion(premiumPaymentHistoryDb.getVersion());
+		}
+		
+		PremiumPaymentHistoryFindByIdRes result = new PremiumPaymentHistoryFindByIdRes();
+		result.setData(data);
+		
+		return result;
+		
 	}
 	
 	public SearchQuery<PremiumPaymentHistoryData> findAllByUser()
