@@ -27,23 +27,23 @@ public class ThreadHeaderPollingDao extends AbstractJpaDao<ThreadHeaderPolling> 
 			data.setThreadHeaderPollingCode(objArr[1].toString());
 			data.setTitlePolling(objArr[2].toString());
 			data.setContentPolling(objArr[3].toString());
-			data.setPollingQuestion(objArr[4].toString());
-			data.setDuration(((Date) objArr[11]).toLocalDate());
-			if (objArr[5] != null) {
-				data.setCreatedAt(((Timestamp) objArr[5]).toLocalDateTime());
+			data.setPollingQuestion(objArr[11].toString());
+			data.setDuration(((Date) objArr[10]).toLocalDate());
+			if (objArr[4] != null) {
+				data.setCreatedAt(((Timestamp) objArr[4]).toLocalDateTime());
 			}
 			
-			data.setCreatedBy(objArr[6].toString());
+			data.setCreatedBy(objArr[5].toString());
+			
+			if (objArr[6] != null) {
+				data.setUpdatedAt(((Timestamp) objArr[6]).toLocalDateTime());
+			}
 			
 			if (objArr[7] != null) {
-				data.setUpdatedAt(((Timestamp) objArr[7]).toLocalDateTime());
+				data.setUpdatedBy(objArr[7].toString());
 			}
-			
-			if (objArr[8] != null) {
-				data.setUpdatedBy(objArr[8].toString());
-			}
-			data.setIsActive(Boolean.valueOf(objArr[9].toString()));
-			data.setVersion(Integer.valueOf(objArr[10].toString()));
+			data.setIsActive(Boolean.valueOf(objArr[8].toString()));
+			data.setVersion(Integer.valueOf(objArr[9].toString()));
 			
 			listThread.add(data);
 		});

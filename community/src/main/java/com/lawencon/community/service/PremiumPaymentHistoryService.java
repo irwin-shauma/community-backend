@@ -12,6 +12,7 @@ import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.PaymentDao;
 import com.lawencon.community.dao.PremiumPaymentHistoryDao;
 import com.lawencon.community.dao.PremiumTypeDao;
+import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
 import com.lawencon.community.dto.InsertDataRes;
@@ -25,6 +26,7 @@ import com.lawencon.community.dto.premiumpaymenthistory.PremiumPaymentHistoryUpd
 import com.lawencon.community.model.Payment;
 import com.lawencon.community.model.PremiumPaymentHistory;
 import com.lawencon.community.model.PremiumType;
+import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
@@ -42,6 +44,8 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 	
 	@Autowired
 	private PaymentDao paymentDao;
+	
+	
 
 	public InsertRes insert(PremiumPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
