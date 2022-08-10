@@ -1,6 +1,7 @@
 package com.lawencon.community.dao;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +13,8 @@ import com.lawencon.community.model.User;
 public class BalanceDao extends AbstractJpaDao<Balance> {
 	public Balance findByUserId(String userId) throws Exception {
 		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append(" SELECT b.id, b.balance_code, b.current_balance, b.user_id FROM balance b ")
+		sqlBuilder.append(" SELECT b.id, b.balance_code, b.current_balance, b.user_id, b.created_at, b.created_by ")
+				.append(" FROM balance b ")
 				.append(" INNER JOIN users u ON u.id = b.user_id ")
 				.append(" WHERE b.user_id = :userId ");
 
@@ -30,6 +32,9 @@ public class BalanceDao extends AbstractJpaDao<Balance> {
 				User user = new User();
 				user.setId(objArr[3].toString());
 				balance.setUser(user);
+				
+				balance.setCreatedAt(((Timestamp) objArr[4]).toLocalDateTime());
+				balance.setCreatedBy(objArr[5].toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,7 +44,8 @@ public class BalanceDao extends AbstractJpaDao<Balance> {
 
 	public Balance findSystem() throws Exception {
 		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append(" SELECT b.id, b.balance_code, b.current_balance, b.user_id, r.role_code FROM balance b ")
+		sqlBuilder.append(" SELECT b.id, b.balance_code, b.current_balance, b.user_id, r.role_code, b.created_at, b.created_by ")
+				.append(" FROM balance b ")
 				.append(" INNER JOIN users u ON u.id = b.user_id ")
 				.append(" INNER JOIN roles r ON r.id = u.role_id ")
 				.append(" WHERE r.role_code = 'SYSTEM' ");
@@ -58,6 +64,10 @@ public class BalanceDao extends AbstractJpaDao<Balance> {
 				User user = new User();
 				user.setId(objArr[3].toString());
 				balance.setUser(user);
+				
+				balance.setCreatedAt(((Timestamp) objArr[5]).toLocalDateTime());
+				balance.setCreatedBy(objArr[6].toString());
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
