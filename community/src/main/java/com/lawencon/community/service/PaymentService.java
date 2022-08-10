@@ -11,6 +11,7 @@ import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.PaymentDao;
+import com.lawencon.community.dao.PremiumPaymentHistoryDao;
 import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
@@ -24,6 +25,7 @@ import com.lawencon.community.dto.payment.PaymentInsertReq;
 import com.lawencon.community.dto.payment.PaymentUpdateReq;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Payment;
+import com.lawencon.community.model.PremiumPaymentHistory;
 import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
@@ -41,6 +43,9 @@ public class PaymentService extends BaseCoreService<Payment>{
 	
 	@Autowired
 	private FileDao fileDao;
+	
+	@Autowired
+	private PremiumPaymentHistoryDao premiumDao;
 	
 	public InsertRes insert(PaymentInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -88,9 +93,13 @@ public class PaymentService extends BaseCoreService<Payment>{
 			Payment paymentDb = paymentDao.getById(data.getId());
 
 			paymentDb.setIsApprove(data.getIsApprove());
+			
+			PremiumPaymentHistory premiumHistory = premiumDao.getByPayment(data.getId());
+			premiumHistory.setIsActive(data.getIsActive());
 
 			begin();
 			Payment paymentUpdate = paymentDao.save(paymentDb);
+			premiumDao.save(premiumHistory);
 			commit();
 
 			UpdateDataRes updateDataRes = new UpdateDataRes();

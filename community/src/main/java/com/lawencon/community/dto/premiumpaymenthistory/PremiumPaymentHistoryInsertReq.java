@@ -1,17 +1,16 @@
 package com.lawencon.community.dto.premiumpaymenthistory;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class PremiumPaymentHistoryInsertReq {
 
-	@NotBlank(message = "Premium Id can't be empty")
-	private String premiumTypeId;
-	
-	@NotBlank(message = "Payment Id can't be empty")
-	private String paymentId;
+	@NotNull(message = "File Can't be Empty")
+	private String fileName;
+	private String fileExtension;
 
-	@NotBlank(message = "trxNo can't be empty")
-	private String trxNo;
+	@NotBlank(message = "PremiumType Id can't be empty")
+	private String premiumTypeId;
 
 	public String getPremiumTypeId() {
 		return premiumTypeId;
@@ -21,23 +20,20 @@ public class PremiumPaymentHistoryInsertReq {
 		this.premiumTypeId = premiumTypeId;
 	}
 
-	public String getPaymentId() {
-		return paymentId;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setPaymentId(String paymentId) {
-		this.paymentId = paymentId;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
-	public String getTrxNo() {
-		return trxNo;
+	public String getFileExtension() {
+		return fileExtension;
 	}
 
-	public void setTrxNo(String trxNo) {
-		this.trxNo = trxNo;
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
 	}
-
-	
-	
 
 }
