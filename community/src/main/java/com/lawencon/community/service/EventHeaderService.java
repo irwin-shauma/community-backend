@@ -1,6 +1,7 @@
 package com.lawencon.community.service;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,8 +88,8 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			eventDetail.setEventHeader(eventHeaderInsert);
 
 			eventDetail.setPrice(data.getPrice());
-			eventDetail.setStartDate(new Timestamp(data.getStarts().getTime()).toLocalDateTime());
-			eventDetail.setEndDate(new Timestamp(data.getEnds().getTime()).toLocalDateTime());
+			eventDetail.setStartDate(stringToLocalDateTime(data.getStarts()));
+			eventDetail.setEndDate(stringToLocalDateTime(data.getEnds()));
 			eventDetail.setProvider(data.getProvider());
 			eventDetail.setLocations(data.getLocation());
 			eventDetail.setCreatedBy(getAuthPrincipal());
@@ -315,5 +316,10 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 		return result;
 	}
+	
+	private LocalDateTime stringToLocalDateTime(String dateTimeStr) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        return LocalDateTime.parse(dateTimeStr, formatter);
+    }
 
 }

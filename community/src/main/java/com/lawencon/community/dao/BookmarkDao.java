@@ -43,7 +43,9 @@ public class BookmarkDao extends AbstractJpaDao<Bookmark> {
 		String sql = "SELECT id, bookmark_code FROM bookmark WHERE thread_id = :id AND user_id= :user";
 		Bookmark bookmark = null;
 		try {
-			Object result = createNativeQuery(sql).setParameter("id", id).setParameter("user", userId)
+			Object result = createNativeQuery(sql)
+					.setParameter("id", id)
+					.setParameter("user", userId)
 					.getSingleResult();
 			if (result != null) {
 				Object[] objArr = (Object[]) result;

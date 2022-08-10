@@ -30,34 +30,34 @@ public class ThreadHeaderDao extends AbstractJpaDao<ThreadHeader> {
             if(objArr[1] != null) {
                 threadHdr.setThreadHeaderCode(objArr[1].toString());
             }
-            threadHdr.setTitle(objArr[2].toString());
+            threadHdr.setTitle(objArr[5].toString());
             ThreadType threadType = new ThreadType();
-            threadType.setId(objArr[3].toString());
+            threadType.setId(objArr[2].toString());
             threadHdr.setThreadType(threadType);
-            threadHdr.setContentThread(objArr[4].toString());
+            threadHdr.setContentThread(objArr[6].toString());
 
-            if (objArr[11] != null) {
+            if (objArr[4] != null) {
                 File file = new File();
-                file.setId(objArr[11].toString());
+                file.setId(objArr[4].toString());
                 threadHdr.setFile(file);
             }
 
             User user = new User();
-            user.setId(objArr[12].toString());
+            user.setId(objArr[3].toString());
             threadHdr.setUser(user);
 
-            threadHdr.setCreatedAt(((Timestamp) objArr[5]).toLocalDateTime());
-            threadHdr.setCreatedBy(objArr[6].toString());
+            threadHdr.setCreatedAt(((Timestamp) objArr[7]).toLocalDateTime());
+            threadHdr.setCreatedBy(objArr[8].toString());
 
-            if (objArr[7] != null) {
-                threadHdr.setUpdatedAt(((Timestamp) objArr[7]).toLocalDateTime());
+            if (objArr[9] != null) {
+                threadHdr.setUpdatedAt(((Timestamp) objArr[9]).toLocalDateTime());
             }
-            if (objArr[8] != null) {
-                threadHdr.setUpdatedBy(objArr[8].toString());
+            if (objArr[10] != null) {
+                threadHdr.setUpdatedBy(objArr[10].toString());
             }
 
-            threadHdr.setIsActive(Boolean.valueOf(objArr[9].toString()));
-            threadHdr.setVersion(Integer.valueOf(objArr[10].toString()));
+            threadHdr.setIsActive(Boolean.valueOf(objArr[11].toString()));
+            threadHdr.setVersion(Integer.valueOf(objArr[12].toString()));
 
             threadHdrs.add(threadHdr);
 		});
@@ -80,34 +80,34 @@ public class ThreadHeaderDao extends AbstractJpaDao<ThreadHeader> {
             if(objArr[1] != null) {
                 threadHdr.setThreadHeaderCode(objArr[1].toString());
             }
-            threadHdr.setTitle(objArr[2].toString());
+            threadHdr.setTitle(objArr[5].toString());
             ThreadType threadType = new ThreadType();
-            threadType.setId(objArr[3].toString());
+            threadType.setId(objArr[2].toString());
             threadHdr.setThreadType(threadType);
-            threadHdr.setContentThread(objArr[4].toString());
+            threadHdr.setContentThread(objArr[6].toString());
 
-            if (objArr[11] != null) {
+            if (objArr[4] != null) {
                 File file = new File();
-                file.setId(objArr[11].toString());
+                file.setId(objArr[4].toString());
                 threadHdr.setFile(file);
             }
 
             User user = new User();
-            user.setId(objArr[12].toString());
+            user.setId(objArr[3].toString());
             threadHdr.setUser(user);
 
-            threadHdr.setCreatedAt(((Timestamp) objArr[5]).toLocalDateTime());
-            threadHdr.setCreatedBy(objArr[6].toString());
+            threadHdr.setCreatedAt(((Timestamp) objArr[7]).toLocalDateTime());
+            threadHdr.setCreatedBy(objArr[8].toString());
 
-            if (objArr[7] != null) {
-                threadHdr.setUpdatedAt(((Timestamp) objArr[7]).toLocalDateTime());
+            if (objArr[9] != null) {
+                threadHdr.setUpdatedAt(((Timestamp) objArr[9]).toLocalDateTime());
             }
-            if (objArr[8] != null) {
-                threadHdr.setUpdatedBy(objArr[8].toString());
+            if (objArr[10] != null) {
+                threadHdr.setUpdatedBy(objArr[10].toString());
             }
 
-            threadHdr.setIsActive(Boolean.valueOf(objArr[9].toString()));
-            threadHdr.setVersion(Integer.valueOf(objArr[10].toString()));
+            threadHdr.setIsActive(Boolean.valueOf(objArr[11].toString()));
+            threadHdr.setVersion(Integer.valueOf(objArr[12].toString()));
 
             threadHdrs.add(threadHdr);
 		});
@@ -130,34 +130,34 @@ public class ThreadHeaderDao extends AbstractJpaDao<ThreadHeader> {
             if(objArr[1] != null) {
                 threadHdr.setThreadHeaderCode(objArr[1].toString());
             }
-            threadHdr.setTitle(objArr[2].toString());
+            threadHdr.setTitle(objArr[5].toString());
             ThreadType threadType = new ThreadType();
-            threadType.setId(objArr[3].toString());
+            threadType.setId(objArr[2].toString());
             threadHdr.setThreadType(threadType);
-            threadHdr.setContentThread(objArr[4].toString());
+            threadHdr.setContentThread(objArr[6].toString());
 
-            if (objArr[11] != null) {
+            if (objArr[4] != null) {
                 File file = new File();
-                file.setId(objArr[11].toString());
+                file.setId(objArr[4].toString());
                 threadHdr.setFile(file);
             }
 
             User user = new User();
-            user.setId(objArr[12].toString());
+            user.setId(objArr[3].toString());
             threadHdr.setUser(user);
 
-            threadHdr.setCreatedAt(((Timestamp) objArr[5]).toLocalDateTime());
-            threadHdr.setCreatedBy(objArr[6].toString());
+            threadHdr.setCreatedAt(((Timestamp) objArr[7]).toLocalDateTime());
+            threadHdr.setCreatedBy(objArr[8].toString());
 
-            if (objArr[7] != null) {
-                threadHdr.setUpdatedAt(((Timestamp) objArr[7]).toLocalDateTime());
+            if (objArr[9] != null) {
+                threadHdr.setUpdatedAt(((Timestamp) objArr[9]).toLocalDateTime());
             }
-            if (objArr[8] != null) {
-                threadHdr.setUpdatedBy(objArr[8].toString());
+            if (objArr[10] != null) {
+                threadHdr.setUpdatedBy(objArr[10].toString());
             }
 
-            threadHdr.setIsActive(Boolean.valueOf(objArr[9].toString()));
-            threadHdr.setVersion(Integer.valueOf(objArr[10].toString()));
+            threadHdr.setIsActive(Boolean.valueOf(objArr[11].toString()));
+            threadHdr.setVersion(Integer.valueOf(objArr[12].toString()));
 
             threadHdrs.add(threadHdr);
 		});
@@ -165,4 +165,19 @@ public class ThreadHeaderDao extends AbstractJpaDao<ThreadHeader> {
 		return threadHdrs;
 	}
 	
+	public Long countAllThread() throws Exception {
+		String sql = "SELECT COUNT(id) FROM thread_headers ";
+		Long total = 0L;
+		try {
+			Object result = createNativeQuery(sql).getSingleResult();
+			if( result != null) {
+				 total = Long.valueOf(result.toString());
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return total;
+	}
+
 }
