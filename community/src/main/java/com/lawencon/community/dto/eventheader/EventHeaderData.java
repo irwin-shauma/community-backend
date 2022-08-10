@@ -2,21 +2,24 @@ package com.lawencon.community.dto.eventheader;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class EventHeaderData {
 	private String id;
 	private String eventHeaderCode;
 	private String title;
 	private String eventTypeId;
+	private String userId;
 	private String fulName;
 	private Boolean isActive;
 	private Integer version;
 	private String fileId;
 	private Float price;
-	
-//	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime startDate;
-	
-//	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime endDate;
 	private String provider;
 	private String location;
@@ -75,6 +78,14 @@ public class EventHeaderData {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getFulName() {

@@ -70,4 +70,5 @@ public class EventHeaderController {
 		DeleteRes result = eventHeaderService.deleteById(id);
 		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
 	}
+	
 }

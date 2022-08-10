@@ -1,8 +1,5 @@
 package com.lawencon.community.dto.eventheader;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -20,11 +17,11 @@ public class EventHeaderInsertReq {
 
 	private Float price;
 
-	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'+07:00'")
-	private Date starts;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+	private String starts;
 
-	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'+07:00'")
-	private Date ends;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+	private String ends;
 
 	private String provider;
 	private String location;
@@ -69,19 +66,19 @@ public class EventHeaderInsertReq {
 		this.price = price;
 	}
 
-	public Date getStarts() {
+	public String getStarts() {
 		return starts;
 	}
 
-	public void setStarts(Date starts) {
+	public void setStarts(String starts) {
 		this.starts = starts;
 	}
 
-	public Date getEnds() {
+	public String getEnds() {
 		return ends;
 	}
 
-	public void setEnds(Date ends) {
+	public void setEnds(String ends) {
 		this.ends = ends;
 	}
 
