@@ -44,8 +44,8 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 		return eventHeader;
 	}
 	
-	public List<EventHeader> findAllByUser(String id) throws Exception {
-		String sql = "SELECT * FROM event_header WHERE ";
+	public List<EventHeader> findAllByUser(String id, String query, Integer startPage, Integer maxPage) throws Exception {
+		String sql = "SELECT * FROM event_header WHERE user_id= :id";
 		
 		List<?> result = createNativeQuery(sql).setParameter("id", id).getResultList();
 		
@@ -61,8 +61,11 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 			eventType.setId(objArr[2].toString());
 			eventHeader.setEventType(eventType);
 			
-			File file = new File();
-			file.setId(objArr[3].toString());
+			if(objArr[3] != null) {
+				File file = new File();
+				file.setId(objArr[3].toString());
+				eventHeader.setFile(file);
+			}
 			
 			eventHeader.setTitle(objArr[4].toString());
 			

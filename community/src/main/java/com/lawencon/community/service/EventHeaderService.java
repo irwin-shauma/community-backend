@@ -1,5 +1,6 @@
 package com.lawencon.community.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +68,6 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			eventType.setId(data.getEventTypeId());
 			eventHeader.setEventType(eventType);
 
-			
 			if (data.getFileName() != null) {
 				File file = new File();
 				file.setFileName(data.getFileName());
@@ -87,8 +87,8 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			eventDetail.setEventHeader(eventHeaderInsert);
 
 			eventDetail.setPrice(data.getPrice());
-			eventDetail.setStartDate(data.getStarts());
-			eventDetail.setEndDate(data.getEnds());
+			eventDetail.setStartDate(new Timestamp(data.getStarts().getTime()).toLocalDateTime());
+			eventDetail.setEndDate(new Timestamp(data.getEnds().getTime()).toLocalDateTime());
 			eventDetail.setProvider(data.getProvider());
 			eventDetail.setLocations(data.getLocation());
 			eventDetail.setCreatedBy(getAuthPrincipal());
@@ -118,11 +118,11 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 		try {
 			EventHeader eventHeaderDb = eventHeaderDao.getById(data.getId());
 			eventHeaderDb.setTitle(data.getTitle());
-			
+
 			EventType eventType = eventTypeDao.getById(data.getEventTypeId());
-			
+
 			eventHeaderDb.setEventType(eventType);
-			
+
 			begin();
 			if (data.getFileName() != null) {
 				File newFile = new File();
@@ -136,7 +136,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			}
 
 			EventHeader eventHeaderUpdate = save(eventHeaderDb);
-			
+
 			EventDetail eventDetail = eventDetailDao.findByHeader(data.getId());
 			eventDetail.setPrice(data.getPrice());
 			eventDetail.setStartDate(data.getStarts());
@@ -183,10 +183,9 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 		data.setIsActive(eventHeaderDb.getIsActive());
 		data.setVersion(eventHeaderDb.getVersion());
-		
 
 		EventDetail eventDetail = eventDetailDao.findByHeader(eventHeaderDb.getId());
-		if (eventDetail != null) {			
+		if (eventDetail != null) {
 			data.setPrice(eventDetail.getPrice());
 			data.setStartDate(eventDetail.getStartDate());
 			data.setEndDate(eventDetail.getEndDate());
@@ -232,18 +231,62 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 					data.setProvider(eventDetail.getProvider());
 					data.setLocation(eventDetail.getLocations());
 				}
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-			
 
 			eventHeaderDataList.add(data);
 		});
 
 		SearchQuery<EventHeaderData> result = new SearchQuery<>();
 		result.setCount(dataDb.getCount());
+		result.setData(eventHeaderDataList);
+
+		return result;
+	}
+
+	public SearchQuery<EventHeaderData> findAllUser(String query, Integer startPage, Integer maxPage) throws Exception {
+		List<EventHeader> dataDb = eventHeaderDao.findAllByUser(getAuthPrincipal(), query, startPage, maxPage);
+
+		List<EventHeaderData> eventHeaderDataList = new ArrayList<EventHeaderData>();
+
+		dataDb.forEach(eventHeader -> {
+			EventHeaderData data = new EventHeaderData();
+			data.setId(eventHeader.getId());
+			data.setEventHeaderCode(eventHeader.getEventHeaderCode());
+
+			data.setTitle(eventHeader.getTitle());
+			data.setEventTypeId(eventHeader.getEventType().getId());
+
+			User user = userDao.getById(eventHeader.getCreatedBy());
+			Profile profile = profileDao.getById(user.getProfile().getId());
+			data.setFulName(profile.getFullName());
+			if (eventHeader.getFile() != null) {
+				data.setFileId(eventHeader.getFile().getId());
+			}
+
+			data.setIsActive(eventHeader.getIsActive());
+			data.setVersion(eventHeader.getVersion());
+
+			try {
+				EventDetail eventDetail = eventDetailDao.findByHeader(eventHeader.getId());
+				if (eventDetail != null) {
+					data.setPrice(eventDetail.getPrice());
+					data.setStartDate(eventDetail.getStartDate());
+					data.setEndDate(eventDetail.getEndDate());
+					data.setProvider(eventDetail.getProvider());
+					data.setLocation(eventDetail.getLocations());
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			eventHeaderDataList.add(data);
+		});
+
+		SearchQuery<EventHeaderData> result = new SearchQuery<>();
 		result.setData(eventHeaderDataList);
 
 		return result;
@@ -257,7 +300,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			begin();
 			EventDetail eventDetail = eventDetailDao.findByHeader(id);
 			eventDetailDao.deleteById(eventDetail.getId());
-			
+
 			boolean isDeleted = eventHeaderDao.deleteById(id);
 			commit();
 
