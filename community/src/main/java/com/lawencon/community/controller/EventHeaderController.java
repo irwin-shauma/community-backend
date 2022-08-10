@@ -38,6 +38,14 @@ public class EventHeaderController {
 		SearchQuery<EventHeaderData> result = eventHeaderService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("users")
+	public ResponseEntity<?> getAllByUser(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
+			throws Exception {
+		SearchQuery<EventHeaderData> result = eventHeaderService.findAllUser(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<?> getById(@PathVariable("id") String id) throws Exception {

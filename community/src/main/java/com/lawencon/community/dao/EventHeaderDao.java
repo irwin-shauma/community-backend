@@ -44,8 +44,8 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 		return eventHeader;
 	}
 	
-	public List<EventHeader> findAllByUser(String id) throws Exception {
-		String sql = "SELECT * FROM event_header WHERE ";
+	public List<EventHeader> findAllByUser(String id, String query, Integer startPage, Integer maxPage) throws Exception {
+		String sql = "SELECT * FROM event_header WHERE user_id= :id";
 		
 		List<?> result = createNativeQuery(sql).setParameter("id", id).getResultList();
 		
@@ -61,27 +61,30 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 			eventType.setId(objArr[2].toString());
 			eventHeader.setEventType(eventType);
 			
-			eventHeader.setTitle(objArr[3].toString());
+			if(objArr[3] != null) {
+				File file = new File();
+				file.setId(objArr[3].toString());
+				eventHeader.setFile(file);
+			}
 			
-			File file = new File();
-			file.setId(objArr[10].toString());
+			eventHeader.setTitle(objArr[4].toString());
 			
 			User user = new User();
-			user.setId(objArr[11].toString());
+			user.setId(objArr[5].toString());
 			
-			eventHeader.setCreatedAt(((Timestamp)objArr[4]).toLocalDateTime());
-			eventHeader.setCreatedBy(objArr[5].toString());
+			eventHeader.setCreatedAt(((Timestamp)objArr[6]).toLocalDateTime());
+			eventHeader.setCreatedBy(objArr[7].toString());
 			
-			if(objArr[6] != null) {
-				eventHeader.setUpdatedAt(((Timestamp)objArr[6]).toLocalDateTime());
+			if(objArr[8] != null) {
+				eventHeader.setUpdatedAt(((Timestamp)objArr[8]).toLocalDateTime());
 			}
 			
-			if(objArr[7] != null) {
-				eventHeader.setUpdatedBy(objArr[7].toString());
+			if(objArr[9] != null) {
+				eventHeader.setUpdatedBy(objArr[9].toString());
 			}
 			
-			eventHeader.setIsActive(Boolean.valueOf(objArr[8].toString()));
-			eventHeader.setVersion(Integer.valueOf(objArr[9].toString()));
+			eventHeader.setIsActive(Boolean.valueOf(objArr[10].toString()));
+			eventHeader.setVersion(Integer.valueOf(objArr[11].toString()));
 			
 			eventHeaders.add(eventHeader);
 		});

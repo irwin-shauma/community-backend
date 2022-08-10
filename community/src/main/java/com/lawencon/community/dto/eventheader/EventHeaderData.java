@@ -14,8 +14,11 @@ public class EventHeaderData {
 	private Integer version;
 	private String fileId;
 	private Float price;
-	private String userId;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime startDate;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime endDate;
 	private String provider;
 	private String location;
@@ -26,16 +29,6 @@ public class EventHeaderData {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-	
-	
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 	public String getEventHeaderCode() {

@@ -1,6 +1,7 @@
 package com.lawencon.community.dto.eventheader;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 
@@ -19,11 +20,12 @@ public class EventHeaderInsertReq {
 
 	private Float price;
 
-	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-	private LocalDateTime starts;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+	private Date starts;
 
-	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-	private LocalDateTime ends;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z")
+	private Date ends;
+
 
 	private String provider;
 	private String location;
@@ -68,19 +70,19 @@ public class EventHeaderInsertReq {
 		this.price = price;
 	}
 
-	public LocalDateTime getStarts() {
+	public Date getStarts() {
 		return starts;
 	}
 
-	public void setStarts(LocalDateTime starts) {
+	public void setStarts(Date starts) {
 		this.starts = starts;
 	}
 
-	public LocalDateTime getEnds() {
+	public Date getEnds() {
 		return ends;
 	}
 
-	public void setEnds(LocalDateTime ends) {
+	public void setEnds(Date ends) {
 		this.ends = ends;
 	}
 
