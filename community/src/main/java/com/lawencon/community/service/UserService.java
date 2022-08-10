@@ -1,5 +1,6 @@
 package com.lawencon.community.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.community.constant.MessageResponse;
+import com.lawencon.community.dao.BalanceDao;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.PremiumPaymentHistoryDao;
 import com.lawencon.community.dao.ProfileDao;
@@ -34,6 +36,7 @@ import com.lawencon.community.dto.user.UserFindByIdRes;
 import com.lawencon.community.dto.user.UserInsertReq;
 import com.lawencon.community.dto.user.UserUpdateReq;
 import com.lawencon.community.exception.InvalidLoginException;
+import com.lawencon.community.model.Balance;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.PremiumPaymentHistory;
 import com.lawencon.community.model.Profile;
@@ -52,6 +55,9 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 	@Autowired
 	private ProfileDao profileDao;
+	
+	@Autowired
+	private BalanceDao balanceDao;
 
 	@Autowired
 	private FileDao fileDao;
@@ -78,7 +84,9 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		InsertRes result = new InsertRes();
 		String userCode = RandomStringUtils.randomAlphanumeric(5);
 		String profileCode = RandomStringUtils.randomAlphanumeric(5);
+		String balanceCode = RandomStringUtils.randomAlphanumeric(5);
 		try {
+			begin();
 			User userSystem = userDao.findByRoleCode("SYSTEM");
 
 			Profile profile = new Profile();
@@ -99,13 +107,24 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 
 			Role role = roleDao.findByRoleMember();
 			user.setRole(role);
+			
+			
 
-			begin();
 			Profile profResult = profileDao.save(profile);
 			user.setProfile(profResult);
 			User userRes = saveNonLogin(user, () -> {
 				return userSystem.getId();
 			});
+			
+			Balance balance = new Balance();
+			balance.setBalanceCode(balanceCode);
+			balance.setUser(userRes);
+			balance.setCurrentBalance(new BigDecimal(0));
+			balance.setCreatedBy(userSystem.getId());
+			balance.setIsActive(true);
+			
+			balanceDao.save(balance);
+			
 			commit();
 
 			InsertDataRes dataRes = new InsertDataRes();
