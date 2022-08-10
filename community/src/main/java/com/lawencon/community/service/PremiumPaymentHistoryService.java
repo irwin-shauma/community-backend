@@ -45,8 +45,7 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 	@Autowired
 	private PaymentDao paymentDao;
 	
-	@Autowired
-	private ProfileDao profileDao;
+	
 
 	public InsertRes insert(PremiumPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -142,35 +141,37 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 		return result;
 
 	}
+	
+	public SearchQuery<PremiumPaymentHistoryData> findAllByUser()
+			throws Exception {
+		List<PremiumPaymentHistory> dataDb = premiumPaymentHistoryDao.getByUser(getAuthPrincipal());
 
-	public PremiumPaymentHistoryFindByIdRes getByUser() throws Exception {
-		PremiumPaymentHistory premiumDb = premiumPaymentHistoryDao.getByUser(getAuthPrincipal());
-		
-		PremiumPaymentHistoryFindByIdRes result = new PremiumPaymentHistoryFindByIdRes();
-		if(premiumDb != null) {
+		List<PremiumPaymentHistoryData> premiumPaymentHistoryDataList = new ArrayList<PremiumPaymentHistoryData>();
+
+		dataDb.forEach(premiumPaymentHistory -> {
 			PremiumPaymentHistoryData data = new PremiumPaymentHistoryData();
-			data.setId(premiumDb.getId());
-			data.setUserId(premiumDb.getUser().getId());
-			if(premiumDb.getPremiumType() != null) {
-				data.setPremiumTypeId(premiumDb.getPremiumType().getId());	
-			}
-			if(premiumDb.getPayment() != null) {
-				data.setPaymentId(premiumDb.getPayment().getId());	
-			}
-			PremiumType premiumType = premiumTypeDao.getById(premiumDb.getPremiumType().getId());
+			data.setId(premiumPaymentHistory.getId());
+			data.setUserId(premiumPaymentHistory.getUser().getId());
+			data.setPremiumTypeId(premiumPaymentHistory.getPremiumType().getId());
+			data.setPaymentId(premiumPaymentHistory.getPayment().getId());
+			
+			User userDb = userDao.getById(premiumPaymentHistory.getUser().getId());
+			data.setFullname(userDb.getProfile().getFullName());
+			
+			PremiumType premiumType = premiumTypeDao.getById(premiumPaymentHistory.getPremiumType().getId());
 			data.setPrice(premiumType.getPrice());
 			data.setDuration(premiumType.getDuration());
 			
-			User user = userDao.getById(premiumDb.getUser().getId());
-			Profile profile = profileDao.getById(user.getProfile().getId());
-			data.setFullname(profile.getFullName());
-			data.setTrxNo(premiumDb.getTrxNo());
-			data.setIsActive(premiumDb.getIsActive());
-			data.setCreatedAt(premiumDb.getCreatedAt());
-			data.setVersion(premiumDb.getVersion());
-			result.setData(data);
-			return result;
-		}
+			data.setTrxNo(premiumPaymentHistory.getTrxNo());
+			data.setIsActive(premiumPaymentHistory.getIsActive());
+			data.setVersion(premiumPaymentHistory.getVersion());
+
+			premiumPaymentHistoryDataList.add(data);
+		});
+
+		SearchQuery<PremiumPaymentHistoryData> result = new SearchQuery<>();
+//		result.setCount(dataDb.getCount());
+		result.setData(premiumPaymentHistoryDataList);
 
 		return result;
 	}

@@ -48,7 +48,7 @@ public class PremiumPaymentHistoryController {
 	
 	@GetMapping("users")
 	public ResponseEntity<?> getByUser() throws Exception {
-		PremiumPaymentHistoryFindByIdRes result = premiumPaymentHistoryService.getByUser();
+		SearchQuery<PremiumPaymentHistoryData> result = premiumPaymentHistoryService.findAllByUser();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

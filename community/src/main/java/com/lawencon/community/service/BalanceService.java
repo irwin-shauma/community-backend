@@ -73,7 +73,6 @@ public class BalanceService extends BaseCoreService<Balance> {
 		try {
 			begin();
 			Balance balanceDb = balanceDao.getByIdWithoutDetach(data.getId());
-//			balanceDb.setBalanceCode(data.getBalanceCode());
 			balanceDb.setCurrentBalance(data.getCurrentBalance());
 
 			User userDb = userDao.getByIdWithoutDetach(data.getId());
@@ -184,13 +183,17 @@ public class BalanceService extends BaseCoreService<Balance> {
 		try {
 			begin();
 			Balance balance = balanceDao.findByUserId(data.getUserId());
-			BigDecimal balanceUpdated = balance.getCurrentBalance().add(data.getBalance().multiply(new BigDecimal(0.9d)));
+			BigDecimal balanceUpdated = balance.getCurrentBalance()
+					.add(data.getBalance().multiply(new BigDecimal(0.9d)));
 			balance.setCurrentBalance(balanceUpdated);
+			balance.setUpdatedBy(getAuthPrincipal());
 			Balance updated = balanceDao.save(balance);
-			
+
 			Balance systemBalance = balanceDao.findSystem();
-			BigDecimal systemBalanceIncrement = systemBalance.getCurrentBalance().add(data.getBalance().multiply(new BigDecimal(0.1d)));
+			BigDecimal systemBalanceIncrement = systemBalance.getCurrentBalance()
+					.add(data.getBalance().multiply(new BigDecimal(0.1d)));
 			systemBalance.setCurrentBalance(systemBalanceIncrement);
+			systemBalance.setUpdatedBy(getAuthPrincipal());
 			balanceDao.save(systemBalance);
 			commit();
 

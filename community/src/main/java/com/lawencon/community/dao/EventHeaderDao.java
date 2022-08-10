@@ -1,10 +1,16 @@
 package com.lawencon.community.dao;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.EventHeader;
 import com.lawencon.community.model.EventType;
+import com.lawencon.community.model.File;
+import com.lawencon.community.model.User;
 
 @Repository
 public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
@@ -36,6 +42,51 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 			e.printStackTrace();
 		}
 		return eventHeader;
+	}
+	
+	public List<EventHeader> findAllByUser(String id) throws Exception {
+		String sql = "SELECT * FROM event_header WHERE ";
+		
+		List<?> result = createNativeQuery(sql).setParameter("id", id).getResultList();
+		
+		List<EventHeader> eventHeaders = new ArrayList<>();
+		
+		result.forEach(data -> {
+			Object[] objArr = (Object[]) data;
+			EventHeader eventHeader = new EventHeader();
+			eventHeader.setId(objArr[0].toString());
+			eventHeader.setEventHeaderCode(objArr[1].toString());
+			
+			EventType eventType = new EventType();
+			eventType.setId(objArr[2].toString());
+			eventHeader.setEventType(eventType);
+			
+			File file = new File();
+			file.setId(objArr[3].toString());
+			
+			eventHeader.setTitle(objArr[4].toString());
+			
+			User user = new User();
+			user.setId(objArr[5].toString());
+			
+			eventHeader.setCreatedAt(((Timestamp)objArr[6]).toLocalDateTime());
+			eventHeader.setCreatedBy(objArr[7].toString());
+			
+			if(objArr[8] != null) {
+				eventHeader.setUpdatedAt(((Timestamp)objArr[8]).toLocalDateTime());
+			}
+			
+			if(objArr[9] != null) {
+				eventHeader.setUpdatedBy(objArr[9].toString());
+			}
+			
+			eventHeader.setIsActive(Boolean.valueOf(objArr[10].toString()));
+			eventHeader.setVersion(Integer.valueOf(objArr[11].toString()));
+			
+			eventHeaders.add(eventHeader);
+		});
+		
+		return eventHeaders;
 	}
 	
 	public Long countAllEvent(String type) throws Exception {
