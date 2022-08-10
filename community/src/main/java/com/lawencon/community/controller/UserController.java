@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateRes;
-import com.lawencon.community.dto.user.LogoutReq;
 import com.lawencon.community.dto.user.UpdatePhotoProfileReq;
 import com.lawencon.community.dto.user.UserChangePasswordReq;
 import com.lawencon.community.dto.user.UserData;
@@ -71,9 +71,9 @@ public class UserController {
 		return new ResponseEntity<UpdateRes>(data, HttpStatus.OK);
 	}
 	
-	@PutMapping("logout")
-	public ResponseEntity<UpdateRes> logout(@RequestBody LogoutReq user) throws Exception {
-		UpdateRes data = userService.logout(user);
+	@PatchMapping("logout")
+	public ResponseEntity<UpdateRes> logout() throws Exception {
+		UpdateRes data = userService.logout();
 		return new ResponseEntity<UpdateRes>(data, HttpStatus.OK);
 	}
 	

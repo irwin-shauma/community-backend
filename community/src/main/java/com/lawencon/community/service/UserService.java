@@ -27,7 +27,6 @@ import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateDataRes;
 import com.lawencon.community.dto.UpdateRes;
-import com.lawencon.community.dto.user.LogoutReq;
 import com.lawencon.community.dto.user.UpdatePhotoProfileReq;
 import com.lawencon.community.dto.user.UserChangePasswordReq;
 import com.lawencon.community.dto.user.UserData;
@@ -354,7 +353,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		return response;
 	}
 
-	public UpdateRes logout(LogoutReq data) throws Exception {
+	public UpdateRes logout() throws Exception {
 		UpdateRes response = new UpdateRes();
 		
 		try {

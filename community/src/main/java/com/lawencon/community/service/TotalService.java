@@ -1,9 +1,12 @@
 package com.lawencon.community.service;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.community.dao.ArticleHeaderDao;
+import com.lawencon.community.dao.BalanceDao;
 import com.lawencon.community.dao.EventHeaderDao;
 import com.lawencon.community.dao.PremiumPaymentHistoryDao;
 import com.lawencon.community.dao.ThreadHeaderDao;
@@ -29,6 +32,9 @@ public class TotalService {
 	@Autowired
 	private PremiumPaymentHistoryDao premiumPaymentHistoryDao;
 	
+	@Autowired
+	private BalanceDao balanceDao;
+	
 	public TotalCountRes getAllCount() throws Exception {
 		TotalCountRes totalCountRes = new TotalCountRes();
 		TotalCountData totalCountData = new TotalCountData();
@@ -50,6 +56,9 @@ public class TotalService {
 		
 		Long totalCourse = eventHeaderDao.countAllEvent("Course");
 		totalCountData.setTotalCourse(totalCourse);
+		
+		BigDecimal systemBalance = balanceDao.findSystemBalance();
+		totalCountData.setTotalRevenue(systemBalance);
 		
 		totalCountRes.setData(totalCountData);
 		

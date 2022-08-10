@@ -1,5 +1,7 @@
 package com.lawencon.community.dto;
 
+import java.math.BigDecimal;
+
 public class TotalCountData {
 	private Long totalUser;
 	private Long totalPremiumUser;
@@ -7,6 +9,7 @@ public class TotalCountData {
 	private Long totalThread;
 	private Long totalEvent;
 	private Long totalCourse;
+	private BigDecimal totalRevenue;
 
 	public Long getTotalUser() {
 		return totalUser;
@@ -54,6 +57,14 @@ public class TotalCountData {
 
 	public void setTotalCourse(Long totalCourse) {
 		this.totalCourse = totalCourse;
+	}
+
+	public BigDecimal getTotalRevenue() {
+		return totalRevenue;
+	}
+
+	public void setTotalRevenue(BigDecimal totalRevenue) {
+		this.totalRevenue = totalRevenue;
 	}
 
 }
