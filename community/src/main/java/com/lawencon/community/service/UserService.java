@@ -359,7 +359,7 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		
 		try {
 			begin();
-			User user = userDao.getByIdWithoutDetach(data.getId());
+			User user = userDao.getById(getAuthPrincipal());
 			String currentTokenId = user.getToken().getId();
 			user.setToken(null);
 			
@@ -384,9 +384,5 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		return response;
 	}
 	
-	public Long countAllUser() throws Exception {
-		Long result = userDao.countAllUser();
-		return result;
-	}
 	
 }

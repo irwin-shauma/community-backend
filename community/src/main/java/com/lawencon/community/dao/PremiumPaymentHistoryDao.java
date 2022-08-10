@@ -61,5 +61,24 @@ public class PremiumPaymentHistoryDao extends AbstractJpaDao<PremiumPaymentHisto
 		
 		return listHistory;
 	}
+	
+	
+	public Long countAllPremiumUser() throws Exception {
+		StringBuilder sqlBuilder = new StringBuilder();
+		sqlBuilder.append(" SELECT COUNT(id) FROM premium_payment_history ")
+		.append(" WHERE is_active = true ");
+		
+		Long total = 0L;
+		try {
+			Object result = createNativeQuery(sqlBuilder.toString()).getSingleResult();
+			if( result != null) {
+				 total = Long.valueOf(result.toString());
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return total;
+	}
 
 }

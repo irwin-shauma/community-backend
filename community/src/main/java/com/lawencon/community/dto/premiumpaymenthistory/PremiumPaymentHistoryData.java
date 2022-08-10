@@ -1,5 +1,7 @@
 package com.lawencon.community.dto.premiumpaymenthistory;
 
+import java.time.LocalDateTime;
+
 public class PremiumPaymentHistoryData {
 	private String id;
 	private String premiumPaymentHistoryCode;
@@ -10,9 +12,8 @@ public class PremiumPaymentHistoryData {
 	private String fullname;
 	private float price;
 	private Integer duration;
-
+	private LocalDateTime createdAt;
 	private String trxNo;
-
 	private Boolean isActive;
 	private Integer version;
 
@@ -22,6 +23,16 @@ public class PremiumPaymentHistoryData {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public String getPremiumPaymentHistoryCode() {
