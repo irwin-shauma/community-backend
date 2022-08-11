@@ -13,7 +13,6 @@ import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.EventDetailDao;
 import com.lawencon.community.dao.EventHeaderDao;
-import com.lawencon.community.dao.EventTypeDao;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.UserDao;
@@ -48,9 +47,6 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 	@Autowired
 	private ProfileDao profileDao;
-
-	@Autowired
-	private EventTypeDao eventTypeDao;
 
 	@Autowired
 	private FileDao fileDao;
@@ -120,10 +116,6 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			EventHeader eventHeaderDb = eventHeaderDao.getById(data.getId());
 			eventHeaderDb.setTitle(data.getTitle());
 
-			EventType eventType = eventTypeDao.getById(data.getEventTypeId());
-
-			eventHeaderDb.setEventType(eventType);
-
 			begin();
 			if (data.getFileName() != null) {
 				File newFile = new File();
@@ -140,12 +132,11 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 			EventDetail eventDetail = eventDetailDao.findByHeader(data.getId());
 			eventDetail.setPrice(data.getPrice());
-			eventDetail.setStartDate(data.getStarts());
-			eventDetail.setEndDate(data.getEnds());
+			eventDetail.setStartDate(stringToLocalDateTime(data.getStarts()));
+			eventDetail.setEndDate(stringToLocalDateTime(data.getEnds()));
 			eventDetail.setProvider(data.getProvider());
 			eventDetail.setLocations(data.getLocation());
 			eventDetail.setCreatedBy(getAuthPrincipal());
-			eventDetail.setIsActive(data.getIsActive());
 
 			eventDetailDao.save(eventDetail);
 			commit();

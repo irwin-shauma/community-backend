@@ -11,6 +11,7 @@ import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.EventHeaderDao;
 import com.lawencon.community.dao.EventPaymentHistoryDao;
+import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.PaymentDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
@@ -24,46 +25,68 @@ import com.lawencon.community.dto.eventpaymenthistory.EventPaymentHistoryInsertR
 import com.lawencon.community.dto.eventpaymenthistory.EventPaymentHistoryUpdateReq;
 import com.lawencon.community.model.EventHeader;
 import com.lawencon.community.model.EventPaymentHistory;
+import com.lawencon.community.model.File;
 import com.lawencon.community.model.Payment;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
 
 @Service
-public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHistory>{
-	
+public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHistory> {
+
 	@Autowired
 	private EventPaymentHistoryDao eventPaymentHistoryDao;
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private EventHeaderDao eventHeaderDao;
-	
+
 	@Autowired
 	private PaymentDao paymentDao;
 	
+	@Autowired
+	private FileDao fileDao;
 
 	public InsertRes insert(EventPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		String code = RandomStringUtils.randomAlphanumeric(5);
+		String payCode = RandomStringUtils.randomAlphanumeric(5);
 		String trxNo = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			EventPaymentHistory eventPaymentHistory = new EventPaymentHistory();
 			eventPaymentHistory.setEvetnPaymentCode(code);
-			User user = userDao.getById(data.getUserId());
+			
+			User user = userDao.getById(getAuthPrincipal());
 			eventPaymentHistory.setUser(user);
+
+			Payment payment = new Payment();
+
+			File file = new File();
+			file.setFileName(data.getFileName());
+			file.setFileExtension(data.getFileExtension());
 			
-			Payment payment = paymentDao.getById(data.getPaymentId());
-			eventPaymentHistory.setPayment(payment);
-			
+			begin();
+			File insertedFile = fileDao.save(file);
+
+			payment.setPaymentCode(payCode);
+
+			User users = new User();
+			users.setId(getAuthPrincipal());
+			payment.setUser(users);
+			payment.setFile(insertedFile);
+			payment.setIsActive(true);
+			payment.setIsApprove(false);
+			payment.setCreatedBy(getAuthPrincipal());
+
+			Payment insertedPayment = paymentDao.save(payment);
+
 			EventHeader eventHeader = eventHeaderDao.getById(data.getEventHeaderId());
 			eventPaymentHistory.setEventHeader(eventHeader);
-			
+			eventPaymentHistory.setPayment(insertedPayment);
 			eventPaymentHistory.setTrxNo(trxNo);
-			eventPaymentHistory.setIsActive(true);
+			eventPaymentHistory.setIsActive(false);
 
-			begin();
 			EventPaymentHistory eventPaymentHistoryInsert = save(eventPaymentHistory);
 			commit();
 
@@ -71,7 +94,7 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 			insertDataRes.setId(eventPaymentHistoryInsert.getId());
 
 			result.setData(insertDataRes);
-			result.setMessage(MessageResponse.SAVED.getMessageResponse());	
+			result.setMessage(MessageResponse.SAVED.getMessageResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
@@ -80,46 +103,46 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 
 		return result;
 	}
-	
-	public UpdateRes update(EventPaymentHistoryUpdateReq data) throws Exception{
+
+	public UpdateRes update(EventPaymentHistoryUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
-		
+
 		try {
 			begin();
 			EventPaymentHistory eventPaymentHistoryDb = eventPaymentHistoryDao.getById(data.getId());
-			
+
 			User userDb = userDao.getByIdWithoutDetach(data.getId());
 			eventPaymentHistoryDb.setUser(userDb);
-			
+
 			Payment payment = paymentDao.getById(data.getPaymentId());
 			eventPaymentHistoryDb.setPayment(payment);
-			
+
 			EventHeader eventHeader = eventHeaderDao.getByIdWithoutDetach(data.getEventHeaderId());
 			eventPaymentHistoryDb.setEventHeader(eventHeader);
-			
+
 			eventPaymentHistoryDb.setTrxNo(data.getTrxNo());
 			eventPaymentHistoryDb.setIsActive(data.getIsActive());
-			
+
 			EventPaymentHistory eventPaymentHistoryUpdate = eventPaymentHistoryDao.save(eventPaymentHistoryDb);
 			commit();
-			
+
 			UpdateDataRes updateDataRes = new UpdateDataRes();
-			
+
 			updateDataRes.setVersion(eventPaymentHistoryUpdate.getVersion());
-			
+
 			result.setData(updateDataRes);
 			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
 		}
 		return result;
 	}
-	
-	public EventPaymentHistoryFindByIdRes getById(String id) throws Exception{
+
+	public EventPaymentHistoryFindByIdRes getById(String id) throws Exception {
 		EventPaymentHistory eventPaymentHistoryDb = eventPaymentHistoryDao.getById(id);
-		
+
 		EventPaymentHistoryData data = new EventPaymentHistoryData();
 		data.setId(eventPaymentHistoryDb.getId());
 		data.setUserId(eventPaymentHistoryDb.getUser().getId());
@@ -128,48 +151,48 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 		data.setTrxNo(eventPaymentHistoryDb.getTrxNo());
 		data.setIsActive(eventPaymentHistoryDb.getIsActive());
 		data.setVersion(eventPaymentHistoryDb.getVersion());
-		
+
 		EventPaymentHistoryFindByIdRes result = new EventPaymentHistoryFindByIdRes();
 		result.setData(data);
-		
+
 		return result;
-		
+
 	}
-	
-	public SearchQuery<EventPaymentHistoryData> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
+
+	public SearchQuery<EventPaymentHistoryData> findAll(String query, Integer startPage, Integer maxPage)
+			throws Exception {
 		SearchQuery<EventPaymentHistory> dataDb = eventPaymentHistoryDao.findAll(query, startPage, maxPage);
-		
+
 		List<EventPaymentHistoryData> eventPaymentHistoryDataList = new ArrayList<EventPaymentHistoryData>();
-		
+
 		dataDb.getData().forEach(eventPaymentHistory -> {
 			EventPaymentHistoryData data = new EventPaymentHistoryData();
 			data.setId(eventPaymentHistory.getId());
 			data.setUserId(eventPaymentHistory.getUser().getId());
 			data.setEventHeaderId(eventPaymentHistory.getEventHeader().getId());
 			data.setPaymentId(eventPaymentHistory.getPayment().getId());
-			
+
 			User userDb = userDao.getById(eventPaymentHistory.getUser().getId());
 			data.setEmail(userDb.getEmail());
 			data.setFullname(userDb.getProfile().getFullName());
-			
+
 			EventHeader eventHeaderDb = eventHeaderDao.getById(eventPaymentHistory.getEventHeader().getId());
 			data.setTitle(eventHeaderDb.getTitle());
-			
+
 			data.setTrxNo(eventPaymentHistory.getTrxNo());
 			data.setIsActive(eventPaymentHistory.getIsActive());
 			data.setVersion(eventPaymentHistory.getVersion());
-			
+
 			eventPaymentHistoryDataList.add(data);
 		});
-		
+
 		SearchQuery<EventPaymentHistoryData> result = new SearchQuery<>();
 		result.setCount(dataDb.getCount());
 		result.setData(eventPaymentHistoryDataList);
-		
+
 		return result;
 	}
-	
-	
+
 	public DeleteRes deleteById(String id) throws Exception {
 		DeleteRes result = new DeleteRes();
 

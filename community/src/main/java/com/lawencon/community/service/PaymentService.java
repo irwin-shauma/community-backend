@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
+import com.lawencon.community.dao.EventPaymentHistoryDao;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.PaymentDao;
 import com.lawencon.community.dao.PremiumPaymentHistoryDao;
@@ -23,6 +24,7 @@ import com.lawencon.community.dto.payment.PaymentData;
 import com.lawencon.community.dto.payment.PaymentFindByIdRes;
 import com.lawencon.community.dto.payment.PaymentInsertReq;
 import com.lawencon.community.dto.payment.PaymentUpdateReq;
+import com.lawencon.community.model.EventPaymentHistory;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Payment;
 import com.lawencon.community.model.PremiumPaymentHistory;
@@ -46,6 +48,9 @@ public class PaymentService extends BaseCoreService<Payment>{
 	
 	@Autowired
 	private PremiumPaymentHistoryDao premiumDao;
+	
+	@Autowired
+	private EventPaymentHistoryDao eventPremiumDao;
 	
 	public InsertRes insert(PaymentInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -100,6 +105,37 @@ public class PaymentService extends BaseCoreService<Payment>{
 			begin();
 			Payment paymentUpdate = paymentDao.save(paymentDb);
 			premiumDao.save(premiumHistory);
+			commit();
+
+			UpdateDataRes updateDataRes = new UpdateDataRes();
+
+			updateDataRes.setVersion(paymentUpdate.getVersion());
+
+			result.setData(updateDataRes);
+			result.setMessage(MessageResponse.UPDATED.getMessageResponse());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+		return result;
+	}
+	
+	public UpdateRes updatePaymentEvent(PaymentUpdateReq data) throws Exception {
+		UpdateRes result = new UpdateRes();
+
+		try {
+			Payment paymentDb = paymentDao.getById(data.getId());
+
+			paymentDb.setIsApprove(data.getIsApprove());
+			
+			EventPaymentHistory eventPremium = eventPremiumDao.getByPayment(data.getId());
+			eventPremium.setIsActive(data.getIsActive());
+
+			begin();
+			Payment paymentUpdate = paymentDao.save(paymentDb);
+			eventPremiumDao.save(eventPremium);
 			commit();
 
 			UpdateDataRes updateDataRes = new UpdateDataRes();

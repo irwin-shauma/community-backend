@@ -92,6 +92,55 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 		return eventHeaders;
 	}
 	
+	public List<EventHeader> findAllByType(String eventType, String query, Integer startPage, Integer maxPage) throws Exception {
+		String sql = "SELECT * FROM event_header eh INNER JOIN event_type et ON eh.event_type_id = et.id"
+				+ " WHERE eh.event_type = :event";
+		
+		List<?> result = createNativeQuery(sql).setParameter("event", eventType).getResultList();
+		
+		List<EventHeader> eventHeaders = new ArrayList<>();
+		
+		result.forEach(data -> {
+			Object[] objArr = (Object[]) data;
+			EventHeader eventHeader = new EventHeader();
+			eventHeader.setId(objArr[0].toString());
+			eventHeader.setEventHeaderCode(objArr[1].toString());
+			
+			EventType eventTypes = new EventType();
+			eventTypes.setId(objArr[2].toString());
+			eventHeader.setEventType(eventTypes);
+			
+			if(objArr[3] != null) {
+				File file = new File();
+				file.setId(objArr[3].toString());
+				eventHeader.setFile(file);
+			}
+			
+			eventHeader.setTitle(objArr[4].toString());
+			
+			User user = new User();
+			user.setId(objArr[5].toString());
+			
+			eventHeader.setCreatedAt(((Timestamp)objArr[6]).toLocalDateTime());
+			eventHeader.setCreatedBy(objArr[7].toString());
+			
+			if(objArr[8] != null) {
+				eventHeader.setUpdatedAt(((Timestamp)objArr[8]).toLocalDateTime());
+			}
+			
+			if(objArr[9] != null) {
+				eventHeader.setUpdatedBy(objArr[9].toString());
+			}
+			
+			eventHeader.setIsActive(Boolean.valueOf(objArr[10].toString()));
+			eventHeader.setVersion(Integer.valueOf(objArr[11].toString()));
+			
+			eventHeaders.add(eventHeader);
+		});
+		
+		return eventHeaders;
+	}
+	
 	public Long countAllEvent(String type) throws Exception {
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append("SELECT COUNT(eh.id) FROM event_header eh ")

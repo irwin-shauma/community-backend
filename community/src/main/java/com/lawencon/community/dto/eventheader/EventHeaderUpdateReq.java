@@ -1,7 +1,5 @@
 package com.lawencon.community.dto.eventheader;
 
-import java.time.LocalDateTime;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -14,31 +12,23 @@ public class EventHeaderUpdateReq {
 
 	private String title;
 
-	@NotBlank(message = "Event Type Id can't be empty")
-	private String eventTypeId;
-
-	@NotNull(message = "User Id can't be empty")
-	private String userId;
-
 	private String fileId;
-
-	@NotBlank(message = "Title can't be empty")
 
 	private String fileName;
 	private String fileExtension;
 
-	@NotBlank(message = "Active status can't be empty")
-	private Boolean isActive;
-
 	private Float price;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime starts;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+	private String starts;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime ends;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+	private String ends;
 
+	@NotBlank(message = "Provider can't be empty")
 	private String provider;
+	
+	@NotBlank(message = "Location can't be empty")
 	private String location;
 
 	public String getId() {
@@ -57,36 +47,12 @@ public class EventHeaderUpdateReq {
 		this.title = title;
 	}
 
-	public String getEventTypeId() {
-		return eventTypeId;
-	}
-
-	public void setEventTypeId(String eventTypeId) {
-		this.eventTypeId = eventTypeId;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
 	public String getFileId() {
 		return fileId;
 	}
 
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
-	}
-
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
 	}
 
 	public String getFileName() {
@@ -113,19 +79,19 @@ public class EventHeaderUpdateReq {
 		this.price = price;
 	}
 
-	public LocalDateTime getStarts() {
+	public String getStarts() {
 		return starts;
 	}
 
-	public void setStarts(LocalDateTime starts) {
+	public void setStarts(String starts) {
 		this.starts = starts;
 	}
 
-	public LocalDateTime getEnds() {
+	public String getEnds() {
 		return ends;
 	}
 
-	public void setEnds(LocalDateTime ends) {
+	public void setEnds(String ends) {
 		this.ends = ends;
 	}
 
