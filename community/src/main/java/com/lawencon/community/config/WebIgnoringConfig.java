@@ -29,11 +29,11 @@ public class WebIgnoringConfig {
 		
 		
 		
-		matchers.add(new AntPathRequestMatcher("/thread-headers/**", HttpMethod.GET.name()));
-		matchers.add(new AntPathRequestMatcher("/thread-header-pollings/**", HttpMethod.GET.name()));
-		matchers.add(new AntPathRequestMatcher("/event-headers/**", HttpMethod.GET.name()));
-		matchers.add(new AntPathRequestMatcher("/article-headers/**", HttpMethod.GET.name()));
-		matchers.add(new AntPathRequestMatcher("/premium-types/**", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/thread-headers/non-login", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/thread-header-pollings/", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/event-headers/", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/article-headers/", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/premium-types/", HttpMethod.GET.name()));
 		
 		matchers.add(new AntPathRequestMatcher("/counts/**", HttpMethod.GET.name()));
 		
