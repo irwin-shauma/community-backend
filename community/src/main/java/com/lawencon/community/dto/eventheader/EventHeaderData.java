@@ -9,16 +9,16 @@ public class EventHeaderData {
 	private String eventHeaderCode;
 	private String title;
 	private String eventTypeId;
+	private String userId;
 	private String fulName;
 	private Boolean isActive;
 	private Integer version;
 	private String fileId;
 	private Float price;
-	private String userId;
-	
+
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime startDate;
-	
+
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime endDate;
 	private String provider;
@@ -88,6 +88,14 @@ public class EventHeaderData {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getFulName() {

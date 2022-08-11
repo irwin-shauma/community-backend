@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,6 +37,10 @@ public class LoginController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("premiumChecking")
+	private Boolean result;
 
 	@PostMapping()
 	public ResponseEntity<LoginRes> login(@RequestBody LoginReq loginReq) throws Exception {
@@ -64,6 +69,7 @@ public class LoginController {
 		data.setRoleCode(user.getRole().getRoleCode());
 		data.setToken(token);
 		data.setRefreshToken(userService.updateToken(user.getId()));
+		data.setPremiumStatus(result);
 		
 		response.setData(data);
 		

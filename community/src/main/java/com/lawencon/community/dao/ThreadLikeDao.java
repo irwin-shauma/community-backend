@@ -1,6 +1,5 @@
 package com.lawencon.community.dao;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,10 +70,19 @@ public class ThreadLikeDao extends AbstractJpaDao<ThreadLike> {
 		return result > 0;
 	}
 
-	public BigInteger countLikes(String id) {
-		BigInteger count = (BigInteger) createNativeQuery("SELECT COUNT(id) FROM thread_like WHERE thread_id = :id")
-				.setParameter("id", id).getSingleResult();
-		return count;
+	public Long countLikes(String id) {
+		String sql = "SELECT COUNT(id) FROM thread_like WHERE thread_id = :id";
+		Long total = 0L;
+		try {
+			Object result = createNativeQuery(sql)
+					.setParameter("id", id).getSingleResult();
+			if(result != null) {
+				total = Long.valueOf(result.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return total;
 
 	}
 

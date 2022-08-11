@@ -32,6 +32,7 @@ public class VerificationService extends BaseCoreService<Verification> {
 		try {
 			String verification = RandomStringUtils.randomAlphanumeric(5);
 			verificationCodeUtil.addVerificationCode(email.getEmail(), verification);
+			
 			Map<String, Object> template = new HashMap<String, Object>();
 			template.put("code", verification);
 
