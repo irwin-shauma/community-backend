@@ -34,7 +34,7 @@ public class ReportController {
 		List<RoleData> roles = listData.getData();
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("company", "PT. Company Internasional");
+		map.put("company", "PT. Communify Sejahtera");
 		
 		byte[] out = jasperUtil.responseToByteArray(roles, map, "sample");
 		
