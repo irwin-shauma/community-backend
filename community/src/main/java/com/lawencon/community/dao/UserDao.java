@@ -69,5 +69,41 @@ public class UserDao extends AbstractJpaDao<User> {
 		}
 		return user;
 	}
+	
+	public User findByToken(String token) throws Exception {
+		
+		StringBuilder sqlBuilder = new StringBuilder()
+				.append("SELECT us.id, us.email, us.passwords, us.role_id, rl.role_code ")
+				.append(" FROM users us ")
+				.append(" INNER JOIN roles rl ON  us.role_id = rl.id ")
+				.append(" INNER JOIN tokens tk ON tk.id = us.token_id")
+				.append(" WHERE tk.refresh_token = :token ");
+		
+		User user = null;
+		try {
+			Object result = createNativeQuery(sqlBuilder.toString())
+					.setParameter("token", token)
+					.getSingleResult();
+			
+			if (result != null) {
+				Object[] objArr = (Object[]) result;
+				
+				user = new User();
+				user.setId(objArr[0].toString());
+				user.setEmail(objArr[1].toString());
+				user.setPassword(objArr[2].toString());
+
+				Role role = new Role();
+				role.setId(objArr[3].toString());
+				role.setRoleCode(objArr[4].toString());
+
+				user.setRole(role);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
 		
 }

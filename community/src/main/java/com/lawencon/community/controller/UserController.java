@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateRes;
+import com.lawencon.community.dto.user.LoginRes;
 import com.lawencon.community.dto.user.UpdatePhotoProfileReq;
 import com.lawencon.community.dto.user.UserChangePasswordReq;
 import com.lawencon.community.dto.user.UserData;
 import com.lawencon.community.dto.user.UserFindByIdRes;
 import com.lawencon.community.dto.user.UserInsertReq;
 import com.lawencon.community.dto.user.UserUpdateReq;
+import com.lawencon.community.service.TokenService;
 import com.lawencon.community.service.UserService;
 import com.lawencon.model.SearchQuery;
 
@@ -32,6 +34,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TokenService tokenService;
 	
 	@GetMapping
 	public ResponseEntity<?> showAll(@RequestParam(required = false) String query, 
@@ -75,6 +80,12 @@ public class UserController {
 	public ResponseEntity<UpdateRes> logout() throws Exception {
 		UpdateRes data = userService.logout();
 		return new ResponseEntity<UpdateRes>(data, HttpStatus.OK);
+	}
+	
+	@PostMapping("refresh")
+	public ResponseEntity<LoginRes> generateNewToken(@RequestBody String token) throws Exception {
+		LoginRes data = tokenService.generateNewToken(token);
+		return new ResponseEntity<LoginRes>(data, HttpStatus.OK);
 	}
 	
 	

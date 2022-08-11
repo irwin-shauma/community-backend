@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class VerificationCodeUtil {
-
 	@Autowired
 	@Qualifier("verificationCodes")
 	private Map<String, VerificationCodes> verificationCodes;

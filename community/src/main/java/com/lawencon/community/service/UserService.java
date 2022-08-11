@@ -300,6 +300,13 @@ public class UserService extends BaseCoreService<User> implements UserDetailsSer
 		User userResult = userDao.findByEmail(email);
 		return userResult;
 	}
+	
+	public User findByRefreshToken(String email) throws Exception {
+		User userResult = userDao.findByToken(email);
+		return userResult;
+	}
+	
+	
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

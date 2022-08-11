@@ -1,6 +1,8 @@
 package com.lawencon.community.controller;
 
+import java.sql.Timestamp;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +63,7 @@ public class LoginController {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put(ClaimKey.ID.name(), user.getId());
 		claims.put(ClaimKey.ROLE.name(), user.getRole().getRoleCode());
+		claims.put("exp", Timestamp.valueOf(LocalDateTime.now().plusSeconds(10)));
 		
 		String token = jwtUtil.generateToken(claims, Duration.ofMinutes(45));
 		

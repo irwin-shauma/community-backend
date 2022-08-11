@@ -47,7 +47,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		long count = antMatchers.stream().filter(matcher -> matcher.matches(request)).collect(Collectors.counting());
-		if (count == 0 && !request.getRequestURI().equals("/login")) {
+//		if (count == 0 && !request.getRequestURI().equals("/login")) {
+			if (count == 0 && !request.getRequestURI().equals("/login") && !request.getRequestURI().equals("/users/refresh")) {
 			String authorization = request.getHeader("Authorization");
 
 			if (authorization == null || authorization.length() < 8 || !authorization.contains("Bearer")) {
