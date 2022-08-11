@@ -26,18 +26,35 @@ FROM student]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="70" splitType="Stretch">
+		<band height="94" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="94" uuid="2eb4fa2d-b2b8-4c50-a014-98c9a477761a"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
 			<textField>
-				<reportElement x="60" y="10" width="270" height="60" uuid="17d085e1-44fa-499b-aba1-84180c68dddc"/>
+				<reportElement x="142" y="6" width="270" height="24" uuid="17d085e1-44fa-499b-aba1-84180c68dddc"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{company}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="-3" y="15" width="50" height="50" uuid="bc0076d8-a730-4de0-aa76-9fe5911b1e89"/>
-				<imageExpression><![CDATA["https://i0.wp.com/www.primefaces.org/wp-content/uploads/2018/05/primeng-logo.png?ssl=1"]]></imageExpression>
+				<reportElement x="10" y="0" width="90" height="94" uuid="bc0076d8-a730-4de0-aa76-9fe5911b1e89">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["https://i.ibb.co/qBWHK8H/6d2cc29c-d36d-4978-adc0-0494106597ed.png"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="142" y="40" width="270" height="30" uuid="ea3428f6-a412-4dfc-90c3-ff26a4d36f04"/>
+				<text><![CDATA[ Jl. Menteng Dalem, Pakuwon Tower Lt.22]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="70" width="270" height="20" uuid="55df2e23-cd1c-492f-aa36-3444397320f9"/>
+				<text><![CDATA[HP : 081234567 Email : admin@communify.org]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
