@@ -6,6 +6,7 @@ public class LoginData {
 	private String token;
 	private String refreshToken;
 	private String roleCode;
+	private Boolean premiumStatus;
 
 	public String getId() {
 		return id;
@@ -46,6 +47,13 @@ public class LoginData {
 	public void setRefreshToken(String refreshToken) {
 		this.refreshToken = refreshToken;
 	}
-	
+
+	public Boolean getPremiumStatus() {
+		return premiumStatus;
+	}
+
+	public void setPremiumStatus(Boolean premiumStatus) {
+		this.premiumStatus = premiumStatus;
+	}
 
 }
