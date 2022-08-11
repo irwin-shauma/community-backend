@@ -39,6 +39,14 @@ public class ThreadHeaderController {
 		SearchQuery<ThreadHeaderData> result = threadHeaderService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("non-login")
+	public ResponseEntity<?> getAllNonLogin(@RequestParam(required = false) String query, 
+			@RequestParam(required = false)Integer startPage,
+			@RequestParam(required = false)Integer maxPage) throws Exception {
+		SearchQuery<ThreadHeaderData> result = threadHeaderService.findAllNonLogin(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<?> getById(@PathVariable("id") String id) throws Exception {
