@@ -60,35 +60,31 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 			EventType eventType = new EventType();
 			eventType.setId(objArr[2].toString());
 			eventHeader.setEventType(eventType);
-			
-			if(objArr[3] != null) {
-				File file = new File();
-				file.setId(objArr[3].toString());
-				eventHeader.setFile(file);
-			}
-			
-			eventHeader.setTitle(objArr[4].toString());
-			
+
+			eventHeader.setTitle(objArr[3].toString());
+
+			File file = new File();
+			file.setId(objArr[10].toString());
+
 			User user = new User();
-			user.setId(objArr[5].toString());
-			
-			eventHeader.setCreatedAt(((Timestamp)objArr[6]).toLocalDateTime());
-			eventHeader.setCreatedBy(objArr[7].toString());
-			
-			if(objArr[8] != null) {
-				eventHeader.setUpdatedAt(((Timestamp)objArr[8]).toLocalDateTime());
+			user.setId(objArr[11].toString());
+
+			eventHeader.setCreatedAt(((Timestamp)objArr[4]).toLocalDateTime());
+			eventHeader.setCreatedBy(objArr[5].toString());
+
+			if(objArr[6] != null) {
+				eventHeader.setUpdatedAt(((Timestamp)objArr[6]).toLocalDateTime());
 			}
-			
-			if(objArr[9] != null) {
-				eventHeader.setUpdatedBy(objArr[9].toString());
+
+			if(objArr[7] != null) {
+				eventHeader.setUpdatedBy(objArr[7].toString());
 			}
-			
-			eventHeader.setIsActive(Boolean.valueOf(objArr[10].toString()));
-			eventHeader.setVersion(Integer.valueOf(objArr[11].toString()));
-			
+
+			eventHeader.setIsActive(Boolean.valueOf(objArr[8].toString()));
+			eventHeader.setVersion(Integer.valueOf(objArr[9].toString()));
+
 			eventHeaders.add(eventHeader);
 		});
-		
 		return eventHeaders;
 	}
 	

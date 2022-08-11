@@ -175,6 +175,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 		data.setEventTypeId(eventHeaderDb.getEventType().getId());
 		User user = userDao.getById(eventHeaderDb.getCreatedBy());
 		data.setUserId(user.getId());
+		
 		Profile profile = profileDao.getById(user.getProfile().getId());
 		data.setFulName(profile.getFullName());
 
