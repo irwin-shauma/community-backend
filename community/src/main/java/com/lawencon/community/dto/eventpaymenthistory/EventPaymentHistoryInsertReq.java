@@ -1,28 +1,16 @@
 package com.lawencon.community.dto.eventpaymenthistory;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class EventPaymentHistoryInsertReq {
 
-	@NotBlank(message = "User Id can't be empty")
-	private String userId;
+	@NotNull(message = "File Can't be Empty")
+	private String fileName;
+	private String fileExtension;
 
 	@NotBlank(message = "Event Id can't be empty")
 	private String eventHeaderId;
-
-	@NotBlank(message = "Payment Id can't be empty")
-	private String paymentId;
-
-	@NotBlank(message = "trxNo can't be empty")
-	private String trxNo;
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 
 	public String getEventHeaderId() {
 		return eventHeaderId;
@@ -32,20 +20,20 @@ public class EventPaymentHistoryInsertReq {
 		this.eventHeaderId = eventHeaderId;
 	}
 
-	public String getPaymentId() {
-		return paymentId;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setPaymentId(String paymentId) {
-		this.paymentId = paymentId;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
-	public String getTrxNo() {
-		return trxNo;
+	public String getFileExtension() {
+		return fileExtension;
 	}
 
-	public void setTrxNo(String trxNo) {
-		this.trxNo = trxNo;
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
 	}
 
 }

@@ -57,6 +57,13 @@ public class PaymentController {
 		UpdateRes result = paymentService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@PutMapping("event")
+	public ResponseEntity<?> updateEvent(@RequestBody @Valid PaymentUpdateReq data) throws Exception {
+		UpdateRes result = paymentService.updatePaymentEvent(data);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
 	@DeleteMapping("{id}")
 	public ResponseEntity<DeleteRes> delete(@PathVariable("id") String id) throws Exception {
 		DeleteRes result = paymentService.deleteById(id);
