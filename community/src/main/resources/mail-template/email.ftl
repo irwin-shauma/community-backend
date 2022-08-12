@@ -239,9 +239,7 @@
                                 border-radius: 10px;
                                 display: inline-block;
                               "
-                            >
-                              ${code}
-                            </h3>
+                            >${code}</h3>
                           </td>
                         </tr>
                       </table>
