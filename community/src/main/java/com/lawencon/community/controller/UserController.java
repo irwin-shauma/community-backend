@@ -27,6 +27,7 @@ import com.lawencon.community.dto.user.UserUpdateReq;
 import com.lawencon.community.service.TokenService;
 import com.lawencon.community.service.UserService;
 import com.lawencon.model.SearchQuery;
+import com.lawencon.security.RefreshTokenService;
 
 @RestController
 @RequestMapping("users")
@@ -37,6 +38,9 @@ public class UserController {
 	
 	@Autowired
 	private TokenService tokenService;
+	
+	@Autowired
+	private RefreshTokenService refreshTokenService;
 	
 	@GetMapping
 	public ResponseEntity<?> showAll(@RequestParam(required = false) String query, 
@@ -84,6 +88,7 @@ public class UserController {
 	
 	@PostMapping("refresh")
 	public ResponseEntity<LoginRes> generateNewToken(@RequestBody String token) throws Exception {
+		refreshTokenService.validateRefreshToken(token);
 		LoginRes data = tokenService.generateNewToken(token);
 		return new ResponseEntity<LoginRes>(data, HttpStatus.OK);
 	}

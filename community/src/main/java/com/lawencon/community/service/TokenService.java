@@ -33,7 +33,7 @@ public class TokenService {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put(ClaimKey.ID.name(), user.getId());
 		claims.put(ClaimKey.ROLE.name(), user.getRole().getRoleCode());
-		claims.put("exp", Timestamp.valueOf(LocalDateTime.now().plusSeconds(10)));
+		claims.put("exp", Timestamp.valueOf(LocalDateTime.now().plusHours(2)));
 
 		String newToken = jwtUtil.generateToken(claims, Duration.ofMinutes(45));
 
