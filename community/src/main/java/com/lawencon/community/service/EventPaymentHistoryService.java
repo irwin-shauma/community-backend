@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
+import com.lawencon.community.dao.EventDetailDao;
 import com.lawencon.community.dao.EventHeaderDao;
 import com.lawencon.community.dao.EventPaymentHistoryDao;
 import com.lawencon.community.dao.FileDao;
@@ -23,6 +24,7 @@ import com.lawencon.community.dto.eventpaymenthistory.EventPaymentHistoryData;
 import com.lawencon.community.dto.eventpaymenthistory.EventPaymentHistoryFindByIdRes;
 import com.lawencon.community.dto.eventpaymenthistory.EventPaymentHistoryInsertReq;
 import com.lawencon.community.dto.eventpaymenthistory.EventPaymentHistoryUpdateReq;
+import com.lawencon.community.model.EventDetail;
 import com.lawencon.community.model.EventHeader;
 import com.lawencon.community.model.EventPaymentHistory;
 import com.lawencon.community.model.File;
@@ -47,6 +49,9 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 	
 	@Autowired
 	private FileDao fileDao;
+	
+	@Autowired
+	private EventDetailDao eventDetailDao;
 
 	public InsertRes insert(EventPaymentHistoryInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
@@ -108,21 +113,15 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 		UpdateRes result = new UpdateRes();
 
 		try {
-			begin();
 			EventPaymentHistory eventPaymentHistoryDb = eventPaymentHistoryDao.getById(data.getId());
 
-			User userDb = userDao.getByIdWithoutDetach(data.getId());
-			eventPaymentHistoryDb.setUser(userDb);
-
 			Payment payment = paymentDao.getById(data.getPaymentId());
-			eventPaymentHistoryDb.setPayment(payment);
+			payment.setIsApprove(data.getIsApprove());
 
-			EventHeader eventHeader = eventHeaderDao.getByIdWithoutDetach(data.getEventHeaderId());
-			eventPaymentHistoryDb.setEventHeader(eventHeader);
-
-			eventPaymentHistoryDb.setTrxNo(data.getTrxNo());
 			eventPaymentHistoryDb.setIsActive(data.getIsActive());
 
+			begin();
+			paymentDao.save(payment);
 			EventPaymentHistory eventPaymentHistoryUpdate = eventPaymentHistoryDao.save(eventPaymentHistoryDb);
 			commit();
 
@@ -178,6 +177,17 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 
 			EventHeader eventHeaderDb = eventHeaderDao.getById(eventPaymentHistory.getEventHeader().getId());
 			data.setTitle(eventHeaderDb.getTitle());
+			
+			try {
+				EventDetail eventDetail = eventDetailDao.findByHeader(eventHeaderDb.getId());
+				data.setPrice(eventDetail.getPrice());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			Payment payment = paymentDao.getById(eventPaymentHistory.getPayment().getId());
+			data.setIsAprove(payment.getIsApprove());
+			data.setFileId(payment.getFile().getId());
 
 			data.setTrxNo(eventPaymentHistory.getTrxNo());
 			data.setIsActive(eventPaymentHistory.getIsActive());

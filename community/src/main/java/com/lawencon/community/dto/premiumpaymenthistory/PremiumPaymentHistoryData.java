@@ -8,12 +8,13 @@ public class PremiumPaymentHistoryData {
 	private String userId;
 	private String premiumTypeId;
 	private String paymentId;
-
 	private String fullname;
 	private float price;
 	private Integer duration;
 	private LocalDateTime createdAt;
 	private String trxNo;
+	private Boolean isAprove;
+	private String fileId;
 	private Boolean isActive;
 	private Integer version;
 
@@ -24,8 +25,6 @@ public class PremiumPaymentHistoryData {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
-	
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
@@ -105,6 +104,22 @@ public class PremiumPaymentHistoryData {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+
+	public Boolean getIsAprove() {
+		return isAprove;
+	}
+
+	public void setIsAprove(Boolean isAprove) {
+		this.isAprove = isAprove;
 	}
 
 	public Integer getVersion() {
