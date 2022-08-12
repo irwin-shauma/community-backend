@@ -12,6 +12,8 @@ public class EventPaymentHistoryData {
 	private String title;
 	private Float price;
 	private String trxNo;
+	private Boolean isAprove;
+	private String fileId;
 	private Boolean isActive;
 	private Integer version;
 
@@ -38,8 +40,6 @@ public class EventPaymentHistoryData {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	
-	
 
 	public String getEmail() {
 		return email;
@@ -64,7 +64,6 @@ public class EventPaymentHistoryData {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 
 	public Float getPrice() {
 		return price;
@@ -96,6 +95,22 @@ public class EventPaymentHistoryData {
 
 	public void setTrxNo(String trxNo) {
 		this.trxNo = trxNo;
+	}
+
+	public Boolean getIsAprove() {
+		return isAprove;
+	}
+
+	public void setIsAprove(Boolean isAprove) {
+		this.isAprove = isAprove;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 	public Boolean getIsActive() {

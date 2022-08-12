@@ -164,6 +164,54 @@ public class PremiumPaymentHistoryDao extends AbstractJpaDao<PremiumPaymentHisto
 		return premium;
 	}
 	
+	public List<PremiumPaymentHistory> getAllUnAprroved(String query, Integer startPage, Integer maxPage) throws Exception {
+		StringBuilder sql = new StringBuilder() 
+				.append("SELECT pph.* FROM premium_payment_history pph INNER JOIN payment p ON pph.payment_id = p.id ")
+				.append("WHERE p.is_approve = false");
+		
+		List<?> result = createNativeQuery(sql.toString())
+				.getResultList();
+		
+		List<PremiumPaymentHistory> listHistory = new ArrayList<>();
+		
+		result.forEach(data -> {
+			Object[] objArr = (Object[]) data;
+			PremiumPaymentHistory premium = new PremiumPaymentHistory();
+			premium.setId(objArr[0].toString());
+			premium.setPremiumPaymentHistoryCode(objArr[1].toString());
+			
+			Payment payment = new Payment();
+			payment.setId(objArr[2].toString());
+			premium.setPayment(payment);
+			
+			User user = new User();
+			user.setId(objArr[3].toString());
+			premium.setUser(user);
+			
+			PremiumType premiumType = new PremiumType();
+			premiumType.setId(objArr[4].toString());
+			premium.setPremiumType(premiumType);
+			
+			premium.setTrxNo(objArr[5].toString());
+			premium.setCreatedAt(((Timestamp)objArr[6]).toLocalDateTime());
+			premium.setCreatedBy(objArr[7].toString());
+			
+			if(objArr[8] != null) {
+				premium.setUpdatedAt(((Timestamp)objArr[8]).toLocalDateTime());
+			}
+			
+			if(objArr[9] != null) {
+				premium.setUpdatedBy(objArr[9].toString());
+			}
+			premium.setIsActive(Boolean.valueOf(objArr[10].toString()));
+			premium.setVersion(Integer.valueOf(objArr[11].toString()));
+			
+			listHistory.add(premium);
+		});
+		
+		return listHistory;
+	}
+	
 	
 	public Long countAllPremiumUser() throws Exception {
 		StringBuilder sqlBuilder = new StringBuilder();

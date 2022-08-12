@@ -107,20 +107,16 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 	public UpdateRes update(PremiumPaymentHistoryUpdateReq data) throws Exception {
 		UpdateRes result = new UpdateRes();
 		try {
-			begin();
 			PremiumPaymentHistory premiumPaymentHistoryDb = premiumPaymentHistoryDao.getById(data.getId());
-
-			User userDb = userDao.getByIdWithoutDetach(data.getId());
-			premiumPaymentHistoryDb.setUser(userDb);
 			
 			Payment payment = paymentDao.getById(data.getPaymentId());
+			payment.setIsApprove(data.getIsApprove());
+			
 			premiumPaymentHistoryDb.setPayment(payment);
-
-			PremiumType premiumType = premiumTypeDao.getByIdWithoutDetach(data.getPremiumTypeId());
-			premiumPaymentHistoryDb.setPremiumType(premiumType);
-
-			premiumPaymentHistoryDb.setTrxNo(data.getTrxNo());
 			premiumPaymentHistoryDb.setIsActive(data.getIsActive());
+			
+			begin();
+			paymentDao.save(payment);
 
 			PremiumPaymentHistory premiumPaymentHistoryUpdate = premiumPaymentHistoryDao.save(premiumPaymentHistoryDb);
 			commit();
@@ -235,6 +231,10 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 			data.setPremiumTypeId(premiumPaymentHistory.getPremiumType().getId());
 			data.setPaymentId(premiumPaymentHistory.getPayment().getId());
 			
+			Payment payment = paymentDao.getById(premiumPaymentHistory.getPayment().getId());
+			data.setIsAprove(payment.getIsApprove());
+			data.setFileId(payment.getFile().getId());
+			
 			User userDb = userDao.getById(premiumPaymentHistory.getUser().getId());
 			data.setFullname(userDb.getProfile().getFullName());
 			
@@ -251,6 +251,43 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 
 		SearchQuery<PremiumPaymentHistoryData> result = new SearchQuery<>();
 		result.setCount(dataDb.getCount());
+		result.setData(premiumPaymentHistoryDataList);
+
+		return result;
+	}
+	
+	public SearchQuery<PremiumPaymentHistoryData> findAllUnApprove(String query, Integer startPage, Integer maxPage)
+			throws Exception {
+		List<PremiumPaymentHistory> dataDb = premiumPaymentHistoryDao.getAllUnAprroved(query, startPage, maxPage);
+
+		List<PremiumPaymentHistoryData> premiumPaymentHistoryDataList = new ArrayList<PremiumPaymentHistoryData>();
+
+		dataDb.forEach(premiumPaymentHistory -> {
+			PremiumPaymentHistoryData data = new PremiumPaymentHistoryData();
+			data.setId(premiumPaymentHistory.getId());
+			data.setUserId(premiumPaymentHistory.getUser().getId());
+			data.setPremiumTypeId(premiumPaymentHistory.getPremiumType().getId());
+			data.setPaymentId(premiumPaymentHistory.getPayment().getId());
+			
+			Payment payment = paymentDao.getById(premiumPaymentHistory.getPayment().getId());
+			data.setIsAprove(payment.getIsApprove());
+			data.setFileId(payment.getFile().getId());
+			
+			User userDb = userDao.getById(premiumPaymentHistory.getUser().getId());
+			data.setFullname(userDb.getProfile().getFullName());
+			
+			PremiumType premiumType = premiumTypeDao.getById(premiumPaymentHistory.getPremiumType().getId());
+			data.setPrice(premiumType.getPrice());
+			data.setDuration(premiumType.getDuration());
+			
+			data.setTrxNo(premiumPaymentHistory.getTrxNo());
+			data.setIsActive(premiumPaymentHistory.getIsActive());
+			data.setVersion(premiumPaymentHistory.getVersion());
+
+			premiumPaymentHistoryDataList.add(data);
+		});
+
+		SearchQuery<PremiumPaymentHistoryData> result = new SearchQuery<>();
 		result.setData(premiumPaymentHistoryDataList);
 
 		return result;
