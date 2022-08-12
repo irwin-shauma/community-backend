@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.EventTypeConstant;
 import com.lawencon.community.constant.MessageResponse;
 import com.lawencon.community.dao.EventDetailDao;
 import com.lawencon.community.dao.EventHeaderDao;
@@ -280,6 +281,102 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 		});
 
 		SearchQuery<EventHeaderData> result = new SearchQuery<>();
+		result.setData(eventHeaderDataList);
+
+		return result;
+	}
+	
+	public SearchQuery<EventHeaderData> findAllEvent(String query, Integer startPage, Integer maxPage) throws Exception {
+		List<EventHeader> dataDb = eventHeaderDao.findAllByType(EventTypeConstant.EVENT.name(), query, startPage, maxPage);
+
+		List<EventHeaderData> eventHeaderDataList = new ArrayList<EventHeaderData>();
+
+		dataDb.forEach(eventHeader -> {
+			EventHeaderData data = new EventHeaderData();
+			data.setId(eventHeader.getId());
+			data.setEventHeaderCode(eventHeader.getEventHeaderCode());
+
+			data.setTitle(eventHeader.getTitle());
+			data.setEventTypeId(eventHeader.getEventType().getId());
+
+			User user = userDao.getById(eventHeader.getCreatedBy());
+			Profile profile = profileDao.getById(user.getProfile().getId());
+			data.setFulName(profile.getFullName());
+			if (eventHeader.getFile() != null) {
+				data.setFileId(eventHeader.getFile().getId());
+			}
+
+			data.setIsActive(eventHeader.getIsActive());
+			data.setVersion(eventHeader.getVersion());
+
+			try {
+				EventDetail eventDetail = eventDetailDao.findByHeader(eventHeader.getId());
+				if (eventDetail != null) {
+					data.setPrice(eventDetail.getPrice());
+					data.setStartDate(eventDetail.getStartDate());
+					data.setEndDate(eventDetail.getEndDate());
+					data.setProvider(eventDetail.getProvider());
+					data.setLocation(eventDetail.getLocations());
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			eventHeaderDataList.add(data);
+		});
+
+		SearchQuery<EventHeaderData> result = new SearchQuery<>();
+		int count = eventHeaderDao.countAll().intValue();
+		result.setCount(count);
+		result.setData(eventHeaderDataList);
+
+		return result;
+	}
+	
+	public SearchQuery<EventHeaderData> findAllCourse(String query, Integer startPage, Integer maxPage) throws Exception {
+		List<EventHeader> dataDb = eventHeaderDao.findAllByType(EventTypeConstant.COURSE.name(), query, startPage, maxPage);
+
+		List<EventHeaderData> eventHeaderDataList = new ArrayList<EventHeaderData>();
+
+		dataDb.forEach(eventHeader -> {
+			EventHeaderData data = new EventHeaderData();
+			data.setId(eventHeader.getId());
+			data.setEventHeaderCode(eventHeader.getEventHeaderCode());
+
+			data.setTitle(eventHeader.getTitle());
+			data.setEventTypeId(eventHeader.getEventType().getId());
+
+			User user = userDao.getById(eventHeader.getCreatedBy());
+			Profile profile = profileDao.getById(user.getProfile().getId());
+			data.setFulName(profile.getFullName());
+			if (eventHeader.getFile() != null) {
+				data.setFileId(eventHeader.getFile().getId());
+			}
+
+			data.setIsActive(eventHeader.getIsActive());
+			data.setVersion(eventHeader.getVersion());
+
+			try {
+				EventDetail eventDetail = eventDetailDao.findByHeader(eventHeader.getId());
+				if (eventDetail != null) {
+					data.setPrice(eventDetail.getPrice());
+					data.setStartDate(eventDetail.getStartDate());
+					data.setEndDate(eventDetail.getEndDate());
+					data.setProvider(eventDetail.getProvider());
+					data.setLocation(eventDetail.getLocations());
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			eventHeaderDataList.add(data);
+		});
+
+		SearchQuery<EventHeaderData> result = new SearchQuery<>();
+		int count = eventHeaderDao.countAll().intValue();
+		result.setCount(count);
 		result.setData(eventHeaderDataList);
 
 		return result;

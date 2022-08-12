@@ -29,21 +29,21 @@ public class ThreadHeaderPollingDao extends AbstractJpaDao<ThreadHeaderPolling> 
 			data.setContentPolling(objArr[3].toString());
 			data.setPollingQuestion(objArr[4].toString());
 			data.setDuration(((Date) objArr[11]).toLocalDate());
-			if (objArr[6] != null) {
-				data.setCreatedAt(((Timestamp) objArr[6]).toLocalDateTime());
+			if (objArr[5] != null) {
+				data.setCreatedAt(((Timestamp) objArr[5]).toLocalDateTime());
 			}
 			
-			data.setCreatedBy(objArr[7].toString());
+			data.setCreatedBy(objArr[6].toString());
+			
+			if (objArr[7] != null) {
+				data.setUpdatedAt(((Timestamp) objArr[7]).toLocalDateTime());
+			}
 			
 			if (objArr[8] != null) {
-				data.setUpdatedAt(((Timestamp) objArr[8]).toLocalDateTime());
+				data.setUpdatedBy(objArr[8].toString());
 			}
-			
-			if (objArr[9] != null) {
-				data.setUpdatedBy(objArr[9].toString());
-			}
-			data.setIsActive(Boolean.valueOf(objArr[10].toString()));
-			data.setVersion(Integer.valueOf(objArr[11].toString()));
+			data.setIsActive(Boolean.valueOf(objArr[9].toString()));
+			data.setVersion(Integer.valueOf(objArr[10].toString()));
 			
 			listThread.add(data);
 		});

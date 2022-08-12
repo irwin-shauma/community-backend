@@ -56,7 +56,7 @@ public class PaymentService extends BaseCoreService<Payment>{
 		InsertRes result = new InsertRes();
 		String code = RandomStringUtils.randomAlphanumeric(5);
 		try {
-			begin();
+			
 			Payment payment = new Payment();
 			payment.setPaymentCode(code);
 			User user = userDao.getById(getAuthPrincipal());
@@ -70,9 +70,9 @@ public class PaymentService extends BaseCoreService<Payment>{
 				payment.setFile(file);
 			}
 			
-			payment.setIsApprove(false);
 			payment.setIsActive(true);
 			
+			begin();
 			Payment paymentInsert = save(payment);
 			commit();
 
