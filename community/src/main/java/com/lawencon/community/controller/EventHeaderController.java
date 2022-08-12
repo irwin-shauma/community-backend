@@ -46,6 +46,22 @@ public class EventHeaderController {
 		SearchQuery<EventHeaderData> result = eventHeaderService.findAllUser(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("events")
+	public ResponseEntity<?> getAllEvent(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
+			throws Exception {
+		SearchQuery<EventHeaderData> result = eventHeaderService.findAllEvent(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("course")
+	public ResponseEntity<?> getAllCourse(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
+			throws Exception {
+		SearchQuery<EventHeaderData> result = eventHeaderService.findAllCourse(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<?> getById(@PathVariable("id") String id) throws Exception {

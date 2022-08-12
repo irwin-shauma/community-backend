@@ -33,7 +33,7 @@ public class RoleController {
 	@Autowired
 	private RoleService roleService;
 	
-	@PreAuthorize("hasAuthority('SYSTEM')")
+	@PreAuthorize("hasAuthority('SUPERADMIN', 'SYSTEM')")
 	@GetMapping
 	public ResponseEntity<?> getAll(@RequestParam(required = false) String query, 
 			@RequestParam(required = false) Integer startPage,
