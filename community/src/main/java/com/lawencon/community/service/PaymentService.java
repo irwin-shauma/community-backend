@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.MessageResponse;
+import com.lawencon.community.dao.EventHeaderDao;
 import com.lawencon.community.dao.EventPaymentHistoryDao;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.PaymentDao;
 import com.lawencon.community.dao.PremiumPaymentHistoryDao;
+import com.lawencon.community.dao.PremiumTypeDao;
 import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.DeleteRes;
@@ -24,10 +26,12 @@ import com.lawencon.community.dto.payment.PaymentData;
 import com.lawencon.community.dto.payment.PaymentFindByIdRes;
 import com.lawencon.community.dto.payment.PaymentInsertReq;
 import com.lawencon.community.dto.payment.PaymentUpdateReq;
+import com.lawencon.community.model.EventHeader;
 import com.lawencon.community.model.EventPaymentHistory;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Payment;
 import com.lawencon.community.model.PremiumPaymentHistory;
+import com.lawencon.community.model.PremiumType;
 import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
@@ -52,11 +56,18 @@ public class PaymentService extends BaseCoreService<Payment>{
 	@Autowired
 	private EventPaymentHistoryDao eventPremiumDao;
 	
+	@Autowired
+	private PremiumTypeDao premiumTypeDao;
+	
+	@Autowired
+	private EventHeaderDao eventHeaderDao;
+	
 	public InsertRes insert(PaymentInsertReq data) throws Exception {
 		InsertRes result = new InsertRes();
 		String code = RandomStringUtils.randomAlphanumeric(5);
+		String trxNo = RandomStringUtils.randomAlphanumeric(5);
 		try {
-			begin();
+			
 			Payment payment = new Payment();
 			payment.setPaymentCode(code);
 			User user = userDao.getById(getAuthPrincipal());
@@ -70,9 +81,18 @@ public class PaymentService extends BaseCoreService<Payment>{
 				payment.setFile(file);
 			}
 			
+			payment.setTrxNo(trxNo);
 			payment.setIsApprove(false);
+			
+			PremiumType premiumType = premiumTypeDao.getById(data.getPremiumTypeId());
+			payment.setPremiumType(premiumType);
+			
+			EventHeader eventHeader = eventHeaderDao.getById(data.getEventHeaderId());
+			payment.setEventHeader(eventHeader);
+			
 			payment.setIsActive(true);
 			
+			begin();
 			Payment paymentInsert = save(payment);
 			commit();
 

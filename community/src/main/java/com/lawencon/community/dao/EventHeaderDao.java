@@ -89,10 +89,11 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 	}
 	
 	public List<EventHeader> findAllByType(String eventType, String query, Integer startPage, Integer maxPage) throws Exception {
-		String sql = "SELECT * FROM event_header eh INNER JOIN event_type et ON eh.event_type_id = et.id"
-				+ " WHERE eh.event_type = :event";
+		StringBuilder sql = new StringBuilder()
+				.append("SELECT eh.* FROM event_header eh INNER JOIN event_type et ON eh.event_type_id = et.id")
+				.append(" WHERE et.\"type\" = :event");
 		
-		List<?> result = createNativeQuery(sql).setParameter("event", eventType).getResultList();
+		List<?> result = createNativeQuery(sql.toString()).setParameter("event", eventType).getResultList();
 		
 		List<EventHeader> eventHeaders = new ArrayList<>();
 		
