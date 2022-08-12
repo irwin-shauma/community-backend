@@ -29,17 +29,6 @@ public class Payment extends BaseEntity {
 	@Column(name = "is_approve")
 	private Boolean isApprove;
 
-	@OneToOne
-	@JoinColumn(name = "premium_type_id")
-	private PremiumType premiumType;
-
-	@OneToOne
-	@JoinColumn(name = "event_header_id")
-	private EventHeader eventHeader;
-
-	@Column(name = "trx_no")
-	private String trxNo;
-
 	public String getPaymentCode() {
 		return paymentCode;
 	}
@@ -70,30 +59,6 @@ public class Payment extends BaseEntity {
 
 	public void setIsApprove(Boolean isApprove) {
 		this.isApprove = isApprove;
-	}
-
-	public PremiumType getPremiumType() {
-		return premiumType;
-	}
-
-	public void setPremiumType(PremiumType premiumType) {
-		this.premiumType = premiumType;
-	}
-
-	public EventHeader getEventHeader() {
-		return eventHeader;
-	}
-
-	public void setEventHeader(EventHeader eventHeader) {
-		this.eventHeader = eventHeader;
-	}
-
-	public String getTrxNo() {
-		return trxNo;
-	}
-
-	public void setTrxNo(String trxNo) {
-		this.trxNo = trxNo;
 	}
 
 }

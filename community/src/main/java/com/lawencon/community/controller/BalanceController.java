@@ -22,6 +22,7 @@ import com.lawencon.community.dto.balance.BalanceData;
 import com.lawencon.community.dto.balance.BalanceFindByIdRes;
 import com.lawencon.community.dto.balance.BalanceInsertReq;
 import com.lawencon.community.dto.balance.BalanceUpdateReq;
+import com.lawencon.community.dto.balance.PremiumUpdateBalanceReq;
 import com.lawencon.community.dto.balance.UpdateCurrentBalanceReq;
 import com.lawencon.community.dto.balance.UpdateCurrentBalanceRes;
 import com.lawencon.community.service.BalanceService;
@@ -71,9 +72,15 @@ public class BalanceController {
 		return new ResponseEntity<DeleteRes>(result, HttpStatus.OK);
 	}
 	
-	@PutMapping("/updateBalance")
+	@PutMapping("/update-balance")
 	public ResponseEntity<?> updateBalance(@RequestBody @Valid UpdateCurrentBalanceReq data) throws Exception {
 		UpdateCurrentBalanceRes result = balanceService.updateBalance(data);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@PutMapping("/premium-update-balance")
+	public ResponseEntity<?> premiumUpdateBalance(@RequestBody @Valid PremiumUpdateBalanceReq data) throws Exception {
+		UpdateCurrentBalanceRes result = balanceService.premiumUpdateBalance(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }
