@@ -1,6 +1,5 @@
 package com.lawencon.community.dto.eventpaymenthistory;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class EventPaymentHistoryUpdateReq {
@@ -8,19 +7,13 @@ public class EventPaymentHistoryUpdateReq {
 	@NotNull(message = "ID can't be empty")
 	private String id;
 
-	@NotBlank(message = "User Id can't be empty")
-	private String userId;
-
-	@NotBlank(message = "Event Id can't be empty")
-	private String eventHeaderId;
-	
-	@NotBlank(message = "Payment Id can't be empty")
+	@NotNull(message = "Payment Id can't be empty")
 	private String paymentId;
 
-	@NotBlank(message = "Trx no can't be empty")
-	private String trxNo;
+	@NotNull(message = "Approve can't be Empty")
+	private Boolean isApprove;
 
-	@NotBlank(message = "Active can't be empty")
+	@NotNull(message = "Active can't be empty")
 	private Boolean isActive;
 
 	public String getId() {
@@ -31,22 +24,6 @@ public class EventPaymentHistoryUpdateReq {
 		this.id = id;
 	}
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getEventHeaderId() {
-		return eventHeaderId;
-	}
-
-	public void setEventHeaderId(String eventHeaderId) {
-		this.eventHeaderId = eventHeaderId;
-	}
-
 	public String getPaymentId() {
 		return paymentId;
 	}
@@ -55,12 +32,12 @@ public class EventPaymentHistoryUpdateReq {
 		this.paymentId = paymentId;
 	}
 
-	public String getTrxNo() {
-		return trxNo;
+	public Boolean getIsApprove() {
+		return isApprove;
 	}
 
-	public void setTrxNo(String trxNo) {
-		this.trxNo = trxNo;
+	public void setIsApprove(Boolean isApprove) {
+		this.isApprove = isApprove;
 	}
 
 	public Boolean getIsActive() {

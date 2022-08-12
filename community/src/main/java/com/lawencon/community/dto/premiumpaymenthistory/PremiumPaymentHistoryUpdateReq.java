@@ -1,6 +1,5 @@
 package com.lawencon.community.dto.premiumpaymenthistory;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class PremiumPaymentHistoryUpdateReq {
@@ -8,20 +7,14 @@ public class PremiumPaymentHistoryUpdateReq {
 	@NotNull(message = "ID can't be empty")
 	private String id;
 
-	@NotBlank(message = "User Id can't be empty")
-	private String userId;
+	@NotNull(message = "Active can't be empty")
+	private Boolean isActive;
 
-	@NotBlank(message = "Premium Id can't be empty")
-	private String premiumTypeId;
-
-	@NotBlank(message = "Payment Id can't be empty")
+	@NotNull(message = "Payment can'be null")
 	private String paymentId;
 
-	@NotBlank(message = "Trx no can't be empty")
-	private String trxNo;
-
-	@NotBlank(message = "Active can't be empty")
-	private Boolean isActive;
+	@NotNull(message = "Approve can't be Empty")
+	private Boolean isApprove;
 
 	public String getId() {
 		return id;
@@ -31,20 +24,12 @@ public class PremiumPaymentHistoryUpdateReq {
 		this.id = id;
 	}
 
-	public String getUserId() {
-		return userId;
+	public Boolean getIsActive() {
+		return isActive;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getPremiumTypeId() {
-		return premiumTypeId;
-	}
-
-	public void setPremiumTypeId(String premiumTypeId) {
-		this.premiumTypeId = premiumTypeId;
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	public String getPaymentId() {
@@ -55,20 +40,12 @@ public class PremiumPaymentHistoryUpdateReq {
 		this.paymentId = paymentId;
 	}
 
-	public String getTrxNo() {
-		return trxNo;
+	public Boolean getIsApprove() {
+		return isApprove;
 	}
 
-	public void setTrxNo(String trxNo) {
-		this.trxNo = trxNo;
-	}
-
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
+	public void setIsApprove(Boolean isApprove) {
+		this.isApprove = isApprove;
 	}
 
 }

@@ -39,6 +39,14 @@ public class PremiumPaymentHistoryController {
 		SearchQuery<PremiumPaymentHistoryData> result = premiumPaymentHistoryService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("unapprove")
+	public ResponseEntity<?> getAllUnApprove(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage,
+			@RequestParam(required = false) Integer maxPage) throws Exception {
+		SearchQuery<PremiumPaymentHistoryData> result = premiumPaymentHistoryService.findAllUnApprove(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<?> getById(@PathVariable("id") String id) throws Exception {
