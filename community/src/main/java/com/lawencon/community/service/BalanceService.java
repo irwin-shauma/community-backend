@@ -213,12 +213,12 @@ public class BalanceService extends BaseCoreService<Balance> {
 		UpdateCurrentBalanceRes response = new UpdateCurrentBalanceRes();
 
 		try {
-			begin();
 
 			Balance systemBalance = balanceDao.findSystem();
 			BigDecimal systemBalanceIncrement = systemBalance.getCurrentBalance()
 					.add(data.getBalance());
 			systemBalance.setCurrentBalance(systemBalanceIncrement);
+			begin();
 			balanceDao.save(systemBalance);
 			commit();
 
