@@ -53,7 +53,11 @@ public class PremiumPaymentHistoryDao extends AbstractJpaDao<PremiumPaymentHisto
 			if(objArr[9] != null) {
 				premium.setUpdatedBy(objArr[9].toString());
 			}
-			premium.setIsActive(Boolean.valueOf(objArr[10].toString()));
+			
+			if(objArr[10] != null) {
+				premium.setIsActive(Boolean.valueOf(objArr[10].toString()));
+			}
+	
 			premium.setVersion(Integer.valueOf(objArr[11].toString()));
 			
 			listHistory.add(premium);
@@ -99,7 +103,9 @@ public class PremiumPaymentHistoryDao extends AbstractJpaDao<PremiumPaymentHisto
 				if(objArr[9] != null) {
 					premium.setUpdatedBy(objArr[9].toString());
 				}
-				premium.setIsActive(Boolean.valueOf(objArr[10].toString()));
+				if(objArr[10] != null) {
+					premium.setIsActive(Boolean.valueOf(objArr[10].toString()));
+				}
 				premium.setVersion(Integer.valueOf(objArr[11].toString()));
 			}
 		} catch (Exception e) {
@@ -146,7 +152,9 @@ public class PremiumPaymentHistoryDao extends AbstractJpaDao<PremiumPaymentHisto
 				if(objArr[9] != null) {
 					premium.setUpdatedBy(objArr[9].toString());
 				}
-				premium.setIsActive(Boolean.valueOf(objArr[10].toString()));
+				if(objArr[10] != null) {
+					premium.setIsActive(Boolean.valueOf(objArr[10].toString()));
+				}
 				premium.setVersion(Integer.valueOf(objArr[11].toString()));
 			}
 		} catch (Exception e) {

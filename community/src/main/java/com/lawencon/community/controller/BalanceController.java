@@ -47,6 +47,12 @@ public class BalanceController {
 		BalanceFindByIdRes result = balanceService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("users")
+	public ResponseEntity<?> getByUserId() throws Exception{
+		BalanceFindByIdRes result = balanceService.getByUserId();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@PostMapping
 	public ResponseEntity<?> insert(@RequestBody @Valid BalanceInsertReq data) throws Exception {
