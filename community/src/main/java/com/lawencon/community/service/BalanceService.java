@@ -21,6 +21,7 @@ import com.lawencon.community.dto.balance.BalanceData;
 import com.lawencon.community.dto.balance.BalanceFindByIdRes;
 import com.lawencon.community.dto.balance.BalanceInsertReq;
 import com.lawencon.community.dto.balance.BalanceUpdateReq;
+import com.lawencon.community.dto.balance.PremiumUpdateBalanceReq;
 import com.lawencon.community.dto.balance.UpdateCurrentBalanceReq;
 import com.lawencon.community.dto.balance.UpdateCurrentBalanceRes;
 import com.lawencon.community.model.Balance;
@@ -198,6 +199,30 @@ public class BalanceService extends BaseCoreService<Balance> {
 			commit();
 
 			response.setMessage("Update balance success! Current balance : " + updated.getCurrentBalance());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+
+		return response;
+	}
+	
+	public UpdateCurrentBalanceRes premiumUpdateBalance(PremiumUpdateBalanceReq data) throws Exception {
+		UpdateCurrentBalanceRes response = new UpdateCurrentBalanceRes();
+
+		try {
+
+			Balance systemBalance = balanceDao.findSystem();
+			BigDecimal systemBalanceIncrement = systemBalance.getCurrentBalance()
+					.add(data.getBalance());
+			systemBalance.setCurrentBalance(systemBalanceIncrement);
+			begin();
+			balanceDao.save(systemBalance);
+			commit();
+
+			response.setMessage("Update balance success!");
 
 		} catch (Exception e) {
 			e.printStackTrace();

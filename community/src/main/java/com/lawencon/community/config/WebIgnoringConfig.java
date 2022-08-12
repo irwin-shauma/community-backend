@@ -35,8 +35,10 @@ public class WebIgnoringConfig {
 		matchers.add(new AntPathRequestMatcher("/article-headers/", HttpMethod.GET.name()));
 		matchers.add(new AntPathRequestMatcher("/premium-types/", HttpMethod.GET.name()));
 		
+		
 		matchers.add(new AntPathRequestMatcher("/counts/**", HttpMethod.GET.name()));
 		
+		matchers.add(new AntPathRequestMatcher("/users/refresh", HttpMethod.POST.name()));
 		return matchers;
 	}
 }

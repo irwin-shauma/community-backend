@@ -28,12 +28,12 @@ import com.lawencon.model.SearchQuery;
 
 @RestController
 @RequestMapping("roles")
+@PreAuthorize("hasAuthority('SUPERADMIN')")
 public class RoleController {
 	
 	@Autowired
 	private RoleService roleService;
-	
-	@PreAuthorize("hasAuthority('SUPERADMIN', 'SYSTEM')")
+
 	@GetMapping
 	public ResponseEntity<?> getAll(@RequestParam(required = false) String query, 
 			@RequestParam(required = false) Integer startPage,
