@@ -44,7 +44,7 @@ public class BalanceDao extends AbstractJpaDao<Balance> {
 
 	public Balance findSystem() throws Exception {
 		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append(" SELECT b.id, b.balance_code, b.current_balance, b.user_id, r.role_code, b.created_at, b.created_by ")
+		sqlBuilder.append(" SELECT b.id, b.balance_code, b.current_balance, b.user_id, r.role_code, b.created_at, b.created_by , b.version")
 				.append(" FROM balance b ")
 				.append(" INNER JOIN users u ON u.id = b.user_id ")
 				.append(" INNER JOIN roles r ON r.id = u.role_id ")
@@ -67,6 +67,7 @@ public class BalanceDao extends AbstractJpaDao<Balance> {
 				
 				balance.setCreatedAt(((Timestamp) objArr[5]).toLocalDateTime());
 				balance.setCreatedBy(objArr[6].toString());
+				balance.setVersion(Integer.valueOf(objArr[7].toString()));
 				
 			}
 		} catch (Exception e) {
