@@ -45,7 +45,7 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 	}
 	
 	public List<EventHeader> findAllByUser(String id, String query, Integer startPage, Integer maxPage) throws Exception {
-		String sql = "SELECT * FROM event_header WHERE user_id= :id";
+		String sql = "SELECT * FROM event_header WHERE user_id= :id ORDER BY created_at DESC ";
 		
 		List<?> result = createNativeQuery(sql).setParameter("id", id).getResultList();
 		
@@ -91,7 +91,7 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 	public List<EventHeader> findAllByType(String eventType, String query, Integer startPage, Integer maxPage) throws Exception {
 		StringBuilder sql = new StringBuilder()
 				.append("SELECT eh.* FROM event_header eh INNER JOIN event_type et ON eh.event_type_id = et.id")
-				.append(" WHERE et.\"type\" = :event");
+				.append(" WHERE et.\"type\" = :event ORDER BY created_at DESC ");
 		
 		List<?> result = createNativeQuery(sql.toString()).setParameter("event", eventType).getResultList();
 		
