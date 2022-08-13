@@ -63,6 +63,22 @@ public class EventHeaderController {
 		SearchQuery<EventHeaderData> result = eventHeaderService.findAllUser(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("events/non-login")
+	public ResponseEntity<?> getAllEventNonLogin(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
+			throws Exception {
+		SearchQuery<EventHeaderData> result = eventHeaderService.findAllEventNonLogin(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("course/non-login")
+	public ResponseEntity<?> getAllCourseNonLogin(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
+			throws Exception {
+		SearchQuery<EventHeaderData> result = eventHeaderService.findAllCourseNonLogin(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<?> getById(@PathVariable("id") String id) throws Exception {
