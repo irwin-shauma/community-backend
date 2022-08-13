@@ -17,8 +17,10 @@ public class ThreadHeaderDao extends AbstractJpaDao<ThreadHeader> {
 
 	public List<ThreadHeader> findAllByUserLike(String userId, String query, Integer startPage, Integer maxPage)
 			throws Exception {
-		StringBuilder sql = new StringBuilder().append("SELECT th.* FROM thread_headers th ")
-				.append("LEFT JOIN thread_like tl ON th.id = tl.thread_id ").append("WHERE tl.user_id = :user");
+		StringBuilder sql = new StringBuilder()
+				.append("SELECT th.* FROM thread_headers th ")
+				.append("LEFT JOIN thread_like tl ON th.id = tl.thread_id ")
+				.append("WHERE tl.user_id = :user ORDER BY created_at DESC ");
 		List<?> result = createNativeQuery(sql.toString()).setParameter("user", userId).getResultList();
 
 		List<ThreadHeader> threadHdrs = new ArrayList<>();
@@ -68,7 +70,7 @@ public class ThreadHeaderDao extends AbstractJpaDao<ThreadHeader> {
 			throws Exception {
 		StringBuilder sql = new StringBuilder().append("SELECT th.* FROM thread_headers th ")
 				.append("LEFT JOIN bookmark b ON th.id = b.thread_id ")
-				.append("WHERE b.user_id = :user");
+				.append("WHERE b.user_id = :user ORDER BY created_at DESC ");
 		List<?> result = createNativeQuery(sql.toString()).setParameter("user", userId).getResultList();
 		
 		List<ThreadHeader> threadHdrs = new ArrayList<>();
@@ -118,7 +120,7 @@ public class ThreadHeaderDao extends AbstractJpaDao<ThreadHeader> {
 	public List<ThreadHeader> findAllByUserId(String userId, String query, Integer startPage, Integer maxPage)
 			throws Exception {
 		StringBuilder sql = new StringBuilder().append("SELECT * FROM thread_headers ")
-				.append("WHERE user_id = :user");
+				.append("WHERE user_id = :user ORDER BY created_at DESC ");
 		List<?> result = createNativeQuery(sql.toString()).setParameter("user", userId).getResultList();
 		
 		List<ThreadHeader> threadHdrs = new ArrayList<>();
