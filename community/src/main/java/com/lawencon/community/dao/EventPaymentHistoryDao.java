@@ -154,5 +154,37 @@ public class EventPaymentHistoryDao extends AbstractJpaDao<EventPaymentHistory> 
 		
 	}
 	
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
