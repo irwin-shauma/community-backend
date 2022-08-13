@@ -288,6 +288,8 @@ public class PremiumPaymentHistoryService extends BaseCoreService<PremiumPayment
 		});
 
 		SearchQuery<PremiumPaymentHistoryData> result = new SearchQuery<>();
+		int count = premiumPaymentHistoryDao.countAllUnapprove().intValue();
+		result.setCount(count);
 		result.setData(premiumPaymentHistoryDataList);
 
 		return result;
