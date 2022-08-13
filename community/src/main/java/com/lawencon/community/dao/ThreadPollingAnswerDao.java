@@ -20,8 +20,7 @@ public class ThreadPollingAnswerDao extends AbstractJpaDao<ThreadPollingAnswer> 
 					.getSingleResult();
 			if (result != null) {
 				threadPollingAns = new ThreadPollingAnswer();
-				Object[] objArr = (Object[]) result;
-				threadPollingAns.setId(objArr[0].toString());
+				threadPollingAns.setId(result.toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

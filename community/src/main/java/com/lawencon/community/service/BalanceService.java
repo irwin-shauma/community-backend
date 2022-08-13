@@ -162,7 +162,7 @@ public class BalanceService extends BaseCoreService<Balance> {
 		return result;
 	}
 
-	public BalanceFindByIdRes getByUserId(String id) throws Exception {
+	public BalanceFindByIdRes getByUserId() throws Exception {
 		Balance balanceDb = balanceDao.findByUserId(getAuthPrincipal());
 
 		BalanceData data = new BalanceData();

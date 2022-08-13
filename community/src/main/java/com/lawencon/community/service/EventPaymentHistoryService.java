@@ -60,7 +60,7 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 		String trxNo = RandomStringUtils.randomAlphanumeric(5);
 		try {
 			EventPaymentHistory eventPaymentHistory = new EventPaymentHistory();
-			eventPaymentHistory.setEvetnPaymentCode(code);
+			eventPaymentHistory.setEventPaymentCode(code);
 			
 			User user = userDao.getById(getAuthPrincipal());
 			eventPaymentHistory.setUser(user);
@@ -167,6 +167,7 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 		dataDb.getData().forEach(eventPaymentHistory -> {
 			EventPaymentHistoryData data = new EventPaymentHistoryData();
 			data.setId(eventPaymentHistory.getId());
+			data.setEventPaymentHistoryCode(eventPaymentHistory.getEventPaymentCode());
 			data.setUserId(eventPaymentHistory.getUser().getId());
 			data.setEventHeaderId(eventPaymentHistory.getEventHeader().getId());
 			data.setPaymentId(eventPaymentHistory.getPayment().getId());
@@ -177,6 +178,7 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 
 			EventHeader eventHeaderDb = eventHeaderDao.getById(eventPaymentHistory.getEventHeader().getId());
 			data.setTitle(eventHeaderDb.getTitle());
+			data.setEventCreator(eventHeaderDb.getUser().getId());
 			
 			try {
 				EventDetail eventDetail = eventDetailDao.findByHeader(eventHeaderDb.getId());
@@ -198,6 +200,54 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 
 		SearchQuery<EventPaymentHistoryData> result = new SearchQuery<>();
 		result.setCount(dataDb.getCount());
+		result.setData(eventPaymentHistoryDataList);
+
+		return result;
+	}
+	
+	public SearchQuery<EventPaymentHistoryData> findAllUnapprove(String query, Integer startPage, Integer maxPage)
+			throws Exception {
+		List<EventPaymentHistory> dataDb = eventPaymentHistoryDao.findAllUnapprove(query, startPage, maxPage);
+
+		List<EventPaymentHistoryData> eventPaymentHistoryDataList = new ArrayList<EventPaymentHistoryData>();
+
+		dataDb.forEach(eventPaymentHistory -> {
+			EventPaymentHistoryData data = new EventPaymentHistoryData();
+			data.setId(eventPaymentHistory.getId());
+			data.setEventPaymentHistoryCode(eventPaymentHistory.getEventPaymentCode());
+			data.setUserId(eventPaymentHistory.getUser().getId());
+			data.setEventHeaderId(eventPaymentHistory.getEventHeader().getId());
+			data.setPaymentId(eventPaymentHistory.getPayment().getId());
+
+			User userDb = userDao.getById(eventPaymentHistory.getUser().getId());
+			data.setEmail(userDb.getEmail());
+			data.setFullname(userDb.getProfile().getFullName());
+
+			EventHeader eventHeaderDb = eventHeaderDao.getById(eventPaymentHistory.getEventHeader().getId());
+			data.setTitle(eventHeaderDb.getTitle());
+			data.setEventCreator(eventHeaderDb.getUser().getId());
+			
+			try {
+				EventDetail eventDetail = eventDetailDao.findByHeader(eventHeaderDb.getId());
+				data.setPrice(eventDetail.getPrice());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			Payment payment = paymentDao.getById(eventPaymentHistory.getPayment().getId());
+			data.setIsAprove(payment.getIsApprove());
+			data.setFileId(payment.getFile().getId());
+
+			data.setTrxNo(eventPaymentHistory.getTrxNo());
+			data.setIsActive(eventPaymentHistory.getIsActive());
+			data.setVersion(eventPaymentHistory.getVersion());
+
+			eventPaymentHistoryDataList.add(data);
+		});
+
+		SearchQuery<EventPaymentHistoryData> result = new SearchQuery<>();
+		int count = eventPaymentHistoryDao.countAll().intValue();
+		result.setCount(count);
 		result.setData(eventPaymentHistoryDataList);
 
 		return result;
