@@ -1,6 +1,7 @@
 package com.lawencon.community.dto.report;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class MemberRevenueReportData {
 	private String fullName;
@@ -8,6 +9,7 @@ public class MemberRevenueReportData {
 	private String title;
 	private String type;
 	private BigDecimal price;
+	private LocalDateTime date;
 
 	public String getFullName() {
 		return fullName;
@@ -47,6 +49,14 @@ public class MemberRevenueReportData {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 
 }

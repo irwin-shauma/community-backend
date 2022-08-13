@@ -1,6 +1,7 @@
 package com.lawencon.community.dao;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class PaymentDao extends AbstractJpaDao<Payment> {
 		StringBuilder sqlBuilder = new StringBuilder()
 				.append(" SELECT pf.full_name AS fullName, eph.trx_no AS trxNo,  ")
 				.append(" eh.title AS title, et.type AS type, ")
-				.append(" ed.price AS price  ")
+				.append(" ed.price AS price, pm.created_at AS date ")
 				.append(" FROM payment pm ")
 				.append(" JOIN users u ON u.id = pm.user_id ")
 				.append(" JOIN profile pf ON pf.id = u.profile_id ")
@@ -77,6 +78,7 @@ public class PaymentDao extends AbstractJpaDao<Payment> {
 					data.setTitle(objArr[2].toString());
 					data.setType(objArr[3].toString());
 					data.setPrice(new BigDecimal( objArr[4].toString()));
+					data.setDate(((Timestamp) objArr[5]).toLocalDateTime());
 					reports.add(data);
 				});
 			}
