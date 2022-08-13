@@ -40,6 +40,18 @@ public class WebIgnoringConfig {
 		matchers.add(new AntPathRequestMatcher("/counts/**", HttpMethod.GET.name()));
 		
 		matchers.add(new AntPathRequestMatcher("/users/refresh", HttpMethod.POST.name()));
+		
+		
+		matchers.add(new AntPathRequestMatcher("/swagger-ui/**", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/v2/api-docs", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/swagger-resources", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/swagger-resources/**", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/configuration/ui", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/configuration/security", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/swagger-ui.html", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/webjars/**", HttpMethod.GET.name()));
+		matchers.add(new AntPathRequestMatcher("/v3/api-docs/**", HttpMethod.GET.name()));
+				
 		return matchers;
 	}
 }
