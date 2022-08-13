@@ -39,6 +39,23 @@ public class EventHeaderController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
+	@GetMapping("events")
+	public ResponseEntity<?> getAllEvents(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
+	throws Exception {
+		SearchQuery<EventHeaderData> result = eventHeaderService.findAllEvent(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("courses")
+	public ResponseEntity<?> getAllCourse(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
+	throws Exception {
+		SearchQuery<EventHeaderData> result = eventHeaderService.findAllCourse(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	
 	@GetMapping("users")
 	public ResponseEntity<?> getAllByUser(@RequestParam(required = false) String query,
 			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
@@ -47,19 +64,19 @@ public class EventHeaderController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("events")
-	public ResponseEntity<?> getAllEvent(@RequestParam(required = false) String query,
+	@GetMapping("events/non-login")
+	public ResponseEntity<?> getAllEventNonLogin(@RequestParam(required = false) String query,
 			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
 			throws Exception {
-		SearchQuery<EventHeaderData> result = eventHeaderService.findAllEvent(query, startPage, maxPage);
+		SearchQuery<EventHeaderData> result = eventHeaderService.findAllEventNonLogin(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("course")
-	public ResponseEntity<?> getAllCourse(@RequestParam(required = false) String query,
+	@GetMapping("course/non-login")
+	public ResponseEntity<?> getAllCourseNonLogin(@RequestParam(required = false) String query,
 			@RequestParam(required = false) Integer startPage, @RequestParam(required = false) Integer maxPage)
 			throws Exception {
-		SearchQuery<EventHeaderData> result = eventHeaderService.findAllCourse(query, startPage, maxPage);
+		SearchQuery<EventHeaderData> result = eventHeaderService.findAllCourseNonLogin(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

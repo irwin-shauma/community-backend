@@ -63,7 +63,7 @@ public class LoginController {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put(ClaimKey.ID.name(), user.getId());
 		claims.put(ClaimKey.ROLE.name(), user.getRole().getRoleCode());
-		claims.put("exp", Timestamp.valueOf(LocalDateTime.now().plusHours(6)));
+		claims.put("exp", Timestamp.valueOf(LocalDateTime.now().plusDays(1)));
 		
 		String token = jwtUtil.generateToken(claims, Duration.ofMinutes(45));
 		

@@ -580,11 +580,11 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 	}
 
 	public SearchQuery<ThreadHeaderData> findAllNonLogin(String query, Integer startPage, Integer maxPage) throws Exception {
-		SearchQuery<ThreadHeader> dataDb = threadHdrDao.findAll(query, startPage, maxPage);
+		List<ThreadHeader> dataDb = threadHdrDao.findAllDesc(query, startPage, maxPage);
 
 		List<ThreadHeaderData> data = new ArrayList<>();
 
-		dataDb.getData().forEach(threadHdr -> {
+		dataDb.forEach(threadHdr -> {
 			ThreadHeaderData thread = new ThreadHeaderData();
 			thread.setId(threadHdr.getId());
 			thread.setThreadHeaderCode(threadHdr.getThreadHeaderCode());
@@ -647,7 +647,6 @@ public class ThreadHeaderService extends BaseCoreService<ThreadHeader> {
 			data.add(thread);
 		});
 		SearchQuery<ThreadHeaderData> result = new SearchQuery<>();
-		result.setCount(dataDb.getCount());
 		result.setData(data);
 		return result;
 	}
