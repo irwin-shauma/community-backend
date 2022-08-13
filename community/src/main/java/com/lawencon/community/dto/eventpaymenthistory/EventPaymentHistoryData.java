@@ -1,5 +1,7 @@
 package com.lawencon.community.dto.eventpaymenthistory;
 
+import java.time.LocalDateTime;
+
 public class EventPaymentHistoryData {
 
 	private String id;
@@ -17,6 +19,7 @@ public class EventPaymentHistoryData {
 	private Boolean isActive;
 	private String eventCreator;
 	private Integer version;
+	private LocalDateTime createdAt;
 
 	public String getId() {
 		return id;
@@ -136,6 +139,14 @@ public class EventPaymentHistoryData {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 }
