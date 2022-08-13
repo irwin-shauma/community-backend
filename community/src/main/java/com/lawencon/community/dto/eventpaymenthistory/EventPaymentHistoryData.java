@@ -15,6 +15,7 @@ public class EventPaymentHistoryData {
 	private Boolean isAprove;
 	private String fileId;
 	private Boolean isActive;
+	private String eventCreator;
 	private Integer version;
 
 	public String getId() {
@@ -119,6 +120,14 @@ public class EventPaymentHistoryData {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public String getEventCreator() {
+		return eventCreator;
+	}
+
+	public void setEventCreator(String eventCreator) {
+		this.eventCreator = eventCreator;
 	}
 
 	public Integer getVersion() {
