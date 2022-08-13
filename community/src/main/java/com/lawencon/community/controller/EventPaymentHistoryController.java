@@ -39,6 +39,14 @@ public class EventPaymentHistoryController {
 		SearchQuery<EventPaymentHistoryData> result = eventPaymentHistoryService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("unapprove")
+	public ResponseEntity<?> getAllUnapprove(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage,
+			@RequestParam(required = false) Integer maxPage) throws Exception {
+		SearchQuery<EventPaymentHistoryData> result = eventPaymentHistoryService.findAllUnapprove(query, startPage, maxPage);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<?> getById(@PathVariable("id") String id) throws Exception {

@@ -17,12 +17,12 @@ public class EventPaymentHistory extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
 	@Column(name = "event_payment_code")
-	private String evetnPaymentCode;
+	private String eventPaymentCode;
 
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	@OneToOne
 	@JoinColumn(name = "payment_id")
 	private Payment payment;
@@ -34,12 +34,12 @@ public class EventPaymentHistory extends BaseEntity {
 	@Column(name = "trx_no")
 	private String trxNo;
 
-	public String getEvetnPaymentCode() {
-		return evetnPaymentCode;
+	public String getEventPaymentCode() {
+		return eventPaymentCode;
 	}
 
-	public void setEvetnPaymentCode(String evetnPaymentCode) {
-		this.evetnPaymentCode = evetnPaymentCode;
+	public void setEventPaymentCode(String eventPaymentCode) {
+		this.eventPaymentCode = eventPaymentCode;
 	}
 
 	public User getUser() {
