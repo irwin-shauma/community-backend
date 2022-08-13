@@ -50,7 +50,7 @@ public class BalanceController {
 	}
 	
 	@GetMapping("users")
-	public ResponseEntity<?> getByUser() throws Exception {
+	public ResponseEntity<?> getByUserId() throws Exception{
 		BalanceFindByIdRes result = balanceService.getByUserId();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

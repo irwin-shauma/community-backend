@@ -260,6 +260,9 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 			Profile profile = profileDao.getById(user.getProfile().getId());
 			data.setFulName(profile.getFullName());
+			data.setUserId(eventHeader.getUser().getId());
+			
+			
 			if (eventHeader.getFile() != null) {
 				data.setFileId(eventHeader.getFile().getId());
 			}
