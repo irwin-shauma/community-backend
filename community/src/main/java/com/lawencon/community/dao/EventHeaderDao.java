@@ -79,7 +79,6 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 			if(objArr[9] != null) {
 				eventHeader.setUpdatedBy(objArr[9].toString());
 			}
-
 			eventHeader.setIsActive(Boolean.valueOf(objArr[10].toString()));
 			eventHeader.setVersion(Integer.valueOf(objArr[11].toString()));
 
@@ -117,6 +116,7 @@ public class EventHeaderDao extends AbstractJpaDao<EventHeader> {
 			
 			User user = new User();
 			user.setId(objArr[5].toString());
+			eventHeader.setUser(user);
 			
 			eventHeader.setCreatedAt(((Timestamp)objArr[6]).toLocalDateTime());
 			eventHeader.setCreatedBy(objArr[7].toString());

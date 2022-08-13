@@ -167,7 +167,7 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 		data.setEventTypeId(eventHeaderDb.getEventType().getId());
 		User user = userDao.getById(eventHeaderDb.getCreatedBy());
 		data.setUserId(user.getId());
-		
+
 		Profile profile = profileDao.getById(user.getProfile().getId());
 		data.setFulName(profile.getFullName());
 
@@ -254,6 +254,10 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 			data.setEventTypeId(eventHeader.getEventType().getId());
 
 			User user = userDao.getById(eventHeader.getCreatedBy());
+			if (eventHeader.getUser() != null) {
+				data.setUserId(eventHeader.getUser().getId());
+			}
+
 			Profile profile = profileDao.getById(user.getProfile().getId());
 			data.setFulName(profile.getFullName());
 			data.setUserId(eventHeader.getUser().getId());
@@ -288,9 +292,11 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 		return result;
 	}
-	
-	public SearchQuery<EventHeaderData> findAllEvent(String query, Integer startPage, Integer maxPage) throws Exception {
-		List<EventHeader> dataDb = eventHeaderDao.findAllByType(EventTypeConstant.EVENT.name(), query, startPage, maxPage);
+
+	public SearchQuery<EventHeaderData> findAllEvent(String query, Integer startPage, Integer maxPage)
+			throws Exception {
+		List<EventHeader> dataDb = eventHeaderDao.findAllByType(EventTypeConstant.EVENT.name(), query, startPage,
+				maxPage);
 
 		List<EventHeaderData> eventHeaderDataList = new ArrayList<EventHeaderData>();
 
@@ -336,9 +342,11 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 		return result;
 	}
-	
-	public SearchQuery<EventHeaderData> findAllCourse(String query, Integer startPage, Integer maxPage) throws Exception {
-		List<EventHeader> dataDb = eventHeaderDao.findAllByType(EventTypeConstant.COURSE.name(), query, startPage, maxPage);
+
+	public SearchQuery<EventHeaderData> findAllCourse(String query, Integer startPage, Integer maxPage)
+			throws Exception {
+		List<EventHeader> dataDb = eventHeaderDao.findAllByType(EventTypeConstant.COURSE.name(), query, startPage,
+				maxPage);
 
 		List<EventHeaderData> eventHeaderDataList = new ArrayList<EventHeaderData>();
 
@@ -408,10 +416,10 @@ public class EventHeaderService extends BaseCoreService<EventHeader> {
 
 		return result;
 	}
-	
+
 	private LocalDateTime stringToLocalDateTime(String dateTimeStr) {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        return LocalDateTime.parse(dateTimeStr, formatter);
-    }
+		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+		return LocalDateTime.parse(dateTimeStr, formatter);
+	}
 
 }
