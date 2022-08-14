@@ -54,11 +54,13 @@ public class ReportController {
 				.body(out);
 	}
 	
-	@PostMapping("member-revenue-report")
-	public ResponseEntity<?> getMemberRevenueReport(@RequestBody MemberRevenueReportReq data) throws Exception{
+	@GetMapping("member-revenue-report")
+	public ResponseEntity<?> getMemberRevenueReport(String id, String startDate, String endDate) throws Exception{
+//		public ResponseEntity<?> getMemberRevenueReport(@RequestBody MemberRevenueReportReq data) throws Exception{
 //		public ResponseEntity<?> getMemberRevenueReport() throws Exception{
 		
-		List<MemberRevenueReportData> listMemberRevenue = paymentService.showMemberRevenueData(data).getData();
+		List<MemberRevenueReportData> listMemberRevenue = paymentService.showMemberRevenueData(id, startDate, endDate).getData();
+//		List<MemberRevenueReportData> listMemberRevenue = paymentService.showMemberRevenueData(data).getData();
 //		List<MemberRevenueReportData> listMemberRevenue = paymentService.showMemberRevenueData("2c55391b-2c58-4beb-a97a-f8482991efb7").getData();
 		
 		Map<String, Object> map = new HashMap<>();

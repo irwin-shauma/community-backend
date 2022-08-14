@@ -2,6 +2,7 @@ package com.lawencon.community.dao;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.dto.report.MemberRevenueReportData;
-import com.lawencon.community.dto.report.MemberRevenueReportReq;
 import com.lawencon.community.dto.report.MemberRevenueReportRes;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Payment;
@@ -47,7 +47,8 @@ public class PaymentDao extends AbstractJpaDao<Payment> {
 		return payment;
 	}
 	
-	public MemberRevenueReportRes getReportData(String id, MemberRevenueReportReq dataInput) throws Exception {
+//	public MemberRevenueReportRes getReportData(String id, MemberRevenueReportReq dataInput) throws Exception {
+		public MemberRevenueReportRes getReportData(String id, LocalDate startDate, LocalDate endDate) throws Exception {
 		
 		List<MemberRevenueReportData> reports = new ArrayList<>();
 		MemberRevenueReportRes response = new MemberRevenueReportRes();
@@ -68,8 +69,10 @@ public class PaymentDao extends AbstractJpaDao<Payment> {
 		try {
 			List<?> result = createNativeQuery(sqlBuilder.toString())
 					.setParameter("id", id)
-					.setParameter("startDate", dataInput.getStartDate())
-					.setParameter("endDate", dataInput.getEndDate())
+					.setParameter("startDate", startDate)
+//					.setParameter("startDate", dataInput.getStartDate())
+					.setParameter("endDate", endDate)
+//					.setParameter("endDate", dataInput.getEndDate())
 					.getResultList();
 			
 			if(result != null) {
