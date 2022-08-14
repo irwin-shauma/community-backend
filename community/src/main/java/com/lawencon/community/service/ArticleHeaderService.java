@@ -127,6 +127,7 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 		data.setTitle(articleHdr.getTitle());
 		data.setContents(articleHdr.getContents());
 		data.setIsActive(articleHdr.getIsActive());
+		data.setCreatedAt(articleHdr.getCreatedAt());
 		data.setVersion(articleHdr.getVersion());
 
 		ArticleHeaderFindByIdRes result = new ArticleHeaderFindByIdRes();
@@ -149,6 +150,7 @@ public class ArticleHeaderService extends BaseCoreService<ArticleHeader> {
 			data.setTitle(articleHdr.getTitle());
 			data.setContents(articleHdr.getContents());
 			data.setIsActive(articleHdr.getIsActive());
+			data.setCreatedAt(articleHdr.getCreatedAt());
 			data.setVersion(articleHdr.getVersion());
 
 			dataList.add(data);

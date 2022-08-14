@@ -1,5 +1,7 @@
 package com.lawencon.community.dto.articleheader;
 
+import java.time.LocalDateTime;
+
 public class ArticleHeaderData {
 
 	private String id;
@@ -8,6 +10,7 @@ public class ArticleHeaderData {
 	private String title;
 	private String contents;
 	private Boolean isActive;
+	private LocalDateTime createdAt;
 	private Integer version;
 
 	public String getId() {
@@ -56,6 +59,14 @@ public class ArticleHeaderData {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public Integer getVersion() {
