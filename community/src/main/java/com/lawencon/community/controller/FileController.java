@@ -31,12 +31,12 @@ public class FileController {
 	@Autowired
 	private FileService fileService;
 	
-	@GetMapping
-	public ResponseEntity<?> getAll(@RequestParam("query") String query, @RequestParam("startPage") Integer startPage,
-			@RequestParam("maxPage") Integer maxPage) throws Exception {
-		SearchQuery<FileData> result = fileService.findAll(query, startPage, maxPage);
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
+//	@GetMapping
+//	public ResponseEntity<?> getAll(@RequestParam("query") String query, @RequestParam("startPage") Integer startPage,
+//			@RequestParam("maxPage") Integer maxPage) throws Exception {
+//		SearchQuery<FileData> result = fileService.findAll(query, startPage, maxPage);
+//		return new ResponseEntity<>(result, HttpStatus.OK);
+//	}
 
 	@GetMapping("{id}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable("id") String id) throws Exception {
