@@ -19,7 +19,7 @@ public class ThreadPollingDetail extends BaseEntity {
 	private String threadPollingDetailCode;
 
 	@OneToOne
-	@JoinColumn(name = "thread_header_polling_id")
+	@JoinColumn(name = "thread_polling_header_id")
 	private ThreadHeaderPolling threadHeaderPolling;
 
 	@Column(name = "polling_choice")

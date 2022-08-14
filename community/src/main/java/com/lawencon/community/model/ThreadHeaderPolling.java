@@ -12,12 +12,12 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "thread_header_polling", uniqueConstraints = {
-		@UniqueConstraint(name = "thread_header_polling_code_bk", columnNames = "thread_header_polling_code") })
+@Table(name = "thread_polling_header", uniqueConstraints = {
+		@UniqueConstraint(name = "thread_polling_header_code_bk", columnNames = "thread_polling_header_code") })
 public class ThreadHeaderPolling extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@Column(name = "thread_header_polling_code")
+	@Column(name = "thread_polling_header_code")
 	private String threadHeaderPollingCode;
 
 	@Column(name = "title_polling")
