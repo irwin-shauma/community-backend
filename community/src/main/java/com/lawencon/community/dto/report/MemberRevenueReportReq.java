@@ -1,26 +1,34 @@
 package com.lawencon.community.dto.report;
 
+import java.time.LocalDate;
+
 public class MemberRevenueReportReq {
-	
+
 	private String id;
-	private String startDate;
-	private String endDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getStartDate() {
+
+	public LocalDate getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(String startDate) {
+
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
-	public String getEndDate() {
+
+	public LocalDate getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
+
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 

@@ -9,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,12 +54,12 @@ public class ReportController {
 				.body(out);
 	}
 	
-	@GetMapping("member-revenue-report")
-//	public ResponseEntity<?> getMemberRevenueReport(MemberRevenueReportReq data) throws Exception{
-		public ResponseEntity<?> getMemberRevenueReport() throws Exception{
+	@PostMapping("member-revenue-report")
+	public ResponseEntity<?> getMemberRevenueReport(@RequestBody MemberRevenueReportReq data) throws Exception{
+//		public ResponseEntity<?> getMemberRevenueReport() throws Exception{
 		
-//		List<MemberRevenueReportData> listMemberRevenue = paymentService.showMemberRevenueData(data.getId()).getData();
-		List<MemberRevenueReportData> listMemberRevenue = paymentService.showMemberRevenueData("2c55391b-2c58-4beb-a97a-f8482991efb7").getData();
+		List<MemberRevenueReportData> listMemberRevenue = paymentService.showMemberRevenueData(data).getData();
+//		List<MemberRevenueReportData> listMemberRevenue = paymentService.showMemberRevenueData("2c55391b-2c58-4beb-a97a-f8482991efb7").getData();
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("company", "PT. Communify Sejahtera");
