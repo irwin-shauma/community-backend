@@ -13,7 +13,7 @@ import com.lawencon.community.model.ThreadPollingDetail;
 public class ThreadPollingDetailDao extends AbstractJpaDao<ThreadPollingDetail>{
 	
 	public List<ThreadPollingDetail> findByHeader(String id) throws Exception {
-		String sql = "SELECT * FROM thread_polling_detail WHERE thread_header_polling_id = :id";
+		String sql = "SELECT * FROM thread_polling_detail WHERE thread_polling_header_id = :id";
 		
 		List<?> result = createNativeQuery(sql)
 						.setParameter("id", id)
