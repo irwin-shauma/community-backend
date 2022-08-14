@@ -32,7 +32,7 @@ public class ThreadPollingAnswerDao extends AbstractJpaDao<ThreadPollingAnswer> 
 
 		StringBuilder sql = new StringBuilder().append("SELECT COUNT(tpa.id) FROM thread_polling_answer tpa ")
 				.append("LEFT JOIN thread_polling_detail tpd on tpa.thread_detail_polling_id = tpd.id ")
-				.append("LEFT JOIN thread_header_polling thp on tpd.thread_header_polling_id = thp.id ")
+				.append("LEFT JOIN thread_polling_header thp on tpd.thread_polling_header_id = thp.id ")
 				.append("WHERE thp.id = :id");
 
 		BigInteger count = (BigInteger) createNativeQuery(sql.toString()).setParameter("id", id).getSingleResult();

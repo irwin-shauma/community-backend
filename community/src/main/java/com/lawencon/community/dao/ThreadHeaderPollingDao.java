@@ -14,7 +14,7 @@ import com.lawencon.community.model.ThreadHeaderPolling;
 public class ThreadHeaderPollingDao extends AbstractJpaDao<ThreadHeaderPolling> {
 
 	public List<ThreadHeaderPolling> findByUserId(String userId, String query, Integer startPage, Integer maxPage) throws Exception {
-		String sql = "SELECT * FROM thread_header_polling WHERE user_id = :user";
+		String sql = "SELECT * FROM thread_polling_header WHERE user_id = :user";
 
 		List<?> result = createNativeQuery(sql).setParameter("user", userId).getResultList();
 

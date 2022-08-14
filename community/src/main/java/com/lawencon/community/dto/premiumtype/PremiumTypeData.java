@@ -43,7 +43,4 @@ public class PremiumTypeData {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-	
-	
-
 }
