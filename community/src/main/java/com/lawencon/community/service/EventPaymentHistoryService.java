@@ -286,7 +286,9 @@ public class EventPaymentHistoryService extends BaseCoreService<EventPaymentHist
 			
 			Payment payment = paymentDao.getById(eventPaymentHistory.getPayment().getId());
 			data.setIsAprove(payment.getIsApprove());
-			data.setFileId(payment.getFile().getId());
+			if(payment.getFile() != null) {
+				data.setFileId(payment.getFile().getId());
+			}
 
 			data.setTrxNo(eventPaymentHistory.getTrxNo());
 			data.setIsActive(eventPaymentHistory.getIsActive());

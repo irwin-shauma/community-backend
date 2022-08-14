@@ -24,6 +24,7 @@ import com.lawencon.community.dto.payment.PaymentData;
 import com.lawencon.community.dto.payment.PaymentFindByIdRes;
 import com.lawencon.community.dto.payment.PaymentInsertReq;
 import com.lawencon.community.dto.payment.PaymentUpdateReq;
+import com.lawencon.community.dto.report.MemberRevenueReportReq;
 import com.lawencon.community.dto.report.MemberRevenueReportRes;
 import com.lawencon.community.model.EventPaymentHistory;
 import com.lawencon.community.model.File;
@@ -206,8 +207,8 @@ public class PaymentService extends BaseCoreService<Payment>{
 		return result;
 	}
 	
-	public MemberRevenueReportRes showMemberRevenueData(String id) throws Exception {
-		MemberRevenueReportRes response = paymentDao.getReportData(id);
+	public MemberRevenueReportRes showMemberRevenueData(MemberRevenueReportReq data) throws Exception {
+		MemberRevenueReportRes response = paymentDao.getReportData(getAuthPrincipal(), data);
 		return response;
 	}
 	

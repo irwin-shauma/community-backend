@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.dto.report.MemberRevenueReportData;
+import com.lawencon.community.dto.report.MemberRevenueReportReq;
 import com.lawencon.community.dto.report.MemberRevenueReportRes;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Payment;
@@ -46,7 +47,7 @@ public class PaymentDao extends AbstractJpaDao<Payment> {
 		return payment;
 	}
 	
-	public MemberRevenueReportRes getReportData(String id) throws Exception {
+	public MemberRevenueReportRes getReportData(String id, MemberRevenueReportReq dataInput) throws Exception {
 		
 		List<MemberRevenueReportData> reports = new ArrayList<>();
 		MemberRevenueReportRes response = new MemberRevenueReportRes();
@@ -62,10 +63,13 @@ public class PaymentDao extends AbstractJpaDao<Payment> {
 				.append(" JOIN event_header eh ON eh.id = eph.event_header_id ")
 				.append(" JOIN event_type et ON et.id = eh.event_type_id ")
 				.append(" JOIN event_detail ed ON ed.event_header_id = eh.id ")
-				.append(" WHERE pm.user_id = :id");
+				.append(" WHERE pm.user_id = :id ")
+				.append(" AND DATE(pm.created_at) BETWEEN :startDate AND :endDate ");
 		try {
 			List<?> result = createNativeQuery(sqlBuilder.toString())
 					.setParameter("id", id)
+					.setParameter("startDate", dataInput.getStartDate())
+					.setParameter("endDate", dataInput.getEndDate())
 					.getResultList();
 			
 			if(result != null) {
