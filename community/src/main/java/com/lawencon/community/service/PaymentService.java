@@ -1,5 +1,7 @@
 package com.lawencon.community.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -206,9 +208,16 @@ public class PaymentService extends BaseCoreService<Payment>{
 
 		return result;
 	}
+	private LocalDate stringToLocalDate(String dateStr) {
+		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		return LocalDate.parse(dateStr, formatter);
+	}
 	
-	public MemberRevenueReportRes showMemberRevenueData(MemberRevenueReportReq data) throws Exception {
-		MemberRevenueReportRes response = paymentDao.getReportData(getAuthPrincipal(), data);
+	public MemberRevenueReportRes showMemberRevenueData(String id, String startDate, String endDate) throws Exception {
+//		public MemberRevenueReportRes showMemberRevenueData(MemberRevenueReportReq data) throws Exception {
+//		MemberRevenueReportRes response = paymentDao.getReportData(getAuthPrincipal(), data);
+		MemberRevenueReportRes response = paymentDao.getReportData(id, stringToLocalDate(startDate),
+				stringToLocalDate(endDate));
 		return response;
 	}
 	
