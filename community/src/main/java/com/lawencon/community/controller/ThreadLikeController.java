@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.DeleteRes;
@@ -32,7 +33,9 @@ public class ThreadLikeController {
 	private ThreadLikeService threadLikeService;
 
 	@GetMapping
-	public ResponseEntity<?> getAll(String query, Integer startPage, Integer maxPage) throws Exception {
+	public ResponseEntity<?> getAll(@RequestParam(required = false) String query,
+			@RequestParam(required = false) Integer startPage,
+			@RequestParam(required = false) Integer maxPage) throws Exception {
 		SearchQuery<ThreadLikeData> result = threadLikeService.findAll(query, startPage, maxPage);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e64e681c-1b37-4479-9623-5c829feac734">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e64e681c-1b37-4479-9623-5c829feac734">
 	<parameter name="company" class="java.lang.String"/>
 	<parameter name="title" class="java.lang.String"/>
 	<queryString>
@@ -256,17 +256,60 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="40"/>
+		<band height="40">
+			<textField>
+				<reportElement x="455" y="10" width="100" height="30" uuid="dbaa1cb7-e998-49c5-a785-5d35a84ed4fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<noData>
-		<band height="50">
+		<band height="213">
 			<staticText>
-				<reportElement x="0" y="0" width="555" height="50" uuid="e260a379-1e55-438e-a955-b325bd7ef6fd"/>
+				<reportElement x="0" y="130" width="555" height="50" uuid="e260a379-1e55-438e-a955-b325bd7ef6fd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="19" isBold="true"/>
 				</textElement>
 				<text><![CDATA[No data availabe]]></text>
 			</staticText>
+			<image>
+				<reportElement x="20" y="0" width="100" height="100" uuid="7792c0f5-915f-4d54-94de-dc667a0576d8">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["https://i.ibb.co/qBWHK8H/6d2cc29c-d36d-4978-adc0-0494106597ed.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="110" y="30" width="400" height="30" forecolor="#FF0905" uuid="5b3046c2-aebc-4953-85ee-e8d5261a8040"/>
+				<textElement textAlignment="Center">
+					<font size="19"/>
+				</textElement>
+				<text><![CDATA[We Learn Together, We Growth Stronger]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="60" width="414" height="20" uuid="e2ea6350-4c30-415f-8c57-d7381ddc9eaf"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Pakuwon Tower Lt.22, Menteng Dalam, Jakarta Selatan, DKI. Jakarta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="80" width="399" height="20" uuid="55d965f6-92b6-4edf-bd61-27bd7091fab5"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Email : customer.service@communify.org HP : 0812-3456-7890]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="110" width="555" height="1" uuid="d5d0d277-30e3-4877-b509-40b8ff565ad9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
 		</band>
 	</noData>
 </jasperReport>
