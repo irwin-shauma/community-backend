@@ -72,7 +72,7 @@ public class LoginController {
 		data.setRoleCode(user.getRole().getRoleCode());
 		data.setToken(token);
 		data.setRefreshToken(userService.updateToken(user.getId()));
-		data.setPremiumStatus(result);
+//		data.setPremiumStatus(result);
 		
 		response.setData(data);
 		

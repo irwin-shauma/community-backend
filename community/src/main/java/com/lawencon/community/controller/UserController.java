@@ -57,13 +57,13 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<InsertRes> insert(@RequestBody @Valid UserInsertReq user) throws Exception {
+	public ResponseEntity<InsertRes> insertUser(@RequestBody @Valid UserInsertReq user) throws Exception {
 		InsertRes data = userService.insert(user);
 		return new ResponseEntity<InsertRes>(data, HttpStatus.CREATED);
 	}
 	
 	@PutMapping 
-	public ResponseEntity<UpdateRes> update(@RequestBody @Valid UserUpdateReq user) throws Exception {
+	public ResponseEntity<UpdateRes> updateUser(@RequestBody @Valid UserUpdateReq user) throws Exception {
 		UpdateRes data = userService.update(user);
 		return new ResponseEntity<UpdateRes>(data, HttpStatus.OK);
 	}
